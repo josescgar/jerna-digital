@@ -64,6 +64,32 @@ If a PR is already open for the current branch, E2E tests must pass before commi
 npm run test
 ```
 
+### Documentation Requirements
+
+Documentation must be kept up to date as part of any change. When making changes, update the relevant documentation files:
+
+| Change Type                            | Documentation to Update                                                       |
+| -------------------------------------- | ----------------------------------------------------------------------------- |
+| New/changed npm scripts                | `CLAUDE.md` (Key Commands), `README.md`                                       |
+| New/changed environment variables      | `CLAUDE.md` (Environment Variables), `README.md`                              |
+| Project structure changes              | `CLAUDE.md` (Project Structure)                                               |
+| Architectural decisions                | `docs/decisions/` (create new ADR), `CLAUDE.md` (Key Architectural Decisions) |
+| New dependencies or tech stack changes | `CLAUDE.md` (Tech Stack), `docs/architecture.md`                              |
+| Design token changes                   | `docs/design-tokens.md`                                                       |
+| New component patterns                 | `CLAUDE.md` (Component Patterns)                                              |
+| CI/CD or deployment changes            | `README.md`, relevant workflow files                                          |
+| New coding conventions                 | `CLAUDE.md` (Coding Conventions)                                              |
+
+**Documentation files:**
+
+- `CLAUDE.md` - Primary reference for Claude Code (this file)
+- `README.md` - Public-facing project documentation
+- `docs/architecture.md` - System architecture overview
+- `docs/design-tokens.md` - Design system documentation
+- `docs/decisions/` - Architecture Decision Records (ADRs)
+
+**ADR naming convention:** `NNNN-short-description.md` (e.g., `0004-add-dark-mode.md`)
+
 ## Git Workflow
 
 ### Repository Info
