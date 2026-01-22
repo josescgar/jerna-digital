@@ -1,0 +1,144 @@
+---
+import { getTranslations } from '@/i18n/translations';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+}
+
+const t = getTranslations();
+
+const {
+  title = t.site.name,
+  description = t.site.description,
+  image = '/og-image.png',
+  canonicalUrl = Astro.url.href,
+  noIndex = false,
+} = Astro.props;
+
+const fullTitle = title === t.site.name ? title : `${title} | ${t.site.name}`;
+const siteUrl = Astro.site ?? new URL('https://jernadigital.com');
+const ogImageUrl = new URL(image, siteUrl).href;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Robots -->
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:site_name" content={t.site.name} />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Fonts - Inter & Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Security Headers (meta tags for static site) -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0a0a0b" />
+
+    <!-- JSON-LD Structured Data -->
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ProfessionalService',
+      name: t.site.name,
+      description: t.site.description,
+      url: siteUrl.href,
+      logo: new URL('/logo.png', siteUrl).href,
+      founder: {
+        '@type': 'Person',
+        name: 'Jose Escobar',
+        jobTitle: 'Software Development and Engineering Management Consultant',
+      },
+      areaServed: {
+        '@type': 'GeoCircle',
+        name: 'Global',
+      },
+      serviceType: [
+        'Technical Consulting',
+        'Engineering Management',
+        'Fractional CTO',
+        'Fractional VPE',
+      ],
+    })} />
+  </head>
+  <body class="flex min-h-screen flex-col bg-background text-foreground antialiased">
+    <!-- Skip to main content link for accessibility -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+    >
+      Skip to main content
+    </a>
+
+    <Header />
+
+    <main id="main-content" class="flex-1 pt-16 md:pt-20">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <!-- Ambient background effects -->
+    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <!-- Large gradient orb - top right -->
+      <div
+        class="absolute -right-1/4 -top-1/4 h-[600px] w-[600px] animate-pulse-glow rounded-full bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent blur-[100px]"
+      >
+      </div>
+      <!-- Secondary orb - bottom left -->
+      <div
+        class="absolute -bottom-1/4 -left-1/4 h-[500px] w-[500px] animate-pulse-glow rounded-full bg-gradient-to-tr from-secondary/15 via-primary/5 to-transparent blur-[100px]"
+        style="animation-delay: 2s;"
+      >
+      </div>
+      <!-- Subtle grid pattern -->
+      <div
+        class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"
+      >
+      </div>
+    </div>
+  </body>
+</html>

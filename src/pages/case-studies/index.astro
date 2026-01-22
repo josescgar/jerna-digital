@@ -1,0 +1,165 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import { getTranslations } from '@/i18n/translations';
+
+const t = getTranslations();
+
+// Placeholder case studies - will be replaced with actual content
+interface CaseStudy {
+  slug: string;
+  title: string;
+  client: string;
+  industry: string;
+  summary: string;
+  tags: string[];
+  comingSoon: boolean;
+}
+
+const caseStudies: CaseStudy[] = [
+  {
+    slug: 'scaling-engineering-team',
+    title: 'Scaling an Engineering Team from 5 to 30',
+    client: 'Series A Startup',
+    industry: 'FinTech',
+    summary: 'Helped a fast-growing fintech startup scale their engineering team while maintaining quality and culture.',
+    tags: ['Team Building', 'Engineering Culture', 'Hiring'],
+    comingSoon: true,
+  },
+  {
+    slug: 'technical-architecture-review',
+    title: 'Architecture Modernization',
+    client: 'E-commerce Platform',
+    industry: 'Retail',
+    summary: 'Led a comprehensive architecture review and modernization initiative to improve scalability and reliability.',
+    tags: ['Architecture', 'Technical Debt', 'Modernization'],
+    comingSoon: true,
+  },
+  {
+    slug: 'fractional-cto-engagement',
+    title: 'Fractional CTO for Seed-Stage Startup',
+    client: 'Health Tech Startup',
+    industry: 'Healthcare',
+    summary: 'Provided part-time CTO leadership to help a healthcare startup make strategic technical decisions during their seed round.',
+    tags: ['Fractional CTO', 'Strategy', 'Fundraising'],
+    comingSoon: true,
+  },
+];
+---
+
+<BaseLayout
+  title={t.caseStudies.title}
+  description={t.caseStudies.subtitle}
+>
+  <!-- Hero section -->
+  <section class="section relative overflow-hidden">
+    <div class="container">
+      <div class="mx-auto max-w-3xl text-center">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+          <span class="text-gradient">{t.caseStudies.title}</span>
+        </h1>
+        <p class="mt-6 text-xl text-foreground-muted">
+          {t.caseStudies.subtitle}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case studies grid -->
+  <section class="section pt-0">
+    <div class="container">
+      <div class="grid gap-8 lg:grid-cols-3">
+        {
+          caseStudies.map((study) => (
+            <article class="group relative overflow-hidden rounded-2xl border border-border bg-background-elevated transition-all duration-normal hover:border-border-subtle hover:shadow-lg">
+              {/* Coming soon badge */}
+              {study.comingSoon && (
+                <div class="absolute right-4 top-4 z-10 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                  Coming Soon
+                </div>
+              )}
+
+              {/* Image placeholder */}
+              <div class="aspect-video bg-background-subtle">
+                <div class="flex h-full items-center justify-center">
+                  <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-primary/20 text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                      <line x1="12" y1="22.08" x2="12" y2="12" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div class="p-6">
+                {/* Tags */}
+                <div class="mb-3 flex flex-wrap gap-2">
+                  {study.tags.slice(0, 2).map((tag) => (
+                    <span class="rounded-full bg-background-subtle px-2 py-1 text-xs text-foreground-subtle">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <h2 class="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                  {study.title}
+                </h2>
+
+                <p class="mt-2 text-sm text-foreground-subtle">
+                  {study.client} • {study.industry}
+                </p>
+
+                <p class="mt-4 text-foreground-muted">
+                  {study.summary}
+                </p>
+
+                {/* Link (disabled for coming soon) */}
+                {study.comingSoon ? (
+                  <div class="mt-6 flex items-center gap-2 text-sm text-foreground-subtle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Full case study coming soon
+                  </div>
+                ) : (
+                  <a
+                    href={`/case-studies/${study.slug}`}
+                    class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary-light"
+                  >
+                    {t.caseStudies.viewCase}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      {/* Empty state / CTA */}
+      <div class="mt-16 text-center">
+        <p class="text-foreground-muted">
+          Detailed case studies are being prepared. In the meantime, feel free to reach out to discuss my experience with similar challenges.
+        </p>
+        <a
+          href="/contact"
+          class="mt-6 inline-flex items-center gap-2 text-primary transition-colors hover:text-primary-light"
+        >
+          Get in touch to learn more
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

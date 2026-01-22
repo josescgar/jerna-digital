@@ -1,0 +1,174 @@
+---
+import { getTranslations } from '@/i18n/translations';
+import Logo from './Logo.astro';
+
+const t = getTranslations();
+
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+const navItems: NavItem[] = [
+  { label: t.nav.about, href: '/about' },
+  { label: t.nav.services, href: '/services' },
+  { label: t.nav.caseStudies, href: '/case-studies' },
+  { label: t.nav.contact, href: '/contact' },
+];
+---
+
+<header
+  class="fixed left-0 right-0 top-0 z-fixed"
+  id="site-header"
+>
+  <div class="glass">
+    <nav class="container flex h-16 items-center justify-between md:h-20">
+      <a
+        href="/"
+        class="flex items-center gap-2 transition-opacity hover:opacity-80"
+        aria-label={t.site.name}
+      >
+        <Logo />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <ul class="hidden items-center gap-1 md:flex">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="rounded-lg px-4 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="ml-4">
+          <a
+            href="/contact"
+            class="inline-flex h-10 items-center justify-center rounded-lg bg-gradient-primary px-5 text-sm font-medium text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-glow"
+          >
+            {t.hero.cta}
+          </a>
+        </li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button
+        type="button"
+        class="flex h-10 w-10 items-center justify-center rounded-lg text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground md:hidden"
+        id="mobile-menu-btn"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="menu-icon"
+        >
+          <line x1="4" x2="20" y1="12" y2="12"></line>
+          <line x1="4" x2="20" y1="6" y2="6"></line>
+          <line x1="4" x2="20" y1="18" y2="18"></line>
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="close-icon hidden"
+        >
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div
+    class="glass hidden md:hidden"
+    id="mobile-menu"
+    aria-hidden="true"
+  >
+    <nav class="container py-4">
+      <ul class="flex flex-col gap-2">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="block rounded-lg px-4 py-3 text-base font-medium text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+        <li class="mt-2">
+          <a
+            href="/contact"
+            class="flex h-12 items-center justify-center rounded-lg bg-gradient-primary text-base font-medium text-primary-foreground transition-all hover:shadow-glow"
+          >
+            {t.hero.cta}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = menuBtn?.querySelector('.menu-icon');
+  const closeIcon = menuBtn?.querySelector('.close-icon');
+
+  function toggleMenu(): void {
+    const isExpanded = menuBtn?.getAttribute('aria-expanded') === 'true';
+
+    menuBtn?.setAttribute('aria-expanded', String(!isExpanded));
+    mobileMenu?.classList.toggle('hidden');
+    mobileMenu?.setAttribute('aria-hidden', String(isExpanded));
+    menuIcon?.classList.toggle('hidden');
+    closeIcon?.classList.toggle('hidden');
+
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = isExpanded ? '' : 'hidden';
+  }
+
+  menuBtn?.addEventListener('click', toggleMenu);
+
+  // Close menu on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menuBtn?.getAttribute('aria-expanded') === 'true') {
+      toggleMenu();
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as Node;
+    if (
+      menuBtn?.getAttribute('aria-expanded') === 'true' &&
+      !mobileMenu?.contains(target) &&
+      !menuBtn?.contains(target)
+    ) {
+      toggleMenu();
+    }
+  });
+</script>

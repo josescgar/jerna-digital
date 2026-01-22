@@ -1,0 +1,131 @@
+---
+import { getTranslations } from '@/i18n/translations';
+
+const t = getTranslations();
+---
+
+<section class="section relative overflow-hidden" id="about-preview">
+  <div class="container">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <!-- Content -->
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          <span class="text-gradient">{t.about.title}</span>
+        </h2>
+        <p class="mt-4 text-lg text-foreground-muted">
+          {t.about.subtitle}
+        </p>
+
+        <p class="mt-6 text-foreground-muted leading-relaxed">
+          {t.about.intro}
+        </p>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold mb-4">{t.about.approach.title}</h3>
+          <p class="text-foreground-muted leading-relaxed">
+            {t.about.approach.description}
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold mb-4">{t.about.values.title}</h3>
+          <ul class="grid gap-3 sm:grid-cols-2">
+            {
+              t.about.values.items.map((value) => (
+                <li class="flex items-center gap-3">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-primary"
+                    >
+                      <path d="m9 12 2 2 4-4" />
+                    </svg>
+                  </div>
+                  <span class="text-foreground-muted">{value}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <a
+          href="/about"
+          class="mt-8 inline-flex items-center gap-2 text-primary transition-colors hover:text-primary-light"
+        >
+          Learn more about my approach
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Visual element / Image placeholder -->
+      <div class="relative lg:order-first">
+        <div class="aspect-square overflow-hidden rounded-2xl border border-border bg-background-elevated p-8">
+          <!-- Abstract visual representing consulting/engineering -->
+          <div class="relative h-full w-full">
+            <!-- Grid of floating cards -->
+            <div class="absolute left-[10%] top-[10%] h-24 w-32 animate-float rounded-xl border border-border bg-background-subtle p-3">
+              <div class="h-2 w-16 rounded bg-primary/30"></div>
+              <div class="mt-2 h-2 w-20 rounded bg-foreground/10"></div>
+              <div class="mt-2 h-2 w-12 rounded bg-foreground/10"></div>
+            </div>
+
+            <div class="absolute right-[15%] top-[25%] h-20 w-28 animate-float rounded-xl border border-border bg-background-subtle p-3" style="animation-delay: 1s;">
+              <div class="h-2 w-12 rounded bg-secondary/30"></div>
+              <div class="mt-2 h-2 w-16 rounded bg-foreground/10"></div>
+            </div>
+
+            <div class="absolute bottom-[30%] left-[20%] h-28 w-36 animate-float rounded-xl border border-border bg-background-subtle p-3" style="animation-delay: 2s;">
+              <div class="h-2 w-20 rounded bg-primary/30"></div>
+              <div class="mt-2 h-2 w-24 rounded bg-foreground/10"></div>
+              <div class="mt-2 h-2 w-16 rounded bg-foreground/10"></div>
+              <div class="mt-2 h-2 w-20 rounded bg-foreground/10"></div>
+            </div>
+
+            <div class="absolute bottom-[15%] right-[10%] h-24 w-32 animate-float rounded-xl border border-border bg-background-subtle p-3" style="animation-delay: 3s;">
+              <div class="h-2 w-16 rounded bg-secondary/30"></div>
+              <div class="mt-2 h-2 w-20 rounded bg-foreground/10"></div>
+              <div class="mt-2 h-2 w-12 rounded bg-foreground/10"></div>
+            </div>
+
+            <!-- Connection lines (decorative) -->
+            <svg class="absolute inset-0 h-full w-full" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="line-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color: var(--color-primary); stop-opacity: 0.3" />
+                  <stop offset="100%" style="stop-color: var(--color-secondary); stop-opacity: 0.3" />
+                </linearGradient>
+              </defs>
+              <line x1="30%" y1="25%" x2="60%" y2="35%" stroke="url(#line-gradient)" stroke-width="1" />
+              <line x1="35%" y1="55%" x2="70%" y2="45%" stroke="url(#line-gradient)" stroke-width="1" />
+              <line x1="40%" y1="70%" x2="65%" y2="80%" stroke="url(#line-gradient)" stroke-width="1" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Decorative gradient behind -->
+        <div class="absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 blur-2xl"></div>
+      </div>
+    </div>
+  </div>
+</section>

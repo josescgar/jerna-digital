@@ -1,0 +1,21 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['flex items-center gap-2', className]}>
+  <!-- Logo mark -->
+  <div class="relative h-8 w-8 overflow-hidden rounded-lg bg-gradient-primary">
+    <span class="absolute inset-0 flex items-center justify-center text-lg font-bold text-primary-foreground">
+      J
+    </span>
+  </div>
+  <!-- Logo text -->
+  <span class="text-lg font-semibold tracking-tight">
+    <span class="text-foreground">Jerna</span>
+    <span class="text-foreground-muted">Digital</span>
+  </span>
+</div>

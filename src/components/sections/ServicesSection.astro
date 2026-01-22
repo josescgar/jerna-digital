@@ -1,0 +1,188 @@
+---
+import { getTranslations } from '@/i18n/translations';
+
+const t = getTranslations();
+
+interface Service {
+  icon: string;
+  title: string;
+  description: string;
+  features: string[];
+}
+
+const services: Service[] = [
+  {
+    icon: 'code',
+    title: t.services.technical.title,
+    description: t.services.technical.description,
+    features: [
+      'Architecture reviews',
+      'Code quality assessments',
+      'Tech stack decisions',
+      'Technical debt remediation',
+    ],
+  },
+  {
+    icon: 'users',
+    title: t.services.management.title,
+    description: t.services.management.description,
+    features: [
+      'Team building & hiring',
+      'Engineering culture',
+      'Agile practices',
+      'Leadership coaching',
+    ],
+  },
+  {
+    icon: 'briefcase',
+    title: t.services.fractional.title,
+    description: t.services.fractional.description,
+    features: [
+      'Strategic direction',
+      'Executive leadership',
+      'Stakeholder management',
+      'Technical roadmapping',
+    ],
+  },
+];
+---
+
+<section class="section relative" id="services">
+  <div class="container">
+    <!-- Section header -->
+    <div class="mx-auto mb-16 max-w-2xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <span class="text-gradient">{t.services.title}</span>
+      </h2>
+      <p class="mt-4 text-lg text-foreground-muted">
+        {t.services.subtitle}
+      </p>
+    </div>
+
+    <!-- Services grid -->
+    <div class="grid gap-6 md:grid-cols-3 lg:gap-8">
+      {
+        services.map((service, index) => (
+          <article
+            class="group relative overflow-hidden rounded-2xl border border-border bg-background-elevated p-6 transition-all duration-normal hover:border-border-subtle hover:shadow-lg lg:p-8"
+            style={`animation-delay: ${index * 0.1}s;`}
+          >
+            <!-- Icon -->
+            <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground">
+              {service.icon === 'code' && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="16 18 22 12 16 6" />
+                  <polyline points="8 6 2 12 8 18" />
+                </svg>
+              )}
+              {service.icon === 'users' && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              )}
+              {service.icon === 'briefcase' && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                  <rect width="20" height="14" x="2" y="6" rx="2" />
+                </svg>
+              )}
+            </div>
+
+            <!-- Content -->
+            <h3 class="mb-3 text-xl font-semibold tracking-tight">
+              {service.title}
+            </h3>
+            <p class="mb-6 text-foreground-muted">
+              {service.description}
+            </p>
+
+            <!-- Features list -->
+            <ul class="space-y-2">
+              {service.features.map((feature) => (
+                <li class="flex items-center gap-2 text-sm text-foreground-subtle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-primary"
+                  >
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <!-- Hover gradient overlay -->
+            <div class="pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity duration-normal group-hover:opacity-100">
+              <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 text-center">
+      <a
+        href="/services"
+        class="inline-flex items-center gap-2 text-primary transition-colors hover:text-primary-light"
+      >
+        {t.services.cta}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,160 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactForm from '@/components/interactive/ContactForm';
+import { getTranslations } from '@/i18n/translations';
+
+const t = getTranslations();
+
+const contactMethods = [
+  {
+    icon: 'mail',
+    title: 'Email',
+    description: 'For general inquiries',
+    value: 'hello@jernadigital.com',
+    href: 'mailto:hello@jernadigital.com',
+  },
+  {
+    icon: 'linkedin',
+    title: 'LinkedIn',
+    description: 'Connect professionally',
+    value: 'linkedin.com/in/joseescobar',
+    href: 'https://linkedin.com/in/joseescobar',
+  },
+  {
+    icon: 'calendar',
+    title: 'Schedule',
+    description: 'Book a discovery call',
+    value: 'Coming soon',
+    href: null,
+  },
+];
+---
+
+<BaseLayout
+  title={t.contact.title}
+  description={t.contact.subtitle}
+>
+  <!-- Hero section -->
+  <section class="section relative overflow-hidden">
+    <div class="container">
+      <div class="mx-auto max-w-3xl text-center">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+          <span class="text-gradient">{t.contact.title}</span>
+        </h1>
+        <p class="mt-6 text-xl text-foreground-muted">
+          {t.contact.subtitle}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact content -->
+  <section class="section pt-0">
+    <div class="container">
+      <div class="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <!-- Contact form -->
+        <div class="order-2 lg:order-1">
+          <div class="rounded-2xl border border-border bg-background-elevated p-6 md:p-8">
+            <h2 class="text-2xl font-semibold">Send a message</h2>
+            <p class="mt-2 text-foreground-muted">
+              Fill out the form below and I'll get back to you within 24-48 hours.
+            </p>
+
+            <div class="mt-8">
+              <ContactForm client:load />
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact info & methods -->
+        <div class="order-1 lg:order-2">
+          <h2 class="text-2xl font-semibold">Other ways to reach me</h2>
+          <p class="mt-2 text-foreground-muted">
+            Prefer a different method? Feel free to reach out through any of these channels.
+          </p>
+
+          <div class="mt-8 space-y-4">
+            {
+              contactMethods.map((method) => (
+                <div class="flex items-start gap-4 rounded-xl border border-border bg-background-elevated p-4 transition-colors hover:border-border-subtle">
+                  <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-primary text-primary-foreground">
+                    {method.icon === 'mail' && (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="16" x="2" y="4" rx="2" />
+                        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                      </svg>
+                    )}
+                    {method.icon === 'linkedin' && (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect width="4" height="12" x="2" y="9" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
+                    )}
+                    {method.icon === 'calendar' && (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M8 2v4" />
+                        <path d="M16 2v4" />
+                        <rect width="18" height="18" x="3" y="4" rx="2" />
+                        <path d="M3 10h18" />
+                      </svg>
+                    )}
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="font-semibold">{method.title}</h3>
+                    <p class="text-sm text-foreground-subtle">{method.description}</p>
+                    {method.href ? (
+                      <a
+                        href={method.href}
+                        target={method.href.startsWith('http') ? '_blank' : undefined}
+                        rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        class="mt-1 inline-block text-sm text-primary transition-colors hover:text-primary-light"
+                      >
+                        {method.value}
+                      </a>
+                    ) : (
+                      <span class="mt-1 inline-block text-sm text-foreground-subtle">
+                        {method.value}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- FAQ or additional info -->
+          <div class="mt-12">
+            <h3 class="text-xl font-semibold">What to expect</h3>
+            <ul class="mt-4 space-y-3 text-foreground-muted">
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-primary">
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span>Response within 24-48 hours</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-primary">
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span>Free 30-minute discovery call</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-primary">
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span>No obligations or pressure</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-primary">
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span>Confidential discussion</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

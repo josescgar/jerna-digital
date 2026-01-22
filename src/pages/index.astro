@@ -1,0 +1,20 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/sections/HeroSection.astro';
+import ServicesSection from '@/components/sections/ServicesSection.astro';
+import AboutPreviewSection from '@/components/sections/AboutPreviewSection.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import { getTranslations } from '@/i18n/translations';
+
+const t = getTranslations();
+---
+
+<BaseLayout
+  title={t.site.name}
+  description={t.site.description}
+>
+  <HeroSection />
+  <ServicesSection />
+  <AboutPreviewSection />
+  <CTASection />
+</BaseLayout>

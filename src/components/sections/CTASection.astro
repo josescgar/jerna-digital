@@ -1,0 +1,55 @@
+---
+import { getTranslations } from '@/i18n/translations';
+
+const t = getTranslations();
+---
+
+<section class="section relative overflow-hidden">
+  <div class="container">
+    <div class="relative overflow-hidden rounded-3xl border border-border bg-background-elevated p-8 md:p-12 lg:p-16">
+      <!-- Content -->
+      <div class="relative z-10 mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          Ready to <span class="text-gradient">transform</span> your engineering organization?
+        </h2>
+        <p class="mt-6 text-lg text-foreground-muted">
+          Let's discuss how I can help you build exceptional engineering teams and products. No commitment, just a conversation.
+        </p>
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="/contact"
+            class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gradient-primary px-8 text-base font-medium text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-glow sm:w-auto"
+          >
+            {t.hero.cta}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+          <a
+            href="/services"
+            class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-border bg-transparent px-8 text-base font-medium text-foreground transition-all hover:border-border-subtle hover:bg-background-subtle sm:w-auto"
+          >
+            {t.hero.secondaryCta}
+          </a>
+        </div>
+      </div>
+
+      <!-- Background gradient effects -->
+      <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div class="absolute -left-1/4 -top-1/4 h-96 w-96 rounded-full bg-gradient-to-br from-primary/20 to-transparent blur-[80px]"></div>
+        <div class="absolute -bottom-1/4 -right-1/4 h-96 w-96 rounded-full bg-gradient-to-tl from-secondary/20 to-transparent blur-[80px]"></div>
+      </div>
+    </div>
+  </div>
+</section>
