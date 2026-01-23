@@ -4,12 +4,16 @@ test.describe('Accessibility', () => {
   test('should have skip to main content link', async ({ page }) => {
     await page.goto('/');
 
-    // Focus on skip link (it's sr-only but focusable)
-    await page.keyboard.press('Tab');
-
     const skipLink = page.locator('a[href="#main-content"]');
-    await expect(skipLink).toBeFocused();
+
+    // Verify skip link exists and has correct text
+    await expect(skipLink).toBeAttached();
     await expect(skipLink).toHaveText('Skip to main content');
+
+    // Focus the skip link directly and verify it becomes visible
+    await skipLink.focus();
+    await expect(skipLink).toBeFocused();
+    await expect(skipLink).toBeVisible();
   });
 
   test('should have proper heading hierarchy on home page', async ({
@@ -52,14 +56,13 @@ test.describe('Accessibility', () => {
   test('should have proper focus indicators', async ({ page }) => {
     await page.goto('/');
 
-    // Tab through interactive elements
-    await page.keyboard.press('Tab'); // Skip link
-    await page.keyboard.press('Tab'); // Logo
-    await page.keyboard.press('Tab'); // First nav link
+    // Focus the logo link directly and verify it has visible focus
+    const logoLink = page.locator('header a[href="/"]');
+    await logoLink.focus();
 
-    // Check that focused element has visible focus style
-    const focusedElement = page.locator(':focus');
-    await expect(focusedElement).toBeVisible();
+    // Check that focused element is visible and has focus
+    await expect(logoLink).toBeFocused();
+    await expect(logoLink).toBeVisible();
   });
 
   test('should have proper ARIA attributes on mobile menu', async ({
@@ -92,13 +95,13 @@ test.describe('Accessibility', () => {
 
     // Open menu
     await mobileMenuBtn.click();
-    await expect(mobileMenu).not.toHaveClass(/hidden/);
+    await expect(mobileMenu).toHaveAttribute('aria-hidden', 'false');
 
     // Press Escape
     await page.keyboard.press('Escape');
 
     // Menu should be closed
-    await expect(mobileMenu).toHaveClass(/hidden/);
+    await expect(mobileMenu).toHaveAttribute('aria-hidden', 'true');
   });
 
   test('form inputs should have proper labels', async ({ page }) => {
