@@ -37,13 +37,13 @@ const navItems: NavItem[] = [
 ];
 ---
 
-<footer class="border-t border-border bg-background-elevated">
+<footer class="border-border bg-background-elevated border-t">
   <div class="container py-12 md:py-16">
     <div class="grid gap-8 md:grid-cols-3 md:gap-12">
       <!-- Brand column -->
       <div class="flex flex-col gap-4">
         <Logo />
-        <p class="max-w-sm text-sm text-foreground-muted">
+        <p class="text-foreground-muted max-w-sm text-sm">
           {t.site.description}
         </p>
         <div class="flex gap-4">
@@ -53,7 +53,7 @@ const navItems: NavItem[] = [
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex h-10 w-10 items-center justify-center rounded-lg text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground"
+                class="text-foreground-muted hover:bg-background-subtle hover:text-foreground flex h-10 w-10 items-center justify-center rounded-lg transition-colors"
                 aria-label={link.name}
               >
                 {link.icon === 'linkedin' && (
@@ -97,7 +97,9 @@ const navItems: NavItem[] = [
 
       <!-- Navigation column -->
       <div class="flex flex-col gap-4">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-foreground-subtle">
+        <h3
+          class="text-foreground-subtle text-sm font-semibold tracking-wider uppercase"
+        >
           Navigation
         </h3>
         <ul class="flex flex-col gap-2">
@@ -106,7 +108,7 @@ const navItems: NavItem[] = [
               <li>
                 <a
                   href={item.href}
-                  class="text-sm text-foreground-muted transition-colors hover:text-foreground"
+                  class="text-foreground-muted hover:text-foreground text-sm transition-colors"
                 >
                   {item.label}
                 </a>
@@ -118,15 +120,17 @@ const navItems: NavItem[] = [
 
       <!-- Contact column -->
       <div class="flex flex-col gap-4">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-foreground-subtle">
+        <h3
+          class="text-foreground-subtle text-sm font-semibold tracking-wider uppercase"
+        >
           Get in Touch
         </h3>
-        <p class="text-sm text-foreground-muted">
+        <p class="text-foreground-muted text-sm">
           Ready to discuss your project? Let's talk.
         </p>
         <a
           href="/contact"
-          class="inline-flex h-10 w-fit items-center justify-center rounded-lg border border-primary px-5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+          class="border-primary text-primary hover:bg-primary/10 inline-flex h-10 w-fit items-center justify-center rounded-lg border px-5 text-sm font-medium transition-colors"
         >
           {t.hero.cta}
         </a>
@@ -134,11 +138,13 @@ const navItems: NavItem[] = [
     </div>
 
     <!-- Bottom bar -->
-    <div class="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
-      <p class="text-sm text-foreground-subtle">
+    <div
+      class="border-border mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row"
+    >
+      <p class="text-foreground-subtle text-sm">
         {t.footer.copyright.replace('{year}', String(currentYear))}
       </p>
-      <p class="text-sm text-foreground-subtle">
+      <p class="text-foreground-subtle text-sm">
         {t.footer.builtWith}
       </p>
     </div>

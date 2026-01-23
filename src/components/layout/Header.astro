@@ -17,10 +17,7 @@ const navItems: NavItem[] = [
 ];
 ---
 
-<header
-  class="fixed left-0 right-0 top-0 z-fixed"
-  id="site-header"
->
+<header class="z-fixed fixed top-0 right-0 left-0" id="site-header">
   <div class="glass">
     <nav class="container flex h-16 items-center justify-between md:h-20">
       <a
@@ -38,7 +35,7 @@ const navItems: NavItem[] = [
             <li>
               <a
                 href={item.href}
-                class="rounded-lg px-4 py-2 text-sm font-medium text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground"
+                class="text-foreground-muted hover:bg-background-subtle hover:text-foreground rounded-lg px-4 py-2 text-sm font-medium transition-colors"
               >
                 {item.label}
               </a>
@@ -48,7 +45,7 @@ const navItems: NavItem[] = [
         <li class="ml-4">
           <a
             href="/contact"
-            class="inline-flex h-10 items-center justify-center rounded-lg bg-gradient-primary px-5 text-sm font-medium text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-glow"
+            class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-10 items-center justify-center rounded-lg px-5 text-sm font-medium transition-all hover:scale-[1.02]"
           >
             {t.hero.cta}
           </a>
@@ -58,7 +55,7 @@ const navItems: NavItem[] = [
       <!-- Mobile Menu Button -->
       <button
         type="button"
-        class="flex h-10 w-10 items-center justify-center rounded-lg text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground md:hidden"
+        class="text-foreground-muted hover:bg-background-subtle hover:text-foreground flex h-10 w-10 items-center justify-center rounded-lg transition-colors md:hidden"
         id="mobile-menu-btn"
         aria-label="Toggle menu"
         aria-expanded="false"
@@ -100,11 +97,7 @@ const navItems: NavItem[] = [
   </div>
 
   <!-- Mobile Menu -->
-  <div
-    class="glass hidden md:hidden"
-    id="mobile-menu"
-    aria-hidden="true"
-  >
+  <div class="glass hidden md:hidden" id="mobile-menu" aria-hidden="true">
     <nav class="container py-4">
       <ul class="flex flex-col gap-2">
         {
@@ -112,7 +105,7 @@ const navItems: NavItem[] = [
             <li>
               <a
                 href={item.href}
-                class="block rounded-lg px-4 py-3 text-base font-medium text-foreground-muted transition-colors hover:bg-background-subtle hover:text-foreground"
+                class="text-foreground-muted hover:bg-background-subtle hover:text-foreground block rounded-lg px-4 py-3 text-base font-medium transition-colors"
               >
                 {item.label}
               </a>
@@ -122,7 +115,7 @@ const navItems: NavItem[] = [
         <li class="mt-2">
           <a
             href="/contact"
-            class="flex h-12 items-center justify-center rounded-lg bg-gradient-primary text-base font-medium text-primary-foreground transition-all hover:shadow-glow"
+            class="bg-gradient-primary text-primary-foreground hover:shadow-glow flex h-12 items-center justify-center rounded-lg text-base font-medium transition-all"
           >
             {t.hero.cta}
           </a>
@@ -155,7 +148,10 @@ const navItems: NavItem[] = [
 
   // Close menu on escape key
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && menuBtn?.getAttribute('aria-expanded') === 'true') {
+    if (
+      e.key === 'Escape' &&
+      menuBtn?.getAttribute('aria-expanded') === 'true'
+    ) {
       toggleMenu();
     }
   });

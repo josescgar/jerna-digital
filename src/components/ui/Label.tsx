@@ -2,8 +2,9 @@ import * as React from 'react';
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { cn } from '@/lib/utils';
 
-export interface LabelProps
-  extends React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> {
+export interface LabelProps extends React.ComponentPropsWithoutRef<
+  typeof LabelPrimitive.Root
+> {
   /**
    * When true, displays required indicator (*).
    */
@@ -28,14 +29,14 @@ export const Label = React.forwardRef<
     <LabelPrimitive.Root
       ref={ref}
       className={cn(
-        'text-sm font-medium leading-none text-foreground',
+        'text-foreground text-sm leading-none font-medium',
         'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
         className
       )}
       {...props}
     >
       {children}
-      {required && <span className="ml-1 text-primary">*</span>}
+      {required && <span className="text-primary ml-1">*</span>}
     </LabelPrimitive.Root>
   );
 });

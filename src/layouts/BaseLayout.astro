@@ -80,35 +80,42 @@ const ogImageUrl = new URL(image, siteUrl).href;
     <meta name="theme-color" content="#0a0a0b" />
 
     <!-- JSON-LD Structured Data -->
-    <script is:inline type="application/ld+json" set:html={JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: t.site.name,
-      description: t.site.description,
-      url: siteUrl.href,
-      logo: new URL('/logo.png', siteUrl).href,
-      founder: {
-        '@type': 'Person',
-        name: 'Jose Escobar',
-        jobTitle: 'Software Development and Engineering Management Consultant',
-      },
-      areaServed: {
-        '@type': 'GeoCircle',
-        name: 'Global',
-      },
-      serviceType: [
-        'Technical Consulting',
-        'Engineering Management',
-        'Fractional CTO',
-        'Fractional VPE',
-      ],
-    })} />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        name: t.site.name,
+        description: t.site.description,
+        url: siteUrl.href,
+        logo: new URL('/logo.png', siteUrl).href,
+        founder: {
+          '@type': 'Person',
+          name: 'Jose Escobar',
+          jobTitle:
+            'Software Development and Engineering Management Consultant',
+        },
+        areaServed: {
+          '@type': 'GeoCircle',
+          name: 'Global',
+        },
+        serviceType: [
+          'Technical Consulting',
+          'Engineering Management',
+          'Fractional CTO',
+          'Fractional VPE',
+        ],
+      })}
+    />
   </head>
-  <body class="flex min-h-screen flex-col bg-background text-foreground antialiased">
+  <body
+    class="bg-background text-foreground flex min-h-screen flex-col antialiased"
+  >
     <!-- Skip to main content link for accessibility -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      class="focus:bg-primary focus:text-primary-foreground sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:px-4 focus:py-2"
     >
       Skip to main content
     </a>
@@ -122,15 +129,18 @@ const ogImageUrl = new URL(image, siteUrl).href;
     <Footer />
 
     <!-- Ambient background effects -->
-    <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <div
+      class="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      aria-hidden="true"
+    >
       <!-- Large gradient orb - top right -->
       <div
-        class="absolute -right-1/4 -top-1/4 h-[600px] w-[600px] animate-pulse-glow rounded-full bg-gradient-to-br from-primary/20 via-secondary/10 to-transparent blur-[100px]"
+        class="animate-pulse-glow from-primary/20 via-secondary/10 absolute -top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-gradient-to-br to-transparent blur-[100px]"
       >
       </div>
       <!-- Secondary orb - bottom left -->
       <div
-        class="absolute -bottom-1/4 -left-1/4 h-[500px] w-[500px] animate-pulse-glow rounded-full bg-gradient-to-tr from-secondary/15 via-primary/5 to-transparent blur-[100px]"
+        class="animate-pulse-glow from-secondary/15 via-primary/5 absolute -bottom-1/4 -left-1/4 h-[500px] w-[500px] rounded-full bg-gradient-to-tr to-transparent blur-[100px]"
         style="animation-delay: 2s;"
       >
       </div>

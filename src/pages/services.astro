@@ -77,30 +77,31 @@ const process = [
   {
     step: 1,
     title: 'Discovery Call',
-    description: 'We start with a free 30-minute call to understand your situation and determine if I can help.',
+    description:
+      'We start with a free 30-minute call to understand your situation and determine if I can help.',
   },
   {
     step: 2,
     title: 'Assessment',
-    description: 'I conduct a thorough assessment of your current state, challenges, and goals.',
+    description:
+      'I conduct a thorough assessment of your current state, challenges, and goals.',
   },
   {
     step: 3,
     title: 'Proposal',
-    description: 'You receive a detailed proposal with recommendations and engagement options.',
+    description:
+      'You receive a detailed proposal with recommendations and engagement options.',
   },
   {
     step: 4,
     title: 'Engagement',
-    description: 'We work together to implement solutions and achieve your goals.',
+    description:
+      'We work together to implement solutions and achieve your goals.',
   },
 ];
 ---
 
-<BaseLayout
-  title={t.nav.services}
-  description={t.services.subtitle}
->
+<BaseLayout title={t.nav.services} description={t.services.subtitle}>
   <!-- Hero section -->
   <section class="section relative overflow-hidden">
     <div class="container">
@@ -108,7 +109,7 @@ const process = [
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           <span class="text-gradient">{t.services.title}</span>
         </h1>
-        <p class="mt-6 text-xl text-foreground-muted">
+        <p class="text-foreground-muted mt-6 text-xl">
           {t.services.subtitle}
         </p>
       </div>
@@ -121,19 +122,41 @@ const process = [
       <div class="space-y-24">
         {
           services.map((service, index) => (
-            <article class={`grid gap-8 lg:grid-cols-2 lg:gap-12 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+            <article
+              class={`grid gap-8 lg:grid-cols-2 lg:gap-12 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}
+            >
               {/* Service content */}
               <div class={index % 2 === 1 ? 'lg:col-start-2' : ''}>
                 {/* Icon */}
-                <div class="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-primary text-primary-foreground">
+                <div class="bg-gradient-primary text-primary-foreground mb-6 flex h-16 w-16 items-center justify-center rounded-2xl">
                   {service.icon === 'code' && (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <polyline points="16 18 22 12 16 6" />
                       <polyline points="8 6 2 12 8 18" />
                     </svg>
                   )}
                   {service.icon === 'users' && (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
                       <circle cx="9" cy="7" r="4" />
                       <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -141,15 +164,29 @@ const process = [
                     </svg>
                   )}
                   {service.icon === 'briefcase' && (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                       <rect width="20" height="14" x="2" y="6" rx="2" />
                     </svg>
                   )}
                 </div>
 
-                <h2 class="text-3xl font-bold tracking-tight">{service.title}</h2>
-                <p class="mt-4 text-lg text-foreground-muted">{service.description}</p>
+                <h2 class="text-3xl font-bold tracking-tight">
+                  {service.title}
+                </h2>
+                <p class="text-foreground-muted mt-4 text-lg">
+                  {service.description}
+                </p>
 
                 {/* What's included */}
                 <div class="mt-8">
@@ -157,7 +194,18 @@ const process = [
                   <ul class="mt-4 space-y-3">
                     {service.details.map((detail) => (
                       <li class="flex items-start gap-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0 text-primary">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="text-primary mt-0.5 shrink-0"
+                        >
                           <path d="m9 12 2 2 4-4" />
                         </svg>
                         <span class="text-foreground-muted">{detail}</span>
@@ -168,13 +216,26 @@ const process = [
               </div>
 
               {/* Use cases card */}
-              <div class={`self-start rounded-2xl border border-border bg-background-elevated p-6 lg:p-8 ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+              <div
+                class={`border-border bg-background-elevated self-start rounded-2xl border p-6 lg:p-8 ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+              >
                 <h3 class="text-lg font-semibold">Best for</h3>
                 <ul class="mt-4 space-y-4">
                   {service.useCases.map((useCase) => (
                     <li class="flex items-start gap-3">
-                      <div class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-primary/10">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-primary">
+                      <div class="bg-primary/10 mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="3"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="text-primary"
+                        >
                           <path d="M5 12h14" />
                           <path d="m12 5 7 7-7 7" />
                         </svg>
@@ -198,7 +259,7 @@ const process = [
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
           <span class="text-gradient">How We Work Together</span>
         </h2>
-        <p class="mt-4 text-lg text-foreground-muted">
+        <p class="text-foreground-muted mt-4 text-lg">
           A straightforward process designed to get you results quickly.
         </p>
       </div>
@@ -206,12 +267,14 @@ const process = [
       <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {
           process.map((item) => (
-            <div class="relative rounded-xl border border-border bg-background-elevated p-6">
-              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-primary text-lg font-bold text-primary-foreground">
+            <div class="border-border bg-background-elevated relative rounded-xl border p-6">
+              <div class="bg-gradient-primary text-primary-foreground mb-4 flex h-10 w-10 items-center justify-center rounded-lg text-lg font-bold">
                 {item.step}
               </div>
               <h3 class="text-lg font-semibold">{item.title}</h3>
-              <p class="mt-2 text-sm text-foreground-muted">{item.description}</p>
+              <p class="text-foreground-muted mt-2 text-sm">
+                {item.description}
+              </p>
             </div>
           ))
         }

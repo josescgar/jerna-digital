@@ -29,10 +29,48 @@ Use these templates when generating issue bodies for the `/create-issue` skill.
 
 [Any design constraints, UX considerations, or technical decisions]
 
+## E2E Test Scenarios
+
+> **Note**: These scenarios will be implemented as Playwright tests in the `/tests` directory.
+
+### Scenario: [Name of user flow]
+
+**Given** [initial state/preconditions]
+**When** [user action/trigger]
+**Then** [expected outcome]
+
+**Implementation Notes:**
+
+- Test file: `tests/[feature-name].spec.ts`
+- Key selectors: [DOM selectors for elements]
+- Related tests: [existing test files to reference]
+
+---
+
+<details>
+<summary>Example: Contact Form Validation</summary>
+
+### Scenario: Show Validation Error for Invalid Email
+
+**Given** the user is on the contact form
+**When** the user enters "invalid-email" in the email field
+**And** clicks the submit button
+**Then** an error message "Please enter a valid email address" appears
+**And** the form is not submitted
+
+**Implementation Notes:**
+
+- Test file: `tests/contact-form.spec.ts`
+- Key selectors: `input[name="email"]`, `button[type="submit"]`, `text=Please enter a valid email address`
+- Pattern: Similar to existing validation tests in contact-form.spec.ts:24-33
+
+</details>
+
 ## Validation
 
 Before closing this issue, ensure:
 
+- [ ] All E2E scenarios implemented and passing
 - [ ] `npm run lint` passes
 - [ ] `npm run format:check` passes
 - [ ] `npm run build` succeeds
@@ -77,10 +115,47 @@ Before closing this issue, ensure:
 
 [If known, describe the proposed solution]
 
+## E2E Regression Test
+
+> **Critical**: This test must pass before closing to prevent regression.
+
+### Scenario: Bug Reproduction and Fix Verification
+
+**Given** [conditions that trigger the bug]
+**When** [user actions that cause the bug]
+**Then** [correct behavior after fix]
+
+**Implementation Notes:**
+
+- Test file: `tests/[area].spec.ts`
+- Bug behavior: [what was failing before]
+- Key selectors: [elements involved]
+
+---
+
+<details>
+<summary>Example: Form Error Not Clearing</summary>
+
+### Scenario: Error Clears When User Types
+
+**Given** the user has triggered a validation error on the name field
+**When** the user starts typing in the name field
+**Then** the error message is removed
+
+**Implementation Notes:**
+
+- Test file: `tests/contact-form.spec.ts`
+- Bug: Previously error stayed visible after typing
+- Key selectors: `input[name="name"]`, `text=Name is required`
+- Pattern: See contact-form.spec.ts:35-45
+
+</details>
+
 ## Validation
 
 Before closing this issue, ensure:
 
+- [ ] Regression test implemented and passing
 - [ ] `npm run lint` passes
 - [ ] `npm run format:check` passes
 - [ ] `npm run build` succeeds
@@ -117,6 +192,22 @@ Before closing this issue, ensure:
 
 [Describe the proposed fix]
 
+## Critical Path E2E Test
+
+> **Required**: This scenario must be tested immediately after deploy.
+
+### Scenario: Critical User Flow
+
+**Given** [production conditions]
+**When** [critical user action that's broken]
+**Then** [expected business outcome]
+
+**Implementation Notes:**
+
+- Test file: `tests/[area].spec.ts`
+- Priority: HIGH - implement with or before the fix
+- Production verification: [how to verify manually if needed]
+
 ## Rollback Plan
 
 [If fix fails, what is the rollback strategy?]
@@ -133,6 +224,7 @@ After fixing:
 
 Before closing this issue, ensure:
 
+- [ ] Critical path test implemented and passing
 - [ ] `npm run lint` passes
 - [ ] `npm run format:check` passes
 - [ ] `npm run build` succeeds
@@ -245,10 +337,36 @@ Before closing this issue, ensure:
 
 [Potential risks and mitigation strategies]
 
+## Behavior Preservation Tests
+
+> **Note**: Only required if this refactor touches user-facing functionality.
+
+### Existing Test Coverage
+
+Document which tests already cover this code:
+
+- [List test files that exercise the refactored code]
+
+### Additional Scenarios (if needed)
+
+If existing tests don't cover critical paths affected by this refactor:
+
+### Scenario: [Behavior that must be preserved]
+
+**Given** [setup]
+**When** [action]
+**Then** [must work exactly as before]
+
+**Implementation Notes:**
+
+- Add to: `tests/[existing-file].spec.ts`
+- Purpose: Ensure no functional changes during refactor
+
 ## Validation
 
 Before closing this issue, ensure:
 
+- [ ] Behavior preservation verified (no functional changes)
 - [ ] `npm run lint` passes
 - [ ] `npm run format:check` passes
 - [ ] `npm run build` succeeds

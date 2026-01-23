@@ -124,7 +124,8 @@ export const translations: Record<Language, TranslationStrings> = {
     hero: {
       greeting: "Hi, I'm",
       name: 'Jose',
-      title: 'I help companies build exceptional engineering teams and products.',
+      title:
+        'I help companies build exceptional engineering teams and products.',
       subtitle:
         'Fractional CTO, Engineering Management Consultant, and Technical Advisor for startups and scale-ups.',
       cta: "Let's Talk",
@@ -183,13 +184,13 @@ export const translations: Record<Language, TranslationStrings> = {
         messagePlaceholder: 'Tell me about your project or challenge...',
         submit: 'Send Message',
         sending: 'Sending...',
-        success: 'Message sent! I\'ll get back to you soon.',
+        success: "Message sent! I'll get back to you soon.",
         error: 'Something went wrong. Please try again or email me directly.',
       },
     },
     caseStudies: {
       title: 'Case Studies',
-      subtitle: 'See how I\'ve helped companies like yours',
+      subtitle: "See how I've helped companies like yours",
       viewCase: 'View Case Study',
       comingSoon: 'Case studies coming soon',
     },
@@ -211,7 +212,9 @@ export const translations: Record<Language, TranslationStrings> = {
  * Get translations for a specific language.
  * Falls back to English if the language is not found.
  */
-export function getTranslations(lang: Language = defaultLanguage): TranslationStrings {
+export function getTranslations(
+  lang: Language = defaultLanguage
+): TranslationStrings {
   return translations[lang] ?? translations[defaultLanguage];
 }
 

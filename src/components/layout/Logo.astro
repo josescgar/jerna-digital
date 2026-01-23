@@ -8,8 +8,10 @@ const { class: className } = Astro.props;
 
 <div class:list={['flex items-center gap-2', className]}>
   <!-- Logo mark -->
-  <div class="relative h-8 w-8 overflow-hidden rounded-lg bg-gradient-primary">
-    <span class="absolute inset-0 flex items-center justify-center text-lg font-bold text-primary-foreground">
+  <div class="bg-gradient-primary relative h-8 w-8 overflow-hidden rounded-lg">
+    <span
+      class="text-primary-foreground absolute inset-0 flex items-center justify-center text-lg font-bold"
+    >
       J
     </span>
   </div>

@@ -32,12 +32,10 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
     <div
       ref={ref}
       className={cn(
-        'rounded-xl border border-border',
-        glass
-          ? 'glass'
-          : 'bg-background-elevated',
+        'border-border rounded-xl border',
+        glass ? 'glass' : 'bg-background-elevated',
         interactive && [
-          'transition-all duration-normal ease-default',
+          'duration-normal ease-default transition-all',
           'hover:border-border-subtle hover:shadow-lg',
           'hover:-translate-y-1',
         ],
@@ -65,8 +63,7 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   }
 );
 
-export interface CardTitleProps
-  extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
 
 /**
  * Card title component.
@@ -77,7 +74,7 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
       <h3
         ref={ref}
         className={cn(
-          'text-xl font-semibold leading-tight tracking-tight',
+          'text-xl leading-tight font-semibold tracking-tight',
           className
         )}
         {...props}
@@ -86,8 +83,7 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
   }
 );
 
-export interface CardDescriptionProps
-  extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
 
 /**
  * Card description component.
@@ -99,23 +95,20 @@ export const CardDescription = React.forwardRef<
   return (
     <p
       ref={ref}
-      className={cn('text-sm text-foreground-muted', className)}
+      className={cn('text-foreground-muted text-sm', className)}
       {...props}
     />
   );
 });
 
-export interface CardContentProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 /**
  * Card content section.
  */
 export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   function CardContent({ className, ...props }, ref): React.ReactElement {
-    return (
-      <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
-    );
+    return <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />;
   }
 );
 

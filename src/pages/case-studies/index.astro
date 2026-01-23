@@ -22,7 +22,8 @@ const caseStudies: CaseStudy[] = [
     title: 'Scaling an Engineering Team from 5 to 30',
     client: 'Series A Startup',
     industry: 'FinTech',
-    summary: 'Helped a fast-growing fintech startup scale their engineering team while maintaining quality and culture.',
+    summary:
+      'Helped a fast-growing fintech startup scale their engineering team while maintaining quality and culture.',
     tags: ['Team Building', 'Engineering Culture', 'Hiring'],
     comingSoon: true,
   },
@@ -31,7 +32,8 @@ const caseStudies: CaseStudy[] = [
     title: 'Architecture Modernization',
     client: 'E-commerce Platform',
     industry: 'Retail',
-    summary: 'Led a comprehensive architecture review and modernization initiative to improve scalability and reliability.',
+    summary:
+      'Led a comprehensive architecture review and modernization initiative to improve scalability and reliability.',
     tags: ['Architecture', 'Technical Debt', 'Modernization'],
     comingSoon: true,
   },
@@ -40,17 +42,15 @@ const caseStudies: CaseStudy[] = [
     title: 'Fractional CTO for Seed-Stage Startup',
     client: 'Health Tech Startup',
     industry: 'Healthcare',
-    summary: 'Provided part-time CTO leadership to help a healthcare startup make strategic technical decisions during their seed round.',
+    summary:
+      'Provided part-time CTO leadership to help a healthcare startup make strategic technical decisions during their seed round.',
     tags: ['Fractional CTO', 'Strategy', 'Fundraising'],
     comingSoon: true,
   },
 ];
 ---
 
-<BaseLayout
-  title={t.caseStudies.title}
-  description={t.caseStudies.subtitle}
->
+<BaseLayout title={t.caseStudies.title} description={t.caseStudies.subtitle}>
   <!-- Hero section -->
   <section class="section relative overflow-hidden">
     <div class="container">
@@ -58,7 +58,7 @@ const caseStudies: CaseStudy[] = [
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           <span class="text-gradient">{t.caseStudies.title}</span>
         </h1>
-        <p class="mt-6 text-xl text-foreground-muted">
+        <p class="text-foreground-muted mt-6 text-xl">
           {t.caseStudies.subtitle}
         </p>
       </div>
@@ -71,19 +71,29 @@ const caseStudies: CaseStudy[] = [
       <div class="grid gap-8 lg:grid-cols-3">
         {
           caseStudies.map((study) => (
-            <article class="group relative overflow-hidden rounded-2xl border border-border bg-background-elevated transition-all duration-normal hover:border-border-subtle hover:shadow-lg">
+            <article class="group border-border bg-background-elevated duration-normal hover:border-border-subtle relative overflow-hidden rounded-2xl border transition-all hover:shadow-lg">
               {/* Coming soon badge */}
               {study.comingSoon && (
-                <div class="absolute right-4 top-4 z-10 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                <div class="bg-primary/10 text-primary absolute top-4 right-4 z-10 rounded-full px-3 py-1 text-xs font-medium">
                   Coming Soon
                 </div>
               )}
 
               {/* Image placeholder */}
-              <div class="aspect-video bg-background-subtle">
+              <div class="bg-background-subtle aspect-video">
                 <div class="flex h-full items-center justify-center">
-                  <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-primary/20 text-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <div class="bg-gradient-primary/20 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
                       <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
                       <line x1="12" y1="22.08" x2="12" y2="12" />
@@ -97,28 +107,36 @@ const caseStudies: CaseStudy[] = [
                 {/* Tags */}
                 <div class="mb-3 flex flex-wrap gap-2">
                   {study.tags.slice(0, 2).map((tag) => (
-                    <span class="rounded-full bg-background-subtle px-2 py-1 text-xs text-foreground-subtle">
+                    <span class="bg-background-subtle text-foreground-subtle rounded-full px-2 py-1 text-xs">
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <h2 class="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                <h2 class="group-hover:text-primary text-xl font-semibold tracking-tight transition-colors">
                   {study.title}
                 </h2>
 
-                <p class="mt-2 text-sm text-foreground-subtle">
+                <p class="text-foreground-subtle mt-2 text-sm">
                   {study.client} • {study.industry}
                 </p>
 
-                <p class="mt-4 text-foreground-muted">
-                  {study.summary}
-                </p>
+                <p class="text-foreground-muted mt-4">{study.summary}</p>
 
                 {/* Link (disabled for coming soon) */}
                 {study.comingSoon ? (
-                  <div class="mt-6 flex items-center gap-2 text-sm text-foreground-subtle">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <div class="text-foreground-subtle mt-6 flex items-center gap-2 text-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <circle cx="12" cy="12" r="10" />
                       <polyline points="12 6 12 12 16 14" />
                     </svg>
@@ -127,10 +145,20 @@ const caseStudies: CaseStudy[] = [
                 ) : (
                   <a
                     href={`/case-studies/${study.slug}`}
-                    class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary-light"
+                    class="text-primary hover:text-primary-light mt-6 inline-flex items-center gap-2 text-sm font-medium transition-colors"
                   >
                     {t.caseStudies.viewCase}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
                       <path d="M5 12h14" />
                       <path d="m12 5 7 7-7 7" />
                     </svg>
@@ -145,16 +173,27 @@ const caseStudies: CaseStudy[] = [
       {/* Empty state / CTA */}
       <div class="mt-16 text-center">
         <p class="text-foreground-muted">
-          Detailed case studies are being prepared. In the meantime, feel free to reach out to discuss my experience with similar challenges.
+          Detailed case studies are being prepared. In the meantime, feel free
+          to reach out to discuss my experience with similar challenges.
         </p>
         <a
           href="/contact"
-          class="mt-6 inline-flex items-center gap-2 text-primary transition-colors hover:text-primary-light"
+          class="text-primary hover:text-primary-light mt-6 inline-flex items-center gap-2 transition-colors"
         >
           Get in touch to learn more
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14" />
-            <path d="m12 5 7 7-7 7" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
           </svg>
         </a>
       </div>

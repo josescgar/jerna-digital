@@ -98,7 +98,9 @@ export default function ContactForm(): React.ReactElement {
   /**
    * Handles form submission via Web3Forms API
    */
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
+  async function handleSubmit(
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     e.preventDefault();
 
     // Check honeypot (spam protection)
@@ -148,7 +150,11 @@ export default function ContactForm(): React.ReactElement {
   }
 
   return (
-    <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6" noValidate>
+    <form
+      onSubmit={(e) => void handleSubmit(e)}
+      className="space-y-6"
+      noValidate
+    >
       {/* Honeypot field - hidden from users, catches bots */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <input
@@ -185,7 +191,7 @@ export default function ContactForm(): React.ReactElement {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="text-sm text-error"
+              className="text-error text-sm"
               role="alert"
             >
               {errors.name}
@@ -218,7 +224,7 @@ export default function ContactForm(): React.ReactElement {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="text-sm text-error"
+              className="text-error text-sm"
               role="alert"
             >
               {errors.email}
@@ -250,7 +256,7 @@ export default function ContactForm(): React.ReactElement {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="text-sm text-error"
+              className="text-error text-sm"
               role="alert"
             >
               {errors.message}

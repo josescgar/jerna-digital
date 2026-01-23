@@ -257,3 +257,61 @@ E2E tests in `tests/` directory:
 
 1. Edit `@theme` block in `src/styles/global.css`
 2. Use CSS custom properties in styles: `var(--color-primary)`
+
+## Claude Skills
+
+Claude Code has custom skills (slash commands) available for this project:
+
+### `/create-issue <type> <title>`
+
+Create standardized GitHub issues with proper templates and labels.
+
+**Arguments:**
+
+- `type`: One of `feature`, `fix`, `hotfix`, `chore`, `docs`, `refactor`
+- `title`: Brief description of the issue
+
+**Example:**
+
+```
+/create-issue feature Add dark mode toggle
+```
+
+**What it does:**
+
+- Asks clarifying questions based on issue type
+- Creates label if it doesn't exist
+- Generates structured issue body from template
+- Creates the issue with appropriate labels
+
+### `/make-release <pr-number>`
+
+Automate the release process following Semver conventions.
+
+**Arguments:**
+
+- `pr-number`: The pull request number to merge and release
+
+**Example:**
+
+```
+/make-release 42
+```
+
+**What it does:**
+
+1. **Validation**: Verifies PR is mergeable, extracts issue number and commits
+2. **Versioning**: Asks for release type (patch/minor/major), suggests version, confirms with user
+3. **Release**: Merges PR, generates changelog, creates GitHub release with tag
+4. **Cleanup**: Closes related issue, optionally deletes feature branch
+
+**Version bumping:**
+
+- Patch (v1.2.3 → v1.2.4): Bug fixes and minor changes
+- Minor (v1.2.3 → v1.3.0): New features, backwards compatible
+- Major (v1.2.3 → v2.0.0): Breaking changes
+
+**References:**
+
+- `.claude/skills/make-release/references/semver-guide.md` - Semantic versioning guide
+- `.claude/skills/make-release/references/changelog-template.md` - CHANGELOG formatting examples

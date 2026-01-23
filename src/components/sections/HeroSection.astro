@@ -5,20 +5,27 @@ const t = getTranslations();
 ---
 
 <section class="section relative overflow-hidden">
-  <div class="container relative z-10">
+  <div class="relative z-10 container">
     <div class="mx-auto max-w-4xl text-center">
       <!-- Greeting badge -->
-      <div class="animate-fade-in-up mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-background-elevated px-4 py-2">
+      <div
+        class="animate-fade-in-up border-border bg-background-elevated mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2"
+      >
         <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
+          <span
+            class="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+          ></span>
+          <span class="bg-primary relative inline-flex h-2 w-2 rounded-full"
+          ></span>
         </span>
-        <span class="text-sm text-foreground-muted">Available for new projects</span>
+        <span class="text-foreground-muted text-sm"
+          >Available for new projects</span
+        >
       </div>
 
       <!-- Main heading -->
       <h1
-        class="animate-fade-in-up text-4xl font-bold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+        class="animate-fade-in-up text-4xl leading-tight font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
         style="animation-delay: 0.1s;"
       >
         <span class="text-foreground">{t.hero.greeting} </span>
@@ -27,7 +34,7 @@ const t = getTranslations();
 
       <!-- Subtitle -->
       <p
-        class="animate-fade-in-up mx-auto mt-6 max-w-2xl text-lg text-foreground-muted sm:text-xl md:text-2xl"
+        class="animate-fade-in-up text-foreground-muted mx-auto mt-6 max-w-2xl text-lg sm:text-xl md:text-2xl"
         style="animation-delay: 0.2s;"
       >
         {t.hero.title}
@@ -35,7 +42,7 @@ const t = getTranslations();
 
       <!-- Description -->
       <p
-        class="animate-fade-in-up mx-auto mt-4 max-w-xl text-base text-foreground-subtle sm:text-lg"
+        class="animate-fade-in-up text-foreground-subtle mx-auto mt-4 max-w-xl text-base sm:text-lg"
         style="animation-delay: 0.3s;"
       >
         {t.hero.subtitle}
@@ -48,7 +55,7 @@ const t = getTranslations();
       >
         <a
           href="/contact"
-          class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-gradient-primary px-8 text-base font-medium text-primary-foreground transition-all hover:scale-[1.02] hover:shadow-glow sm:w-auto"
+          class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg px-8 text-base font-medium transition-all hover:scale-[1.02] sm:w-auto"
         >
           {t.hero.cta}
           <svg
@@ -68,7 +75,7 @@ const t = getTranslations();
         </a>
         <a
           href="/services"
-          class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-border bg-background-elevated px-8 text-base font-medium text-foreground transition-all hover:border-border-subtle hover:bg-background-muted sm:w-auto"
+          class="border-border bg-background-elevated text-foreground hover:border-border-subtle hover:bg-background-muted inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border px-8 text-base font-medium transition-all sm:w-auto"
         >
           {t.hero.secondaryCta}
         </a>
@@ -76,7 +83,7 @@ const t = getTranslations();
 
       <!-- Trust indicators -->
       <div
-        class="animate-fade-in-up mt-16 flex flex-wrap items-center justify-center gap-6 text-sm text-foreground-subtle"
+        class="animate-fade-in-up text-foreground-subtle mt-16 flex flex-wrap items-center justify-center gap-6 text-sm"
         style="animation-delay: 0.5s;"
       >
         <div class="flex items-center gap-2">
@@ -92,7 +99,9 @@ const t = getTranslations();
             stroke-linejoin="round"
             class="text-primary"
           >
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path
+              d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
+            ></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
           <span>10+ years experience</span>
@@ -110,7 +119,9 @@ const t = getTranslations();
             stroke-linejoin="round"
             class="text-primary"
           >
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path
+              d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
+            ></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
           <span>Startups & Scale-ups</span>
@@ -128,7 +139,9 @@ const t = getTranslations();
             stroke-linejoin="round"
             class="text-primary"
           >
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path
+              d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
+            ></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
           <span>Remote-first</span>
@@ -140,9 +153,25 @@ const t = getTranslations();
   <!-- Decorative elements -->
   <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
     <!-- Floating shapes -->
-    <div class="absolute left-[10%] top-[20%] h-16 w-16 animate-float rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent" style="animation-delay: 0s;"></div>
-    <div class="absolute right-[15%] top-[30%] h-12 w-12 animate-float rounded-lg border border-secondary/20 bg-gradient-to-br from-secondary/10 to-transparent" style="animation-delay: 1s;"></div>
-    <div class="absolute bottom-[25%] left-[20%] h-10 w-10 animate-float rounded-lg border border-primary/20 bg-gradient-to-br from-primary/10 to-transparent" style="animation-delay: 2s;"></div>
-    <div class="absolute bottom-[20%] right-[10%] h-14 w-14 animate-float rounded-xl border border-secondary/20 bg-gradient-to-br from-secondary/10 to-transparent" style="animation-delay: 3s;"></div>
+    <div
+      class="animate-float border-primary/20 from-primary/10 absolute top-[20%] left-[10%] h-16 w-16 rounded-xl border bg-gradient-to-br to-transparent"
+      style="animation-delay: 0s;"
+    >
+    </div>
+    <div
+      class="animate-float border-secondary/20 from-secondary/10 absolute top-[30%] right-[15%] h-12 w-12 rounded-lg border bg-gradient-to-br to-transparent"
+      style="animation-delay: 1s;"
+    >
+    </div>
+    <div
+      class="animate-float border-primary/20 from-primary/10 absolute bottom-[25%] left-[20%] h-10 w-10 rounded-lg border bg-gradient-to-br to-transparent"
+      style="animation-delay: 2s;"
+    >
+    </div>
+    <div
+      class="animate-float border-secondary/20 from-secondary/10 absolute right-[10%] bottom-[20%] h-14 w-14 rounded-xl border bg-gradient-to-br to-transparent"
+      style="animation-delay: 3s;"
+    >
+    </div>
   </div>
 </section>

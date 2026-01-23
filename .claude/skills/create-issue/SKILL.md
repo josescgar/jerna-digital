@@ -51,6 +51,7 @@ Based on the issue type, ask relevant questions using `AskUserQuestion`:
 - What is the motivation for this feature?
 - What are the key acceptance criteria?
 - Are there any design considerations or constraints?
+- What E2E scenarios should we test? Describe user flows in Given-When-Then format (we can provide a template if needed).
 
 **For `fix`:**
 
@@ -58,12 +59,14 @@ Based on the issue type, ask relevant questions using `AskUserQuestion`:
 - What is the actual (buggy) behavior?
 - Steps to reproduce the bug?
 - Any error messages or logs?
+- Can you describe how to reproduce the bug as a test scenario? (Given: initial state, When: user action, Then: expected vs actual)
 
 **For `hotfix`:**
 
 - What is the user/business impact?
 - What is the suspected root cause?
 - Is there a temporary workaround available?
+- What is the critical user journey that's broken? Describe as a scenario so we can test it thoroughly.
 
 **For `chore`:**
 
@@ -82,6 +85,7 @@ Based on the issue type, ask relevant questions using `AskUserQuestion`:
 - What is the current state of the code?
 - What is the target state after refactoring?
 - What is the rationale for this refactor?
+- Does this refactor change any user-facing behavior? If yes, we should add E2E scenarios to prevent regressions.
 
 ### Step 3: Ensure Labels Exist
 
