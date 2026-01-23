@@ -20,16 +20,16 @@ test.describe('Responsive Design', () => {
     const mobileMenuBtn = page.locator('#mobile-menu-btn');
     const mobileMenu = page.locator('#mobile-menu');
 
-    // Menu should be hidden initially
-    await expect(mobileMenu).toHaveClass(/hidden/);
+    // Menu should be hidden initially (use aria-hidden to avoid matching md:hidden)
+    await expect(mobileMenu).toHaveAttribute('aria-hidden', 'true');
 
     // Open menu
     await mobileMenuBtn.click();
-    await expect(mobileMenu).not.toHaveClass(/hidden/);
+    await expect(mobileMenu).toHaveAttribute('aria-hidden', 'false');
 
     // Close menu
     await mobileMenuBtn.click();
-    await expect(mobileMenu).toHaveClass(/hidden/);
+    await expect(mobileMenu).toHaveAttribute('aria-hidden', 'true');
   });
 
   test('should display desktop navigation on larger screens', async ({
