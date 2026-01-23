@@ -46,7 +46,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
   );
 });
 
-export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+export type CardHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Card header section for title and description.
@@ -63,13 +63,16 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   }
 );
 
-export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+export type CardTitleProps = React.HTMLAttributes<HTMLHeadingElement>;
 
 /**
  * Card title component.
  */
 export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
-  function CardTitle({ className, ...props }, ref): React.ReactElement {
+  function CardTitle(
+    { className, children, ...props },
+    ref
+  ): React.ReactElement {
     return (
       <h3
         ref={ref}
@@ -78,12 +81,14 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
           className
         )}
         {...props}
-      />
+      >
+        {children}
+      </h3>
     );
   }
 );
 
-export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+export type CardDescriptionProps = React.HTMLAttributes<HTMLParagraphElement>;
 
 /**
  * Card description component.
@@ -101,7 +106,7 @@ export const CardDescription = React.forwardRef<
   );
 });
 
-export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export type CardContentProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Card content section.
@@ -112,7 +117,7 @@ export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
   }
 );
 
-export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
+export type CardFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * Card footer section, typically for actions.

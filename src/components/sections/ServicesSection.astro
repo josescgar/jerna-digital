@@ -54,7 +54,7 @@ const services: Service[] = [
       <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
         <span class="text-gradient">{t.services.title}</span>
       </h2>
-      <p class="mt-4 text-lg text-foreground-muted">
+      <p class="text-foreground-muted mt-4 text-lg">
         {t.services.subtitle}
       </p>
     </div>
@@ -64,11 +64,11 @@ const services: Service[] = [
       {
         services.map((service, index) => (
           <article
-            class="group relative overflow-hidden rounded-2xl border border-border bg-background-elevated p-6 transition-all duration-normal hover:border-border-subtle hover:shadow-lg lg:p-8"
+            class="group border-border bg-background-elevated duration-normal hover:border-border-subtle relative overflow-hidden rounded-2xl border p-6 transition-all hover:shadow-lg lg:p-8"
             style={`animation-delay: ${index * 0.1}s;`}
           >
-            <!-- Icon -->
-            <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground">
+            {/* Icon */}
+            <div class="bg-gradient-primary text-primary-foreground mb-6 flex h-14 w-14 items-center justify-center rounded-xl">
               {service.icon === 'code' && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -121,18 +121,16 @@ const services: Service[] = [
               )}
             </div>
 
-            <!-- Content -->
+            {/* Content */}
             <h3 class="mb-3 text-xl font-semibold tracking-tight">
               {service.title}
             </h3>
-            <p class="mb-6 text-foreground-muted">
-              {service.description}
-            </p>
+            <p class="text-foreground-muted mb-6">{service.description}</p>
 
-            <!-- Features list -->
+            {/* Features list */}
             <ul class="space-y-2">
               {service.features.map((feature) => (
-                <li class="flex items-center gap-2 text-sm text-foreground-subtle">
+                <li class="text-foreground-subtle flex items-center gap-2 text-sm">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -152,9 +150,9 @@ const services: Service[] = [
               ))}
             </ul>
 
-            <!-- Hover gradient overlay -->
-            <div class="pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity duration-normal group-hover:opacity-100">
-              <div class="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+            {/* Hover gradient overlay */}
+            <div class="duration-normal pointer-events-none absolute inset-0 -z-10 opacity-0 transition-opacity group-hover:opacity-100">
+              <div class="from-primary/5 to-secondary/5 absolute inset-0 bg-gradient-to-br via-transparent" />
             </div>
           </article>
         ))
@@ -165,7 +163,7 @@ const services: Service[] = [
     <div class="mt-12 text-center">
       <a
         href="/services"
-        class="inline-flex items-center gap-2 text-primary transition-colors hover:text-primary-light"
+        class="text-primary hover:text-primary-light inline-flex items-center gap-2 transition-colors"
       >
         {t.services.cta}
         <svg

@@ -12,7 +12,7 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        project: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -63,6 +63,7 @@ export default tseslint.config(
       '.astro/**',
       '*.config.js',
       '*.config.mjs',
+      'playwright.config.ts',
     ],
   }
 );

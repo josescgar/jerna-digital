@@ -28,7 +28,8 @@ interface FormErrors {
  * Web3Forms API configuration
  * Access key should be set via environment variable
  */
-const WEB3FORMS_ACCESS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? '';
+const WEB3FORMS_ACCESS_KEY: string =
+  (import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY as string | undefined) ?? '';
 
 /**
  * Validates email format
