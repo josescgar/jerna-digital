@@ -90,6 +90,52 @@ Documentation must be kept up to date as part of any change. When making changes
 
 **ADR naming convention:** `NNNN-short-description.md` (e.g., `0004-add-dark-mode.md`)
 
+## Git Hooks
+
+Git hooks are managed by [Husky](https://typicode.github.io/husky/) and run automatically.
+
+### Pre-commit Hook
+
+Runs before each commit to validate the codebase:
+
+```bash
+npm run lint         # Check for linting errors
+npm run format:check # Check code formatting
+npm run typecheck    # TypeScript type checking
+npm run build        # Build the project
+```
+
+If any check fails, the commit is blocked until the issue is fixed.
+
+### Pre-push Hook
+
+Runs before pushing to remote:
+
+```bash
+npm run test         # Run Playwright E2E tests
+```
+
+If tests fail, the push is blocked until tests pass.
+
+### Skipping Hooks
+
+In rare cases where you need to bypass hooks (e.g., WIP commits):
+
+```bash
+git commit --no-verify -m "WIP: work in progress"
+git push --no-verify
+```
+
+**Note:** Use sparingly. CI will still catch issues, but it's better to fix them locally.
+
+### Hook Installation
+
+Hooks are installed automatically when running `npm install` via the `prepare` script. If hooks aren't working, run:
+
+```bash
+npm run prepare
+```
+
 ## Git Workflow
 
 ### Repository Info

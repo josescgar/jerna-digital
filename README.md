@@ -41,6 +41,20 @@ Open [http://localhost:4321](http://localhost:4321) in your browser.
 | `npm run format`  | Format with Prettier              |
 | `npm run test`    | Run Playwright tests              |
 
+## Git Hooks
+
+This project uses [Husky](https://typicode.github.io/husky/) to run automated checks:
+
+- **Pre-commit:** Runs lint, format check, type check, and build
+- **Pre-push:** Runs E2E tests
+
+Hooks are installed automatically via `npm install`. To skip hooks temporarily, use `--no-verify`:
+
+```bash
+git commit --no-verify -m "message"
+git push --no-verify
+```
+
 ## Project Structure
 
 ```
