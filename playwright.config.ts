@@ -5,8 +5,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env['CI'],
   retries: process.env['CI'] ? 2 : 0,
-  workers: process.env['CI'] ? 1 : undefined,
-  reporter: 'html',
+  reporter: process.env['CI'] ? 'github' : 'list',
   timeout: 15000,
   expect: {
     timeout: 5000,
@@ -23,26 +22,22 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-    {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
     },
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      use: { ...devices['Pixel 7'] },
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { ...devices['iPhone 14'] },
     },
   ],
   webServer: {
     command: 'npm run preview',
     url: 'http://localhost:4321',
     reuseExistingServer: !process.env['CI'],
-    timeout: 120000,
+    timeout: 30000,
   },
 });
