@@ -57,6 +57,23 @@ export default tseslint.config(
     },
   },
   {
+    // Astro content config uses virtual modules that can't be type-checked before build
+    files: ['src/content.config.ts'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+    },
+  },
+  {
+    // Files using import.meta.env need unsafe rules disabled for env variables
+    files: ['src/components/interactive/ContactForm.tsx'],
+    rules: {
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+    },
+  },
+  {
     ignores: [
       'dist/**',
       'node_modules/**',
