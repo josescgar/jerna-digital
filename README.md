@@ -55,6 +55,15 @@ git commit --no-verify -m "message"
 git push --no-verify
 ```
 
+## Languages
+
+The site supports multiple languages:
+
+- **English** - Default language, served at root URLs (`/`, `/about`, `/services`, etc.)
+- **Spanish** - Available at `/es/` prefix (`/es/`, `/es/about`, `/es/services`, etc.)
+
+Language preference is saved to localStorage and can be changed via the language switcher in the header.
+
 ## Project Structure
 
 ```
@@ -68,9 +77,13 @@ src/
 │   └── case-studies/ # MDX case study files
 ├── layouts/          # Base layout with SEO
 ├── pages/            # Astro pages
+│   ├── *.astro       # English pages at root
+│   └── [lang]/       # Localized pages
 ├── styles/           # Global CSS + design tokens
 ├── lib/              # Utilities
-└── i18n/             # Translations
+└── i18n/             # Internationalization
+    ├── translations.ts  # Translation strings
+    └── utils.ts         # i18n utilities
 ```
 
 ## Documentation

@@ -1,13 +1,25 @@
 ---
-/**
- * English Case Studies page - renders at /case-studies
- * Spanish version is at /es/case-studies
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTASection from '@/components/sections/CTASection.astro';
-import { getTranslations, defaultLanguage } from '@/i18n/translations';
+import { getTranslations, languages, type Language } from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 
-const lang = defaultLanguage;
+export function getStaticPaths() {
+  // Only generate non-default language paths here
+  // Default language (English) is handled by src/pages/case-studies/index.astro
+  return (Object.keys(languages) as Language[])
+    .filter((lang) => lang !== 'en')
+    .map((lang) => ({
+      params: { lang },
+      props: { lang },
+    }));
+}
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 const t = getTranslations(lang);
 
 // Placeholder case studies - will be replaced with actual content
@@ -154,7 +166,7 @@ const caseStudies: CaseStudy[] = [
                   </div>
                 ) : (
                   <a
-                    href={`/case-studies/${study.slug}`}
+                    href={getLocalizedPath(lang, `/case-studies/${study.slug}`)}
                     class="text-primary hover:text-primary-light mt-6 inline-flex items-center gap-2 text-sm font-medium transition-colors"
                   >
                     {t.caseStudies.viewCase}
@@ -186,7 +198,7 @@ const caseStudies: CaseStudy[] = [
           {t.caseStudies.inTheMeantime}
         </p>
         <a
-          href="/contact"
+          href={getLocalizedPath(lang, '/contact')}
           class="text-primary hover:text-primary-light mt-6 inline-flex items-center gap-2 transition-colors"
         >
           {t.caseStudies.getInTouchToLearnMore}

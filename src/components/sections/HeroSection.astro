@@ -1,7 +1,20 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 
-const t = getTranslations();
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
+
+const contactHref = getLocalizedPath(lang, '/contact');
+const servicesHref = getLocalizedPath(lang, '/services');
 ---
 
 <section class="section relative overflow-hidden">
@@ -19,7 +32,7 @@ const t = getTranslations();
           ></span>
         </span>
         <span class="text-foreground-muted text-sm"
-          >Available for new projects</span
+          >{t.hero.availableForProjects}</span
         >
       </div>
 
@@ -54,7 +67,7 @@ const t = getTranslations();
         style="animation-delay: 0.4s;"
       >
         <a
-          href="/contact"
+          href={contactHref}
           class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg px-8 text-base font-medium transition-all hover:scale-[1.02] sm:w-auto"
         >
           {t.hero.cta}
@@ -74,7 +87,7 @@ const t = getTranslations();
           </svg>
         </a>
         <a
-          href="/services"
+          href={servicesHref}
           class="border-border bg-background-elevated text-foreground hover:border-border-subtle hover:bg-background-muted inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border px-8 text-base font-medium transition-all sm:w-auto"
         >
           {t.hero.secondaryCta}
@@ -104,7 +117,7 @@ const t = getTranslations();
             ></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
-          <span>10+ years experience</span>
+          <span>{t.hero.experience}</span>
         </div>
         <div class="flex items-center gap-2">
           <svg
@@ -124,7 +137,7 @@ const t = getTranslations();
             ></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
-          <span>Startups & Scale-ups</span>
+          <span>{t.hero.startupsScaleups}</span>
         </div>
         <div class="flex items-center gap-2">
           <svg
@@ -144,7 +157,7 @@ const t = getTranslations();
             ></path>
             <path d="m9 12 2 2 4-4"></path>
           </svg>
-          <span>Remote-first</span>
+          <span>{t.hero.remoteFirst}</span>
         </div>
       </div>
     </div>

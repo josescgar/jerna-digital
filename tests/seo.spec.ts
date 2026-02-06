@@ -97,4 +97,62 @@ test.describe('SEO', () => {
     const charset = page.locator('meta[charset]');
     await expect(charset).toHaveAttribute('charset', 'UTF-8');
   });
+
+  test.describe('i18n SEO', () => {
+    test('should have hreflang tags on English pages', async ({ page }) => {
+      await page.goto('/');
+
+      const hreflangEn = page.locator('link[hreflang="en"]');
+      const hreflangEs = page.locator('link[hreflang="es"]');
+      const hreflangDefault = page.locator('link[hreflang="x-default"]');
+
+      await expect(hreflangEn).toBeAttached();
+      await expect(hreflangEs).toBeAttached();
+      await expect(hreflangDefault).toBeAttached();
+    });
+
+    test('should have hreflang tags on Spanish pages', async ({ page }) => {
+      await page.goto('/es');
+
+      const hreflangEn = page.locator('link[hreflang="en"]');
+      const hreflangEs = page.locator('link[hreflang="es"]');
+      const hreflangDefault = page.locator('link[hreflang="x-default"]');
+
+      await expect(hreflangEn).toBeAttached();
+      await expect(hreflangEs).toBeAttached();
+      await expect(hreflangDefault).toBeAttached();
+    });
+
+    test('English page should have og:locale set to en_US', async ({
+      page,
+    }) => {
+      await page.goto('/');
+
+      const ogLocale = page.locator('meta[property="og:locale"]');
+      await expect(ogLocale).toHaveAttribute('content', 'en_US');
+    });
+
+    test('Spanish page should have og:locale set to es_ES', async ({
+      page,
+    }) => {
+      await page.goto('/es');
+
+      const ogLocale = page.locator('meta[property="og:locale"]');
+      await expect(ogLocale).toHaveAttribute('content', 'es_ES');
+    });
+
+    test('Spanish page should have proper title', async ({ page }) => {
+      await page.goto('/es');
+      await expect(page).toHaveTitle(/Jerna Digital/);
+    });
+
+    test('Spanish about page should have unique meta tags', async ({
+      page,
+    }) => {
+      await page.goto('/es/about');
+
+      const title = await page.title();
+      expect(title).toContain('Jerna Digital');
+    });
+  });
 });

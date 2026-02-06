@@ -1,7 +1,19 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 
-const t = getTranslations();
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
+
+const aboutHref = getLocalizedPath(lang, '/about');
 ---
 
 <section class="section relative overflow-hidden" id="about-preview">
@@ -57,10 +69,10 @@ const t = getTranslations();
         </div>
 
         <a
-          href="/about"
+          href={aboutHref}
           class="text-primary hover:text-primary-light mt-8 inline-flex items-center gap-2 transition-colors"
         >
-          Learn more about my approach
+          {t.about.learnMore}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

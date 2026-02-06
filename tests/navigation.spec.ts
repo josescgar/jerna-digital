@@ -22,42 +22,86 @@ test.describe('Navigation', () => {
     }
   }
 
-  test('should load home page successfully', async ({ page }) => {
-    await page.goto('/');
-    await expect(page).toHaveTitle(/Jerna Digital/);
+  test.describe('English Navigation', () => {
+    test('should load home page successfully', async ({ page }) => {
+      await page.goto('/');
+      await expect(page).toHaveTitle(/Jerna Digital/);
+    });
+
+    test('should navigate to About page', async ({ page }) => {
+      await page.goto('/');
+      await navigateViaHeader(page, '/about');
+      await expect(page).toHaveURL('/about');
+      await expect(page.locator('h1')).toContainText('About');
+    });
+
+    test('should navigate to Services page', async ({ page }) => {
+      await page.goto('/');
+      await navigateViaHeader(page, '/services');
+      await expect(page).toHaveURL('/services');
+      await expect(page.locator('h1')).toContainText('Services');
+    });
+
+    test('should navigate to Case Studies page', async ({ page }) => {
+      await page.goto('/');
+      await navigateViaHeader(page, '/case-studies');
+      await expect(page).toHaveURL('/case-studies');
+      await expect(page.locator('h1')).toContainText('Case Studies');
+    });
+
+    test('should navigate to Contact page', async ({ page }) => {
+      await page.goto('/');
+      await navigateViaHeader(page, '/contact');
+      await expect(page).toHaveURL('/contact');
+      await expect(page.locator('h1')).toContainText('Get in Touch');
+    });
+
+    test('should have working logo link to home', async ({ page }) => {
+      await page.goto('/about');
+      await page.click('header a[href="/"]');
+      await expect(page).toHaveURL('/');
+    });
   });
 
-  test('should navigate to About page', async ({ page }) => {
-    await page.goto('/');
-    await navigateViaHeader(page, '/about');
-    await expect(page).toHaveURL('/about');
-    await expect(page.locator('h1')).toContainText('About');
-  });
+  test.describe('Spanish Navigation', () => {
+    test('should load Spanish home page successfully', async ({ page }) => {
+      await page.goto('/es');
+      await expect(page).toHaveTitle(/Jerna Digital/);
+      await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+    });
 
-  test('should navigate to Services page', async ({ page }) => {
-    await page.goto('/');
-    await navigateViaHeader(page, '/services');
-    await expect(page).toHaveURL('/services');
-    await expect(page.locator('h1')).toContainText('Services');
-  });
+    test('should navigate to Spanish About page', async ({ page }) => {
+      await page.goto('/es');
+      await navigateViaHeader(page, '/es/about');
+      await expect(page).toHaveURL('/es/about');
+      await expect(page.locator('h1')).toBeVisible();
+    });
 
-  test('should navigate to Case Studies page', async ({ page }) => {
-    await page.goto('/');
-    await navigateViaHeader(page, '/case-studies');
-    await expect(page).toHaveURL('/case-studies');
-    await expect(page.locator('h1')).toContainText('Case Studies');
-  });
+    test('should navigate to Spanish Services page', async ({ page }) => {
+      await page.goto('/es');
+      await navigateViaHeader(page, '/es/services');
+      await expect(page).toHaveURL('/es/services');
+      await expect(page.locator('h1')).toBeVisible();
+    });
 
-  test('should navigate to Contact page', async ({ page }) => {
-    await page.goto('/');
-    await navigateViaHeader(page, '/contact');
-    await expect(page).toHaveURL('/contact');
-    await expect(page.locator('h1')).toContainText('Get in Touch');
-  });
+    test('should navigate to Spanish Contact page', async ({ page }) => {
+      await page.goto('/es');
+      await navigateViaHeader(page, '/es/contact');
+      await expect(page).toHaveURL('/es/contact');
+      // Spanish contact title is "Contacto"
+      const h1 = page.locator('h1');
+      await expect(h1).toBeVisible();
+      const h1Text = await h1.textContent();
+      expect(h1Text).toContain('Contacto');
+    });
 
-  test('should have working logo link to home', async ({ page }) => {
-    await page.goto('/about');
-    await page.click('header a[href="/"]');
-    await expect(page).toHaveURL('/');
+    test('should have working logo link to Spanish home', async ({ page }) => {
+      await page.goto('/es/about');
+      // Logo link should point to /es/ on Spanish pages (with trailing slash)
+      const logoLink = page.locator('header a[href="/es/"]').first();
+      await expect(logoLink).toBeVisible();
+      await logoLink.click();
+      await expect(page).toHaveURL(/\/es\/?$/);
+    });
   });
 });

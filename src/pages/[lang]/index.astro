@@ -1,19 +1,27 @@
 ---
-/**
- * Root index page - renders English homepage.
- * Spanish version is at /es/
- *
- * Language detection and redirect is handled client-side in BaseLayout
- * to avoid redirect loops and ensure proper SEO.
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import HeroSection from '@/components/sections/HeroSection.astro';
 import ServicesSection from '@/components/sections/ServicesSection.astro';
 import AboutPreviewSection from '@/components/sections/AboutPreviewSection.astro';
 import CTASection from '@/components/sections/CTASection.astro';
-import { getTranslations, defaultLanguage } from '@/i18n/translations';
+import { getTranslations, languages, type Language } from '@/i18n/translations';
 
-const lang = defaultLanguage;
+export function getStaticPaths() {
+  // Only generate non-default language paths here
+  // Default language (English) is handled by src/pages/index.astro
+  return (Object.keys(languages) as Language[])
+    .filter((lang) => lang !== 'en')
+    .map((lang) => ({
+      params: { lang },
+      props: { lang },
+    }));
+}
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 const t = getTranslations(lang);
 ---
 

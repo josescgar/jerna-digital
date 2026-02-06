@@ -1,7 +1,19 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 
-const t = getTranslations();
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
+
+const servicesHref = getLocalizedPath(lang, '/services');
 
 interface Service {
   icon: string;
@@ -15,34 +27,19 @@ const services: Service[] = [
     icon: 'code',
     title: t.services.technical.title,
     description: t.services.technical.description,
-    features: [
-      'Architecture reviews',
-      'Code quality assessments',
-      'Tech stack decisions',
-      'Technical debt remediation',
-    ],
+    features: t.services.technical.features,
   },
   {
     icon: 'users',
     title: t.services.management.title,
     description: t.services.management.description,
-    features: [
-      'Team building & hiring',
-      'Engineering culture',
-      'Agile practices',
-      'Leadership coaching',
-    ],
+    features: t.services.management.features,
   },
   {
     icon: 'briefcase',
     title: t.services.fractional.title,
     description: t.services.fractional.description,
-    features: [
-      'Strategic direction',
-      'Executive leadership',
-      'Stakeholder management',
-      'Technical roadmapping',
-    ],
+    features: t.services.fractional.features,
   },
 ];
 ---
@@ -162,7 +159,7 @@ const services: Service[] = [
     <!-- CTA -->
     <div class="mt-12 text-center">
       <a
-        href="/services"
+        href={servicesHref}
         class="text-primary hover:text-primary-light inline-flex items-center gap-2 transition-colors"
       >
         {t.services.cta}

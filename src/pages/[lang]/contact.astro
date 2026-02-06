@@ -1,13 +1,24 @@
 ---
-/**
- * English Contact page - renders at /contact
- * Spanish version is at /es/contact
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContactForm from '@/components/interactive/ContactForm';
-import { getTranslations, defaultLanguage } from '@/i18n/translations';
+import { getTranslations, languages, type Language } from '@/i18n/translations';
 
-const lang = defaultLanguage;
+export function getStaticPaths() {
+  // Only generate non-default language paths here
+  // Default language (English) is handled by src/pages/contact.astro
+  return (Object.keys(languages) as Language[])
+    .filter((lang) => lang !== 'en')
+    .map((lang) => ({
+      params: { lang },
+      props: { lang },
+    }));
+}
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 const t = getTranslations(lang);
 
 const contactMethods = [
