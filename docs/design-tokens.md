@@ -4,22 +4,24 @@ This document describes the design tokens used throughout the Jerna Digital webs
 
 ## Color Palette
 
+The site supports both dark (default) and light themes. Colors automatically adjust based on the `data-theme` attribute on `<html>`.
+
 ### Background Colors
 
-| Token                         | Value     | Usage                      |
-| ----------------------------- | --------- | -------------------------- |
-| `--color-background`          | `#0a0a0b` | Page background            |
-| `--color-background-elevated` | `#111113` | Cards, elevated surfaces   |
-| `--color-background-subtle`   | `#18181b` | Subtle backgrounds, inputs |
-| `--color-background-muted`    | `#27272a` | Muted backgrounds, hovers  |
+| Token                         | Dark Value | Light Value | Usage                      |
+| ----------------------------- | ---------- | ----------- | -------------------------- |
+| `--color-background`          | `#0a0a0b`  | `#ffffff`   | Page background            |
+| `--color-background-elevated` | `#111113`  | `#f9fafb`   | Cards, elevated surfaces   |
+| `--color-background-subtle`   | `#18181b`  | `#f3f4f6`   | Subtle backgrounds, inputs |
+| `--color-background-muted`    | `#27272a`  | `#e5e7eb`   | Muted backgrounds, hovers  |
 
 ### Text Colors
 
-| Token                       | Value     | Usage                       |
-| --------------------------- | --------- | --------------------------- |
-| `--color-foreground`        | `#fafafa` | Primary text                |
-| `--color-foreground-muted`  | `#a1a1aa` | Secondary text              |
-| `--color-foreground-subtle` | `#71717a` | Tertiary text, placeholders |
+| Token                       | Dark Value | Light Value | Usage                       |
+| --------------------------- | ---------- | ----------- | --------------------------- |
+| `--color-foreground`        | `#fafafa`  | `#111827`   | Primary text                |
+| `--color-foreground-muted`  | `#a1a1aa`  | `#4b5563`   | Secondary text              |
+| `--color-foreground-subtle` | `#71717a`  | `#6b7280`   | Tertiary text, placeholders |
 
 ### Primary Colors (Orange)
 
@@ -48,11 +50,11 @@ This document describes the design tokens used throughout the Jerna Digital webs
 
 ### Border Colors
 
-| Token                   | Value                     | Usage           |
-| ----------------------- | ------------------------- | --------------- |
-| `--color-border`        | `#27272a`                 | Default borders |
-| `--color-border-subtle` | `#3f3f46`                 | Hover borders   |
-| `--color-border-accent` | `rgba(249, 115, 22, 0.3)` | Accent borders  |
+| Token                   | Dark Value                | Light Value | Usage           |
+| ----------------------- | ------------------------- | ----------- | --------------- |
+| `--color-border`        | `#27272a`                 | `#e5e7eb`   | Default borders |
+| `--color-border-subtle` | `#3f3f46`                 | `#d1d5db`   | Hover borders   |
+| `--color-border-accent` | `rgba(249, 115, 22, 0.3)` | (unchanged) | Accent borders  |
 
 ### Status Colors
 
@@ -240,3 +242,43 @@ This document describes the design tokens used throughout the Jerna Digital webs
   Content
 </div>
 ```
+
+## Theme System
+
+The site supports light and dark themes. Dark is the default.
+
+### How Theming Works
+
+1. **Detection**: Theme is determined by stored preference (`localStorage.jerna-theme`) or system preference (`prefers-color-scheme`)
+2. **Application**: The `data-theme` attribute on `<html>` controls which colors are active
+3. **Transitions**: CSS transitions animate color changes when toggling (disabled on initial load to prevent FOUC)
+
+### Theme-Specific Styling
+
+For components that need different styling per theme, use the `light:` variant:
+
+```html
+<!-- Text that's different in light mode -->
+<p class="text-foreground-muted light:text-foreground-subtle">Adaptive text</p>
+```
+
+Or use CSS:
+
+```css
+.my-element {
+  background: rgba(17, 17, 19, 0.7);
+}
+
+[data-theme='light'] .my-element {
+  background: rgba(255, 255, 255, 0.8);
+}
+```
+
+### Adding Theme Support to New Colors
+
+When adding new color tokens that should change between themes:
+
+1. Add the dark mode value in the `@theme` block
+2. Add the light mode override in `[data-theme='light']` block
+
+See `src/styles/global.css` for the full implementation and `docs/decisions/0005-theme-system.md` for architectural details.
