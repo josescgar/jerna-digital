@@ -15,6 +15,8 @@ Start working on a GitHub issue with an enforced plan-first workflow. This skill
 /start-issue <issue-number>
 ```
 
+**ALWAYS** make sure an issue number is provided. Ask for one if missing.
+
 ## Arguments
 
 1. **issue-number** (required): The GitHub issue number to work on
