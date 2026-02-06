@@ -7,6 +7,7 @@ import {
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
 import Logo from './Logo.astro';
+import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 
 interface Props {
   lang?: Language;
@@ -59,6 +60,11 @@ const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
             </li>
           ))
         }
+
+        <!-- Theme Toggle (Desktop) -->
+        <li class="ml-2">
+          <ThemeToggle lang={lang} />
+        </li>
 
         <!-- Language Switcher (Desktop) -->
         <li class="relative ml-2">
@@ -216,6 +222,25 @@ const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
           ))
         }
 
+        <!-- Theme Toggle (Mobile) -->
+        <li class="border-border mt-2 border-t pt-4">
+          <div
+            class="text-foreground-subtle mb-2 px-4 text-xs font-semibold tracking-wider uppercase"
+          >
+            {t.themeSwitcher.label}
+          </div>
+          <div class="flex items-center gap-2 px-4">
+            <ThemeToggle lang={lang} />
+            <span
+              class="text-foreground-muted text-sm"
+              id="mobile-theme-label"
+              data-light-label={t.themeSwitcher.light}
+              data-dark-label={t.themeSwitcher.dark}
+              >{t.themeSwitcher.dark}</span
+            >
+          </div>
+        </li>
+
         <!-- Language Switcher (Mobile) -->
         <li class="border-border mt-2 border-t pt-4">
           <div
@@ -333,5 +358,39 @@ const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
         }
       }
     });
+  });
+
+  // Update mobile theme label when theme changes
+  const mobileThemeLabel = document.getElementById('mobile-theme-label');
+  const themeLabels = {
+    light: mobileThemeLabel?.dataset.lightLabel || 'Light',
+    dark: mobileThemeLabel?.dataset.darkLabel || 'Dark',
+  };
+
+  function updateMobileThemeLabel(): void {
+    if (!mobileThemeLabel) return;
+    const theme = document.documentElement.getAttribute('data-theme');
+    mobileThemeLabel.textContent =
+      theme === 'light' ? themeLabels.light : themeLabels.dark;
+  }
+
+  // Update label on initial load
+  updateMobileThemeLabel();
+
+  // Watch for theme changes via MutationObserver
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (
+        mutation.type === 'attributes' &&
+        mutation.attributeName === 'data-theme'
+      ) {
+        updateMobileThemeLabel();
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
   });
 </script>
