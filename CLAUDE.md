@@ -210,6 +210,8 @@ src/
 ├── i18n/             # Internationalization
 │   ├── translations.ts  # Translation strings (en, es)
 │   └── utils.ts         # i18n utility functions
+├── theme/            # Theme system (light/dark mode)
+│   └── utils.ts         # Theme utility functions
 └── assets/           # Static assets
 ```
 
@@ -226,8 +228,18 @@ src/
 
 - Design tokens defined in `src/styles/global.css` using `@theme`
 - Colors: Dark backgrounds (#0a0a0b base) with warm gradient accents (#f97316 to #fb7185)
+- Light mode support via `[data-theme='light']` CSS overrides
 - Typography: Inter (body) + Space Grotesk (headings)
 - Consistent spacing and border radius scales
+
+### Theme System (Light/Dark Mode)
+
+- **Default:** Dark theme
+- **Detection:** Stored preference (`localStorage.jerna-theme`) → System preference → Default
+- **Implementation:** `data-theme` attribute on `<html>`, CSS custom property overrides
+- **FOUC Prevention:** Inline script in `<head>` sets theme before render
+- **Utilities:** `src/theme/utils.ts` for theme detection and toggling
+- **Toggle:** `ThemeToggle.astro` component in header (desktop and mobile)
 
 ### i18n Architecture
 
@@ -283,6 +295,7 @@ E2E tests in `tests/` directory:
 - `accessibility.spec.ts` - A11y checks
 - `seo.spec.ts` - Meta tags, structured data, and hreflang verification
 - `i18n.spec.ts` - Language switching, URL structure, localStorage preference
+- `theme.spec.ts` - Theme toggle, localStorage persistence, FOUC prevention
 
 ## Known Constraints
 
@@ -346,6 +359,15 @@ const t = getTranslations(lang);
 
 1. Edit `@theme` block in `src/styles/global.css`
 2. Use CSS custom properties in styles: `var(--color-primary)`
+
+### Modifying theme colors
+
+1. Edit dark mode colors in `@theme` block in `src/styles/global.css`
+2. Edit light mode overrides in `[data-theme='light']` block
+3. For new color tokens that need theme support:
+   - Add dark value in `@theme { ... }`
+   - Add light override in `[data-theme='light'] { ... }`
+4. Update `docs/design-tokens.md` to document both values
 
 ## Claude Skills
 
