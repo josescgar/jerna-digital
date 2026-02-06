@@ -1,8 +1,19 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 import Logo from './Logo.astro';
 
-const t = getTranslations();
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
 
 interface NavItem {
   label: string;
@@ -10,18 +21,24 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: t.nav.about, href: '/about' },
-  { label: t.nav.services, href: '/services' },
-  { label: t.nav.caseStudies, href: '/case-studies' },
-  { label: t.nav.contact, href: '/contact' },
+  { label: t.nav.about, href: getLocalizedPath(lang, '/about') },
+  { label: t.nav.services, href: getLocalizedPath(lang, '/services') },
+  { label: t.nav.caseStudies, href: getLocalizedPath(lang, '/case-studies') },
+  { label: t.nav.contact, href: getLocalizedPath(lang, '/contact') },
 ];
+
+const homeHref = getLocalizedPath(lang, '/');
+const contactHref = getLocalizedPath(lang, '/contact');
+
+// Get current path without language prefix for language switching
+const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
 ---
 
 <header class="fixed top-0 right-0 left-0 z-30" id="site-header">
   <div class="glass">
     <nav class="container flex h-16 items-center justify-between md:h-20">
       <a
-        href="/"
+        href={homeHref}
         class="flex items-center gap-2 transition-opacity hover:opacity-80"
         aria-label={t.site.name}
       >
@@ -42,9 +59,91 @@ const navItems: NavItem[] = [
             </li>
           ))
         }
-        <li class="ml-4">
+
+        <!-- Language Switcher (Desktop) -->
+        <li class="relative ml-2">
+          <button
+            type="button"
+            class="text-foreground-muted hover:bg-background-subtle hover:text-foreground flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+            id="lang-switcher-btn"
+            aria-label={t.languageSwitcher.selectLanguage}
+            aria-expanded="false"
+            aria-haspopup="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+              <path d="M2 12h20"></path>
+            </svg>
+            <span class="uppercase">{lang}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+          <div
+            class="border-border bg-background-elevated absolute right-0 mt-2 hidden min-w-[120px] rounded-lg border py-1 shadow-lg"
+            id="lang-switcher-menu"
+            role="menu"
+          >
+            {
+              (Object.keys(languages) as Language[]).map((langKey) => (
+                <a
+                  href={getLocalizedPath(langKey, currentPath)}
+                  class={`hover:bg-background-subtle flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
+                    langKey === lang
+                      ? 'text-primary font-medium'
+                      : 'text-foreground-muted'
+                  }`}
+                  role="menuitem"
+                  data-lang={langKey}
+                >
+                  {langKey === lang && (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m9 12 2 2 4-4" />
+                    </svg>
+                  )}
+                  <span class={langKey !== lang ? 'ml-[22px]' : ''}>
+                    {languages[langKey]}
+                  </span>
+                </a>
+              ))
+            }
+          </div>
+        </li>
+
+        <li class="ml-2">
           <a
-            href="/contact"
+            href={contactHref}
             class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-10 items-center justify-center rounded-lg px-5 text-sm font-medium transition-all hover:scale-[1.02]"
           >
             {t.hero.cta}
@@ -116,9 +215,36 @@ const navItems: NavItem[] = [
             </li>
           ))
         }
+
+        <!-- Language Switcher (Mobile) -->
+        <li class="border-border mt-2 border-t pt-4">
+          <div
+            class="text-foreground-subtle mb-2 px-4 text-xs font-semibold tracking-wider uppercase"
+          >
+            {t.languageSwitcher.label}
+          </div>
+          <div class="flex gap-2 px-4">
+            {
+              (Object.keys(languages) as Language[]).map((langKey) => (
+                <a
+                  href={getLocalizedPath(langKey, currentPath)}
+                  class={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    langKey === lang
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-foreground-muted hover:bg-background-subtle hover:text-foreground'
+                  }`}
+                  data-lang={langKey}
+                >
+                  {languages[langKey]}
+                </a>
+              ))
+            }
+          </div>
+        </li>
+
         <li class="mt-2">
           <a
-            href="/contact"
+            href={contactHref}
             class="bg-gradient-primary text-primary-foreground hover:shadow-glow flex h-12 items-center justify-center rounded-lg text-base font-medium transition-all"
           >
             {t.hero.cta}
@@ -130,6 +256,7 @@ const navItems: NavItem[] = [
 </header>
 
 <script>
+  // Mobile menu toggle
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = menuBtn?.querySelector('.menu-icon');
@@ -170,5 +297,41 @@ const navItems: NavItem[] = [
     ) {
       toggleMenu();
     }
+  });
+
+  // Language switcher dropdown (desktop)
+  const langBtn = document.getElementById('lang-switcher-btn');
+  const langMenu = document.getElementById('lang-switcher-menu');
+
+  function toggleLangMenu(): void {
+    const isExpanded = langBtn?.getAttribute('aria-expanded') === 'true';
+    langBtn?.setAttribute('aria-expanded', String(!isExpanded));
+    langMenu?.classList.toggle('hidden');
+  }
+
+  langBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleLangMenu();
+  });
+
+  // Close language menu when clicking outside
+  document.addEventListener('click', () => {
+    if (langBtn?.getAttribute('aria-expanded') === 'true') {
+      toggleLangMenu();
+    }
+  });
+
+  // Save language preference when clicking a language link
+  document.querySelectorAll('[data-lang]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const lang = (link as HTMLElement).dataset.lang;
+      if (lang) {
+        try {
+          localStorage.setItem('jerna-lang', lang);
+        } catch {
+          // localStorage might be blocked
+        }
+      }
+    });
   });
 </script>

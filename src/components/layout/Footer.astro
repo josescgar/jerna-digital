@@ -1,8 +1,18 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 import Logo from './Logo.astro';
 
-const t = getTranslations();
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
 const currentYear = new Date().getFullYear();
 
 interface SocialLink {
@@ -30,11 +40,13 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: t.nav.about, href: '/about' },
-  { label: t.nav.services, href: '/services' },
-  { label: t.nav.caseStudies, href: '/case-studies' },
-  { label: t.nav.contact, href: '/contact' },
+  { label: t.nav.about, href: getLocalizedPath(lang, '/about') },
+  { label: t.nav.services, href: getLocalizedPath(lang, '/services') },
+  { label: t.nav.caseStudies, href: getLocalizedPath(lang, '/case-studies') },
+  { label: t.nav.contact, href: getLocalizedPath(lang, '/contact') },
 ];
+
+const contactHref = getLocalizedPath(lang, '/contact');
 ---
 
 <footer class="border-border bg-background-elevated border-t">
@@ -100,7 +112,7 @@ const navItems: NavItem[] = [
         <h3
           class="text-foreground-subtle text-sm font-semibold tracking-wider uppercase"
         >
-          Navigation
+          {t.footer.navigation}
         </h3>
         <ul class="flex flex-col gap-2">
           {
@@ -123,13 +135,13 @@ const navItems: NavItem[] = [
         <h3
           class="text-foreground-subtle text-sm font-semibold tracking-wider uppercase"
         >
-          Get in Touch
+          {t.footer.getInTouch}
         </h3>
         <p class="text-foreground-muted text-sm">
-          Ready to discuss your project? Let's talk.
+          {t.footer.getInTouchSubtitle}
         </p>
         <a
-          href="/contact"
+          href={contactHref}
           class="border-primary text-primary hover:bg-primary/10 inline-flex h-10 w-fit items-center justify-center rounded-lg border px-5 text-sm font-medium transition-colors"
         >
           {t.hero.cta}

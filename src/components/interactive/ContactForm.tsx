@@ -25,6 +25,65 @@ interface FormErrors {
 }
 
 /**
+ * Translations for the contact form
+ */
+export interface ContactFormTranslations {
+  name: string;
+  namePlaceholder: string;
+  email: string;
+  emailPlaceholder: string;
+  message: string;
+  messagePlaceholder: string;
+  submit: string;
+  sending: string;
+  success: string;
+  successSubtitle: string;
+  error: string;
+  errorSubtitle: string;
+  tryAgain: string;
+  validation: {
+    nameRequired: string;
+    nameMinLength: string;
+    emailRequired: string;
+    emailInvalid: string;
+    messageRequired: string;
+    messageMinLength: string;
+  };
+}
+
+/**
+ * Default English translations (fallback)
+ */
+const defaultTranslations: ContactFormTranslations = {
+  name: 'Name',
+  namePlaceholder: 'Your name',
+  email: 'Email',
+  emailPlaceholder: 'your@email.com',
+  message: 'Message',
+  messagePlaceholder: 'Tell me about your project or challenge...',
+  submit: 'Send Message',
+  sending: 'Sending...',
+  success: 'Message sent successfully!',
+  successSubtitle: "I'll get back to you within 24-48 hours.",
+  error: 'Something went wrong',
+  errorSubtitle:
+    'Please try again or email me directly at hello@jernadigital.com',
+  tryAgain: 'Try again',
+  validation: {
+    nameRequired: 'Name is required',
+    nameMinLength: 'Name must be at least 2 characters',
+    emailRequired: 'Email is required',
+    emailInvalid: 'Please enter a valid email address',
+    messageRequired: 'Message is required',
+    messageMinLength: 'Message must be at least 10 characters',
+  },
+};
+
+interface ContactFormProps {
+  translations?: ContactFormTranslations;
+}
+
+/**
  * Web3Forms API configuration
  * Access key should be set via environment variable
  */
@@ -44,7 +103,11 @@ function isValidEmail(email: string): boolean {
  * Includes client-side validation, honeypot spam protection,
  * and accessible form controls.
  */
-export default function ContactForm(): React.ReactElement {
+export default function ContactForm({
+  translations,
+}: ContactFormProps): React.ReactElement {
+  const t = translations ?? defaultTranslations;
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -61,21 +124,21 @@ export default function ContactForm(): React.ReactElement {
     const newErrors: FormErrors = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = t.validation.nameRequired;
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
+      newErrors.name = t.validation.nameMinLength;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t.validation.emailRequired;
     } else if (!isValidEmail(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t.validation.emailInvalid;
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+      newErrors.message = t.validation.messageRequired;
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
+      newErrors.message = t.validation.messageMinLength;
     }
 
     return newErrors;
@@ -171,13 +234,13 @@ export default function ContactForm(): React.ReactElement {
       {/* Name field */}
       <div className="space-y-2">
         <Label htmlFor="name" required>
-          Name
+          {t.name}
         </Label>
         <Input
           id="name"
           name="name"
           type="text"
-          placeholder="Your name"
+          placeholder={t.namePlaceholder}
           value={formData.name}
           onChange={handleChange}
           error={!!errors.name}
@@ -204,13 +267,13 @@ export default function ContactForm(): React.ReactElement {
       {/* Email field */}
       <div className="space-y-2">
         <Label htmlFor="email" required>
-          Email
+          {t.email}
         </Label>
         <Input
           id="email"
           name="email"
           type="email"
-          placeholder="your@email.com"
+          placeholder={t.emailPlaceholder}
           value={formData.email}
           onChange={handleChange}
           error={!!errors.email}
@@ -237,12 +300,12 @@ export default function ContactForm(): React.ReactElement {
       {/* Message field */}
       <div className="space-y-2">
         <Label htmlFor="message" required>
-          Message
+          {t.message}
         </Label>
         <Textarea
           id="message"
           name="message"
-          placeholder="Tell me about your project or challenge..."
+          placeholder={t.messagePlaceholder}
           value={formData.message}
           onChange={handleChange}
           error={!!errors.message}
@@ -296,10 +359,10 @@ export default function ContactForm(): React.ReactElement {
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            Sending...
+            {t.sending}
           </span>
         ) : (
-          'Send Message'
+          t.submit
         )}
       </Button>
 
@@ -316,10 +379,8 @@ export default function ContactForm(): React.ReactElement {
             )}
             role="status"
           >
-            <p className="font-medium">Message sent successfully!</p>
-            <p className="mt-1 text-sm opacity-80">
-              I&apos;ll get back to you within 24-48 hours.
-            </p>
+            <p className="font-medium">{t.success}</p>
+            <p className="mt-1 text-sm opacity-80">{t.successSubtitle}</p>
           </motion.div>
         )}
 
@@ -334,16 +395,14 @@ export default function ContactForm(): React.ReactElement {
             )}
             role="alert"
           >
-            <p className="font-medium">Something went wrong</p>
-            <p className="mt-1 text-sm opacity-80">
-              Please try again or email me directly at hello@jernadigital.com
-            </p>
+            <p className="font-medium">{t.error}</p>
+            <p className="mt-1 text-sm opacity-80">{t.errorSubtitle}</p>
             <button
               type="button"
               onClick={() => setStatus('idle')}
               className="mt-2 text-sm underline hover:no-underline"
             >
-              Try again
+              {t.tryAgain}
             </button>
           </motion.div>
         )}

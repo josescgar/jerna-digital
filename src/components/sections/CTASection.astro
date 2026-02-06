@@ -1,7 +1,20 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
 
-const t = getTranslations();
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
+
+const contactHref = getLocalizedPath(lang, '/contact');
+const servicesHref = getLocalizedPath(lang, '/services');
 ---
 
 <section class="section relative overflow-hidden">
@@ -12,17 +25,18 @@ const t = getTranslations();
       <!-- Content -->
       <div class="relative z-10 mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-          Ready to <span class="text-gradient">transform</span> your engineering organization?
+          {t.cta.title}
+          <span class="text-gradient">{t.cta.titleHighlight}</span> your engineering
+          organization?
         </h2>
         <p class="text-foreground-muted mt-6 text-lg">
-          Let's discuss how I can help you build exceptional engineering teams
-          and products. No commitment, just a conversation.
+          {t.cta.subtitle}
         </p>
         <div
           class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
-            href="/contact"
+            href={contactHref}
             class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg px-8 text-base font-medium transition-all hover:scale-[1.02] sm:w-auto"
           >
             {t.hero.cta}
@@ -42,7 +56,7 @@ const t = getTranslations();
             </svg>
           </a>
           <a
-            href="/services"
+            href={servicesHref}
             class="border-border text-foreground hover:border-border-subtle hover:bg-background-subtle inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border bg-transparent px-8 text-base font-medium transition-all sm:w-auto"
           >
             {t.hero.secondaryCta}

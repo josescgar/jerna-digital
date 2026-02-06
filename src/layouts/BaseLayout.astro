@@ -1,10 +1,17 @@
 ---
-import { getTranslations } from '@/i18n/translations';
+import {
+  getTranslations,
+  localeMetadata,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getAlternateUrls } from '@/i18n/utils';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import '@/styles/global.css';
 
 interface Props {
+  lang?: Language;
   title?: string;
   description?: string;
   image?: string;
@@ -12,7 +19,9 @@ interface Props {
   noIndex?: boolean;
 }
 
-const t = getTranslations();
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
+const { locale } = localeMetadata[lang];
 
 const {
   title = t.site.name,
@@ -25,10 +34,13 @@ const {
 const fullTitle = title === t.site.name ? title : `${title} | ${t.site.name}`;
 const siteUrl = Astro.site ?? new URL('https://jernadigital.com');
 const ogImageUrl = new URL(image, siteUrl).href;
+
+// Get alternate URLs for hreflang tags
+const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -54,7 +66,7 @@ const ogImageUrl = new URL(image, siteUrl).href;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:site_name" content={t.site.name} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={locale} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -62,6 +74,18 @@ const ogImageUrl = new URL(image, siteUrl).href;
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- hreflang tags for language alternatives -->
+    {
+      alternateUrls.map(({ hreflang, url }) => (
+        <link rel="alternate" hreflang={hreflang} href={url} />
+      ))
+    }
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={alternateUrls.find((a) => a.lang === defaultLanguage)?.url}
+    />
 
     <!-- Fonts - Inter & Space Grotesk -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -120,13 +144,13 @@ const ogImageUrl = new URL(image, siteUrl).href;
       Skip to main content
     </a>
 
-    <Header />
+    <Header lang={lang} />
 
     <main id="main-content" class="flex-1 pt-16 md:pt-20">
       <slot />
     </main>
 
-    <Footer />
+    <Footer lang={lang} />
 
     <!-- Ambient background effects -->
     <div

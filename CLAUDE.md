@@ -193,15 +193,23 @@ src/
 │   └── config/       # Site configuration
 ├── layouts/          # BaseLayout.astro (main layout with SEO)
 ├── pages/            # Astro pages (routing)
-│   ├── index.astro
-│   ├── about.astro
-│   ├── services.astro
-│   ├── contact.astro
-│   └── case-studies/
+│   ├── index.astro         # English home page
+│   ├── about.astro         # English about page
+│   ├── services.astro      # English services page
+│   ├── contact.astro       # English contact page
+│   ├── case-studies/       # English case studies
+│   └── [lang]/             # Localized pages (e.g., /es/*)
+│       ├── index.astro
+│       ├── about.astro
+│       ├── services.astro
+│       ├── contact.astro
+│       └── case-studies/
 ├── styles/
 │   └── global.css    # Design tokens + Tailwind config
 ├── lib/              # Utilities (cn function, formatters)
-├── i18n/             # Translations (English, expandable)
+├── i18n/             # Internationalization
+│   ├── translations.ts  # Translation strings (en, es)
+│   └── utils.ts         # i18n utility functions
 └── assets/           # Static assets
 ```
 
@@ -223,10 +231,13 @@ src/
 
 ### i18n Architecture
 
-- Translations in `src/i18n/translations.ts`
-- Type-safe with `TranslationStrings` interface
-- Currently English only, but structure supports multiple languages
-- Use `getTranslations()` to access strings
+- **Languages:** English (default) and Spanish
+- **URL Structure:** English at root (`/about`), Spanish with prefix (`/es/about`)
+- **Routing:** Astro's built-in i18n with `prefixDefaultLocale: false`
+- **Translations:** `src/i18n/translations.ts` with type-safe `TranslationStrings` interface
+- **Utilities:** `src/i18n/utils.ts` for path generation, language detection, localStorage
+- **SEO:** hreflang tags and og:locale meta tags per language
+- **Language Switcher:** In header, saves preference to localStorage
 
 ### Component Patterns
 
@@ -266,11 +277,12 @@ PUBLIC_WEB3FORMS_ACCESS_KEY=your-access-key-here
 
 E2E tests in `tests/` directory:
 
-- `navigation.spec.ts` - Page navigation
+- `navigation.spec.ts` - Page navigation (English and Spanish)
 - `contact-form.spec.ts` - Form validation and submission
 - `responsive.spec.ts` - Responsive layout tests
 - `accessibility.spec.ts` - A11y checks
-- `seo.spec.ts` - Meta tags and structured data
+- `seo.spec.ts` - Meta tags, structured data, and hreflang verification
+- `i18n.spec.ts` - Language switching, URL structure, localStorage preference
 
 ## Known Constraints
 
@@ -282,10 +294,33 @@ E2E tests in `tests/` directory:
 
 ### Adding a new page
 
-1. Create `src/pages/new-page.astro`
-2. Import `BaseLayout` and wrap content
-3. Add translations to `src/i18n/translations.ts`
-4. Add navigation link in `src/components/layout/Header.astro`
+1. Create English page at `src/pages/new-page.astro`
+2. Create localized page at `src/pages/[lang]/new-page.astro` with `getStaticPaths()`
+3. Import `BaseLayout` and pass `lang` prop
+4. Add translations to `src/i18n/translations.ts` (both `en` and `es`)
+5. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
+
+**Page pattern example:**
+
+```astro
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getTranslations, languages, type Language } from '@/i18n/translations';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as Language[])
+    .filter((lang) => lang !== 'en')
+    .map((lang) => ({ params: { lang }, props: { lang } }));
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+---
+
+<BaseLayout lang={lang} title={t.nav.newPage}>
+  <!-- content using t.* -->
+</BaseLayout>
+```
 
 ### Adding a new UI component
 
@@ -296,8 +331,16 @@ E2E tests in `tests/` directory:
 ### Adding translations
 
 1. Update `TranslationStrings` interface in `src/i18n/translations.ts`
-2. Add strings to `translations.en` object
+2. Add strings to both `translations.en` and `translations.es` objects
 3. Use `t.key.subkey` pattern in components
+4. For React components, pass translations as props
+
+**Adding a new language:**
+
+1. Add language code to `languages` object in `src/i18n/translations.ts`
+2. Add locale metadata to `localeMetadata` object
+3. Add complete translation object (e.g., `translations.fr`)
+4. Update `astro.config.mjs` to add the locale
 
 ### Modifying design tokens
 
