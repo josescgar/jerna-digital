@@ -191,6 +191,13 @@ export interface TranslationStrings {
     label: string;
     selectLanguage: string;
   };
+  // Theme switcher
+  themeSwitcher: {
+    label: string;
+    toggleTheme: string;
+    light: string;
+    dark: string;
+  };
 }
 
 export const translations: Record<Language, TranslationStrings> = {
@@ -488,6 +495,12 @@ export const translations: Record<Language, TranslationStrings> = {
     languageSwitcher: {
       label: 'Language',
       selectLanguage: 'Select language',
+    },
+    themeSwitcher: {
+      label: 'Theme',
+      toggleTheme: 'Toggle theme',
+      light: 'Light',
+      dark: 'Dark',
     },
   },
   es: {
@@ -787,6 +800,12 @@ export const translations: Record<Language, TranslationStrings> = {
     languageSwitcher: {
       label: 'Idioma',
       selectLanguage: 'Seleccionar idioma',
+    },
+    themeSwitcher: {
+      label: 'Tema',
+      toggleTheme: 'Cambiar tema',
+      light: 'Claro',
+      dark: 'Oscuro',
     },
   },
 };
