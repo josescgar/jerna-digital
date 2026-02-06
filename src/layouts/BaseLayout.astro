@@ -40,8 +40,19 @@ const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
 ---
 
 <!doctype html>
-<html lang={lang} class="scroll-smooth">
+<html lang={lang} class="no-transitions scroll-smooth">
   <head>
+    <!-- Theme initialization - must run before any render to prevent FOUC -->
+    <script is:inline>
+      (function () {
+        var stored = localStorage.getItem('jerna-theme');
+        var system = window.matchMedia('(prefers-color-scheme: light)').matches
+          ? 'light'
+          : 'dark';
+        var theme = stored === 'light' || stored === 'dark' ? stored : system;
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
@@ -174,5 +185,12 @@ const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
       >
       </div>
     </div>
+
+    <!-- Enable transitions after initial render to prevent FOUC -->
+    <script is:inline>
+      requestAnimationFrame(function () {
+        document.documentElement.classList.remove('no-transitions');
+      });
+    </script>
   </body>
 </html>
