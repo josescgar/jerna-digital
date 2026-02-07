@@ -49,15 +49,20 @@ test.describe('Accessibility', () => {
     await expect(mobileMenuBtn).toHaveAttribute('aria-label', 'Toggle menu');
 
     // Check logo link has accessible label
-    const logoLink = page.locator('header a[href="/"]');
-    await expect(logoLink).toHaveAttribute('aria-label');
+    const logoLink = page
+      .locator('#site-header a[aria-label="Jerna Digital"]')
+      .first();
+    await expect(logoLink).toBeVisible();
+    await expect(logoLink).toHaveAttribute('aria-label', 'Jerna Digital');
   });
 
   test('should have proper focus indicators', async ({ page }) => {
     await page.goto('/');
 
     // Focus the logo link directly and verify it has visible focus
-    const logoLink = page.locator('header a[href="/"]');
+    const logoLink = page
+      .locator('#site-header a[aria-label="Jerna Digital"]')
+      .first();
     await logoLink.focus();
 
     // Check that focused element is visible and has focus

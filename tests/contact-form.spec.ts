@@ -3,6 +3,14 @@ import { test, expect } from '@playwright/test';
 test.describe('Contact Form', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/contact');
+
+    // ContactForm is a hydrated React island. Wait until hydration completes
+    // so React doesn't overwrite values we fill during tests.
+    const contactFormIsland = page.locator('astro-island[opts*="ContactForm"]');
+    await expect(contactFormIsland).toHaveCount(1);
+    await expect(contactFormIsland).not.toHaveAttribute('ssr', /.*/, {
+      timeout: 15000,
+    });
   });
 
   test('should display the contact form', async ({ page }) => {

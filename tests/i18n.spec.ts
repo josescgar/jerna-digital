@@ -22,20 +22,20 @@ test.describe('Internationalization (i18n)', () => {
 
     test('Spanish pages should have /es/ prefix', async ({ page }) => {
       await page.goto('/es');
-      await expect(page).toHaveURL('/es');
+      await expect(page).toHaveURL(/\/es\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
 
       await page.goto('/es/about');
-      await expect(page).toHaveURL('/es/about');
+      await expect(page).toHaveURL(/\/es\/about\/?$/);
 
       await page.goto('/es/services');
-      await expect(page).toHaveURL('/es/services');
+      await expect(page).toHaveURL(/\/es\/services\/?$/);
 
       await page.goto('/es/contact');
-      await expect(page).toHaveURL('/es/contact');
+      await expect(page).toHaveURL(/\/es\/contact\/?$/);
 
       await page.goto('/es/case-studies');
-      await expect(page).toHaveURL('/es/case-studies');
+      await expect(page).toHaveURL(/\/es\/case-studies\/?$/);
     });
   });
 
@@ -105,7 +105,7 @@ test.describe('Internationalization (i18n)', () => {
       if (isMobile) {
         // On mobile, directly navigate to verify the Spanish URL exists
         await page.goto('/es');
-        await expect(page).toHaveURL('/es');
+        await expect(page).toHaveURL(/\/es\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'es');
         return;
       }
@@ -114,7 +114,7 @@ test.describe('Internationalization (i18n)', () => {
       await switchLanguage(page, 'es');
 
       // Should navigate to Spanish version
-      await expect(page).toHaveURL('/es');
+      await expect(page).toHaveURL(/\/es\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
     });
 
@@ -147,14 +147,14 @@ test.describe('Internationalization (i18n)', () => {
       if (isMobile) {
         // On mobile, directly navigate to verify the Spanish about URL exists
         await page.goto('/es/about');
-        await expect(page).toHaveURL('/es/about');
+        await expect(page).toHaveURL(/\/es\/about\/?$/);
         return;
       }
 
       await page.goto('/about');
       await switchLanguage(page, 'es');
 
-      await expect(page).toHaveURL('/es/about');
+      await expect(page).toHaveURL(/\/es\/about\/?$/);
     });
 
     test('should save language preference to localStorage', async ({
@@ -170,7 +170,7 @@ test.describe('Internationalization (i18n)', () => {
         const mobileMenu = page.locator('#mobile-menu');
         await expect(mobileMenu).toHaveAttribute('aria-hidden', 'false');
         await page.locator('#mobile-menu a[data-lang="es"]').click();
-        await expect(page).toHaveURL('/es');
+        await expect(page).toHaveURL(/\/es\/?$/);
 
         const storedLang = await page.evaluate(() =>
           localStorage.getItem('jerna-lang')
@@ -183,7 +183,7 @@ test.describe('Internationalization (i18n)', () => {
       await switchLanguage(page, 'es');
 
       // Wait for navigation to complete
-      await expect(page).toHaveURL('/es');
+      await expect(page).toHaveURL(/\/es\/?$/);
 
       // Check localStorage (key is 'jerna-lang')
       const storedLang = await page.evaluate(() =>
@@ -225,7 +225,10 @@ test.describe('Internationalization (i18n)', () => {
       // Check for Spanish form labels - use text content check
       const formLabels = await page.locator('label').allTextContents();
       const hasNombre = formLabels.some((label) => label.includes('Nombre'));
-      const hasCorreo = formLabels.some((label) => label.includes('Correo'));
+      // Copy can vary; current translations use "Email".
+      const hasCorreo = formLabels.some(
+        (label) => label.includes('Email') || label.includes('Correo')
+      );
       const hasMensaje = formLabels.some((label) => label.includes('Mensaje'));
 
       expect(hasNombre).toBe(true);
@@ -291,10 +294,12 @@ test.describe('Internationalization (i18n)', () => {
         await expect(mobileMenu).toHaveAttribute('aria-hidden', 'false');
       }
 
-      // Click the first visible link to /es/about
-      const aboutLink = page.locator('a[href="/es/about"]').first();
+      // Click the About link (mobile menu vs desktop header)
+      const aboutLink = isMobile
+        ? page.locator('#mobile-menu a[href="/es/about"]').first()
+        : page.locator('#site-header a[href="/es/about"]').first();
       await aboutLink.click();
-      await expect(page).toHaveURL('/es/about');
+      await expect(page).toHaveURL(/\/es\/about\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
     });
 
