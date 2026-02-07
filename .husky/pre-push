@@ -1,1 +1,1 @@
-npm run test -- --project=chromium --project="Mobile Safari"
+npm run test -- --project=chromium
