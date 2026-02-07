@@ -11,7 +11,7 @@ export default defineConfig({
     timeout: 5000,
   },
   use: {
-    baseURL: 'http://localhost:4321',
+    baseURL: 'http://127.0.0.1:4321',
     trace: 'on-first-retry',
     actionTimeout: 5000,
     navigationTimeout: 15000,
@@ -35,9 +35,13 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run preview',
-    url: 'http://localhost:4321',
-    reuseExistingServer: !process.env['CI'],
-    timeout: 30000,
+    // Ensure `dist/` is fresh before running E2E.
+    // Use Astro's built-in preview server on the expected port.
+    command:
+      'npm run build && exec npx astro preview --host 127.0.0.1 --port 4321',
+    url: 'http://127.0.0.1:4321/index.html',
+    reuseExistingServer: false,
+    // Build + preview can take longer than just starting the server.
+    timeout: 120000,
   },
 });
