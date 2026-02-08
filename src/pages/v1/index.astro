@@ -1,0 +1,23 @@
+---
+import VariationLayout from '@/variations/layouts/VariationLayout.astro';
+import HeroV1Minimal from '@/variations/components/HeroV1Minimal.astro';
+import ServicesSection from '@/components/sections/ServicesSection.astro';
+import AboutPreviewSection from '@/components/sections/AboutPreviewSection.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import { getTranslations, defaultLanguage } from '@/i18n/translations';
+
+const lang = defaultLanguage;
+const t = getTranslations(lang);
+---
+
+<VariationLayout
+  variation="v1"
+  lang={lang}
+  title={`V1 Minimal | ${t.site.name}`}
+  description={t.site.description}
+>
+  <HeroV1Minimal lang={lang} />
+  <ServicesSection lang={lang} />
+  <AboutPreviewSection lang={lang} />
+  <CTASection lang={lang} />
+</VariationLayout>
