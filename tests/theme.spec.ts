@@ -27,13 +27,21 @@ async function clickThemeToggle(page: Page): Promise<void> {
 }
 
 test.describe('Theme System', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      if (!localStorage.getItem('jerna-lang')) {
+        localStorage.setItem('jerna-lang', 'en');
+      }
+    });
+  });
+
   test.describe('Default Theme', () => {
     test('should use dark theme by default when no stored preference and dark system preference', async ({
       page,
     }) => {
       // Emulate dark color scheme
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/en');
+      await page.goto('/');
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('dark');
@@ -44,7 +52,7 @@ test.describe('Theme System', () => {
     }) => {
       // Emulate light color scheme
       await page.emulateMedia({ colorScheme: 'light' });
-      await page.goto('/en');
+      await page.goto('/');
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
@@ -61,7 +69,7 @@ test.describe('Theme System', () => {
         localStorage.setItem('jerna-theme', 'light');
       });
 
-      await page.goto('/en');
+      await page.goto('/');
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
@@ -70,7 +78,7 @@ test.describe('Theme System', () => {
 
   test.describe('Theme Toggle', () => {
     test('should show theme toggle button in header', async ({ page }) => {
-      await page.goto('/en');
+      await page.goto('/');
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();
@@ -90,7 +98,7 @@ test.describe('Theme System', () => {
 
     test('should toggle from dark to light', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/en');
+      await page.goto('/');
 
       // Verify starting in dark mode
       let theme = await page.locator('html').getAttribute('data-theme');
@@ -106,7 +114,7 @@ test.describe('Theme System', () => {
 
     test('should toggle from light to dark', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'light' });
-      await page.goto('/en');
+      await page.goto('/');
 
       // Verify starting in light mode
       let theme = await page.locator('html').getAttribute('data-theme');
@@ -124,7 +132,7 @@ test.describe('Theme System', () => {
       page,
     }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/en');
+      await page.goto('/');
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();
@@ -158,7 +166,7 @@ test.describe('Theme System', () => {
   test.describe('Persistence', () => {
     test('should save theme preference to localStorage', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/en');
+      await page.goto('/');
 
       // Initially no stored preference
       let storedTheme = await page.evaluate(() =>
@@ -178,13 +186,13 @@ test.describe('Theme System', () => {
 
     test('should persist theme across page navigation', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/en');
+      await page.goto('/');
 
       // Toggle to light using helper
       await clickThemeToggle(page);
 
       // Navigate to another page
-      await page.goto('/en/about');
+      await page.goto('/about');
 
       // Theme should still be light
       const theme = await page.locator('html').getAttribute('data-theme');
@@ -198,7 +206,7 @@ test.describe('Theme System', () => {
       await page.addInitScript(() => {
         localStorage.setItem('jerna-theme', 'light');
       });
-      await page.goto('/en');
+      await page.goto('/');
 
       // Verify theme is light (from stored preference)
       let theme = await page.locator('html').getAttribute('data-theme');
@@ -216,7 +224,7 @@ test.describe('Theme System', () => {
   test.describe('FOUC Prevention', () => {
     test('should have no-transitions class initially', async ({ page }) => {
       // Check that html starts with no-transitions class
-      await page.goto('/en');
+      await page.goto('/');
 
       // The class should be removed after initial render
       // We verify by checking it's NOT present after load (removed by RAF)
@@ -240,7 +248,7 @@ test.describe('Theme System', () => {
 
       // We can verify FOUC prevention by checking the theme is set
       // synchronously in the <head> script
-      await page.goto('/en');
+      await page.goto('/');
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
@@ -252,7 +260,7 @@ test.describe('Theme System', () => {
       // Set viewport to mobile
       await page.setViewportSize({ width: 375, height: 667 });
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/en');
+      await page.goto('/');
 
       // Open mobile menu
       await page.locator('#mobile-menu-btn').click();
@@ -293,7 +301,7 @@ test.describe('Theme System', () => {
 
   test.describe('Accessibility', () => {
     test('theme toggle should have accessible label', async ({ page }) => {
-      await page.goto('/en');
+      await page.goto('/');
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();

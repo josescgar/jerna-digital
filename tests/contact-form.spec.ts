@@ -2,7 +2,13 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Contact Form', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/en/contact');
+    await page.addInitScript(() => {
+      if (!localStorage.getItem('jerna-lang')) {
+        localStorage.setItem('jerna-lang', 'en');
+      }
+    });
+
+    await page.goto('/contact');
 
     // ContactForm is a hydrated React island. Wait until hydration completes
     // so React doesn't overwrite values we fill during tests.
