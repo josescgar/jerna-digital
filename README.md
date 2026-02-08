@@ -59,8 +59,10 @@ git push --no-verify
 
 The site supports multiple languages:
 
-- **English** - Default language, served at root URLs (`/`, `/about`, `/services`, etc.)
+- **English** - Default language, served at `/en/` prefix (`/en/`, `/en/about`, `/en/services`, etc.)
 - **Spanish** - Available at `/es/` prefix (`/es/`, `/es/about`, `/es/services`, etc.)
+
+Legacy root URLs (`/`, `/about`, etc.) redirect to their `/en/*` equivalents.
 
 Language preference is saved to localStorage and can be changed via the language switcher in the header.
 
@@ -76,9 +78,8 @@ src/
 ├── content/
 │   └── case-studies/ # MDX case study files
 ├── layouts/          # Base layout with SEO
-├── pages/            # Astro pages
-│   ├── *.astro       # English pages at root
-│   └── [lang]/       # Localized pages
+├── pages/            # Astro pages (i18n)
+│   └── [lang]/       # Localized pages (e.g., /en/*, /es/*)
 ├── styles/           # Global CSS + design tokens
 ├── lib/              # Utilities
 └── i18n/             # Internationalization

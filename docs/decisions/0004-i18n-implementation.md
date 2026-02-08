@@ -2,7 +2,10 @@
 
 ## Status
 
-Accepted
+Superseded
+
+Superseded by ADR 0007 (prefixed default locale routing with consolidated
+`src/pages/[lang]/` pages).
 
 ## Context
 
