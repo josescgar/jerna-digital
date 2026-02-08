@@ -9,6 +9,10 @@ import {
   type Language,
 } from './translations';
 
+const languagePrefixRegex = new RegExp(
+  `^/(${Object.keys(languages).join('|')})(?=/|$)`
+);
+
 /**
  * Storage key for persisted language preference.
  */
@@ -16,22 +20,18 @@ const LANGUAGE_STORAGE_KEY = 'jerna-lang';
 
 /**
  * Get the localized path for a given language and path.
- * English stays at root (e.g., /about), other languages get prefixed (e.g., /es/about).
+ * All languages are prefixed (e.g., /en/about, /es/about).
  */
 export function getLocalizedPath(lang: Language, path: string): string {
   // Normalize path to start with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 
   // Remove any existing language prefix
-  const pathWithoutLang = normalizedPath.replace(/^\/(en|es)(?=\/|$)/, '');
+  const stripped = normalizedPath.replace(languagePrefixRegex, '');
+  const pathWithoutLang = stripped === '' ? '/' : stripped;
 
-  // For default language (English), return path without prefix
-  if (lang === defaultLanguage) {
-    return pathWithoutLang || '/';
-  }
-
-  // For other languages, add the language prefix
-  return `/${lang}${pathWithoutLang || ''}`;
+  // Always prefix, including the default language
+  return `/${lang}${pathWithoutLang}`;
 }
 
 /**
@@ -45,7 +45,8 @@ export function getAlternateUrls(
   const baseUrl = typeof siteUrl === 'string' ? siteUrl : siteUrl.origin;
 
   // Remove any existing language prefix from the path
-  const cleanPath = currentPath.replace(/^\/(en|es)(?=\/|$)/, '');
+  const stripped = currentPath.replace(languagePrefixRegex, '');
+  const cleanPath = stripped === '' ? '/' : stripped;
 
   return (Object.keys(languages) as Language[]).map((lang) => {
     const localizedPath = getLocalizedPath(lang, cleanPath);

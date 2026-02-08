@@ -32,7 +32,10 @@ const homeHref = getLocalizedPath(lang, '/');
 const contactHref = getLocalizedPath(lang, '/contact');
 
 // Get current path without language prefix for language switching
-const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
+const languagePrefixRegex = new RegExp(
+  `^/(${Object.keys(languages).join('|')})(?=/|$)`
+);
+const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
 ---
 
 <header class="fixed top-0 right-0 left-0 z-30" id="site-header">
