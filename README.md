@@ -64,6 +64,10 @@ The site supports multiple languages:
 
 Language preference is saved to localStorage and can be changed via the language switcher in the header.
 
+On unprefixed URLs (e.g. `/about`), the site will default to the stored language
+preference if present. Otherwise, it will use the browser language when it
+matches a supported language, falling back to English.
+
 ## Project Structure
 
 ```
@@ -76,9 +80,8 @@ src/
 ├── content/
 │   └── case-studies/ # MDX case study files
 ├── layouts/          # Base layout with SEO
-├── pages/            # Astro pages
-│   ├── *.astro       # English pages at root
-│   └── [lang]/       # Localized pages
+├── pages/            # Astro pages (i18n)
+│   └── [...lang]/    # Optional locale segment (e.g., /, /es/*)
 ├── styles/           # Global CSS + design tokens
 ├── lib/              # Utilities
 └── i18n/             # Internationalization

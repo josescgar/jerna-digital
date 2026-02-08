@@ -1,6 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('SEO', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      if (!localStorage.getItem('jerna-lang')) {
+        localStorage.setItem('jerna-lang', 'en');
+      }
+    });
+  });
+
   test('home page should have proper meta tags', async ({ page }) => {
     await page.goto('/');
 

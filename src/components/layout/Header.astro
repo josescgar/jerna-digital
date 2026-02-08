@@ -32,7 +32,10 @@ const homeHref = getLocalizedPath(lang, '/');
 const contactHref = getLocalizedPath(lang, '/contact');
 
 // Get current path without language prefix for language switching
-const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
+const languagePrefixRegex = new RegExp(
+  `^/(${Object.keys(languages).join('|')})(?=/|$)`
+);
+const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
 ---
 
 <header class="fixed top-0 right-0 left-0 z-30" id="site-header">
@@ -115,6 +118,7 @@ const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
               (Object.keys(languages) as Language[]).map((langKey) => (
                 <a
                   href={getLocalizedPath(langKey, currentPath)}
+                  onclick={`try{localStorage.setItem('jerna-lang','${langKey}')}catch(e){}`}
                   class={`hover:bg-background-subtle flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
                     langKey === lang
                       ? 'text-primary font-medium'
@@ -253,6 +257,7 @@ const currentPath = Astro.url.pathname.replace(/^\/(en|es)(?=\/|$)/, '') || '/';
               (Object.keys(languages) as Language[]).map((langKey) => (
                 <a
                   href={getLocalizedPath(langKey, currentPath)}
+                  onclick={`try{localStorage.setItem('jerna-lang','${langKey}')}catch(e){}`}
                   class={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     langKey === lang
                       ? 'bg-primary/10 text-primary'

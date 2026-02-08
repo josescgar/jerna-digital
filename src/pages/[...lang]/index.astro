@@ -4,17 +4,20 @@ import HeroSection from '@/components/sections/HeroSection.astro';
 import ServicesSection from '@/components/sections/ServicesSection.astro';
 import AboutPreviewSection from '@/components/sections/AboutPreviewSection.astro';
 import CTASection from '@/components/sections/CTASection.astro';
-import { getTranslations, languages, type Language } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
 
 export function getStaticPaths() {
-  // Only generate non-default language paths here
-  // Default language (English) is handled by src/pages/index.astro
-  return (Object.keys(languages) as Language[])
-    .filter((lang) => lang !== 'en')
-    .map((lang) => ({
-      params: { lang },
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: { lang: lang === defaultLanguage ? undefined : lang },
       props: { lang },
-    }));
+    };
+  });
 }
 
 interface Props {

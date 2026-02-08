@@ -2,22 +2,30 @@ import { test, expect, type Page } from '@playwright/test';
 
 test.describe('Internationalization (i18n)', () => {
   test.describe('URL Structure', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.addInitScript(() => {
+        if (!localStorage.getItem('jerna-lang')) {
+          localStorage.setItem('jerna-lang', 'en');
+        }
+      });
+    });
+
     test('English pages should be at root URLs', async ({ page }) => {
       await page.goto('/');
-      await expect(page).toHaveURL('/');
+      await expect(page).toHaveURL(/\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 
       await page.goto('/about');
-      await expect(page).toHaveURL('/about');
+      await expect(page).toHaveURL(/\/about\/?$/);
 
       await page.goto('/services');
-      await expect(page).toHaveURL('/services');
+      await expect(page).toHaveURL(/\/services\/?$/);
 
       await page.goto('/contact');
-      await expect(page).toHaveURL('/contact');
+      await expect(page).toHaveURL(/\/contact\/?$/);
 
       await page.goto('/case-studies');
-      await expect(page).toHaveURL('/case-studies');
+      await expect(page).toHaveURL(/\/case-studies\/?$/);
     });
 
     test('Spanish pages should have /es/ prefix', async ({ page }) => {
@@ -39,7 +47,76 @@ test.describe('Internationalization (i18n)', () => {
     });
   });
 
+  test.describe('Language Negotiation', () => {
+    test.describe('Browser Language Match', () => {
+      test.use({ locale: 'es-ES' });
+
+      test('should redirect unprefixed URLs to browser language when supported', async ({
+        page,
+      }) => {
+        await page.addInitScript(() => {
+          localStorage.removeItem('jerna-lang');
+        });
+
+        await page.goto('/');
+        await expect(page).toHaveURL(/\/es\/?$/);
+        await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+      });
+    });
+
+    test.describe('Browser Language Unsupported', () => {
+      test.use({ locale: 'fr-FR' });
+
+      test('should keep unprefixed URLs in English when browser language is unsupported', async ({
+        page,
+      }) => {
+        await page.addInitScript(() => {
+          localStorage.removeItem('jerna-lang');
+        });
+
+        await page.goto('/');
+        await expect(page).toHaveURL(/\/?$/);
+        await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+      });
+    });
+
+    test.describe('Stored Preference Overrides', () => {
+      test.use({ locale: 'es-ES' });
+
+      test('stored preference should override browser language on unprefixed URLs', async ({
+        page,
+      }) => {
+        await page.addInitScript(() => {
+          localStorage.setItem('jerna-lang', 'en');
+        });
+
+        await page.goto('/about');
+        await expect(page).toHaveURL(/\/about\/?$/);
+        await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+      });
+
+      test('stored non-default should redirect unprefixed URLs', async ({
+        page,
+      }) => {
+        await page.addInitScript(() => {
+          localStorage.setItem('jerna-lang', 'es');
+        });
+
+        await page.goto('/about');
+        await expect(page).toHaveURL(/\/es\/about\/?$/);
+        await expect(page.locator('html')).toHaveAttribute('lang', 'es');
+      });
+    });
+  });
+
   test.describe('Language Switcher', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.addInitScript(() => {
+        if (!localStorage.getItem('jerna-lang')) {
+          localStorage.setItem('jerna-lang', 'en');
+        }
+      });
+    });
     /**
      * Helper to open language switcher and click a language option.
      * Handles both desktop and mobile viewports.
@@ -125,7 +202,7 @@ test.describe('Internationalization (i18n)', () => {
       if (isMobile) {
         // On mobile, directly navigate to verify the English URL exists
         await page.goto('/');
-        await expect(page).toHaveURL('/');
+        await expect(page).toHaveURL(/\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'en');
         return;
       }
@@ -134,7 +211,7 @@ test.describe('Internationalization (i18n)', () => {
       await switchLanguage(page, 'en');
 
       // Should navigate to English version
-      await expect(page).toHaveURL('/');
+      await expect(page).toHaveURL(/\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     });
 
@@ -195,6 +272,11 @@ test.describe('Internationalization (i18n)', () => {
 
   test.describe('Content Translation', () => {
     test('English home page should show English content', async ({ page }) => {
+      await page.addInitScript(() => {
+        if (!localStorage.getItem('jerna-lang')) {
+          localStorage.setItem('jerna-lang', 'en');
+        }
+      });
       await page.goto('/');
 
       // Check for English-specific content in h1 ("Hi, I'm Jose")
@@ -239,6 +321,11 @@ test.describe('Internationalization (i18n)', () => {
 
   test.describe('SEO for i18n', () => {
     test('English page should have correct hreflang tags', async ({ page }) => {
+      await page.addInitScript(() => {
+        if (!localStorage.getItem('jerna-lang')) {
+          localStorage.setItem('jerna-lang', 'en');
+        }
+      });
       await page.goto('/');
 
       // Check for hreflang tags
@@ -246,9 +333,9 @@ test.describe('Internationalization (i18n)', () => {
       const hreflangEs = page.locator('link[hreflang="es"]');
       const hreflangDefault = page.locator('link[hreflang="x-default"]');
 
-      await expect(hreflangEn).toHaveAttribute('href', /\/$/);
+      await expect(hreflangEn).toHaveAttribute('href', /\/?$/);
       await expect(hreflangEs).toHaveAttribute('href', /\/es\/?$/);
-      await expect(hreflangDefault).toHaveAttribute('href', /\/$/);
+      await expect(hreflangDefault).toHaveAttribute('href', /\/?$/);
     });
 
     test('Spanish page should have correct hreflang tags', async ({ page }) => {
@@ -257,13 +344,18 @@ test.describe('Internationalization (i18n)', () => {
       const hreflangEn = page.locator('link[hreflang="en"]');
       const hreflangEs = page.locator('link[hreflang="es"]');
 
-      await expect(hreflangEn).toHaveAttribute('href', /\/$/);
+      await expect(hreflangEn).toHaveAttribute('href', /\/?$/);
       await expect(hreflangEs).toHaveAttribute('href', /\/es\/?$/);
     });
 
     test('English page should have og:locale set to en_US', async ({
       page,
     }) => {
+      await page.addInitScript(() => {
+        if (!localStorage.getItem('jerna-lang')) {
+          localStorage.setItem('jerna-lang', 'en');
+        }
+      });
       await page.goto('/');
 
       const ogLocale = page.locator('meta[property="og:locale"]');
@@ -308,8 +400,8 @@ test.describe('Internationalization (i18n)', () => {
     }) => {
       await page.goto('/es/about');
 
-      // Click logo - the link should be to /es/ (with trailing slash, first link in header)
-      const logoLink = page.locator('header a[href="/es/"]').first();
+      // Click logo - the link should be to /es
+      const logoLink = page.locator('header a[href="/es"]').first();
       await expect(logoLink).toBeVisible();
       await logoLink.click();
       await expect(page).toHaveURL(/\/es\/?$/);

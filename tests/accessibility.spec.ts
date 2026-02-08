@@ -1,6 +1,14 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Accessibility', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      if (!localStorage.getItem('jerna-lang')) {
+        localStorage.setItem('jerna-lang', 'en');
+      }
+    });
+  });
+
   test('should have skip to main content link', async ({ page }) => {
     await page.goto('/');
 

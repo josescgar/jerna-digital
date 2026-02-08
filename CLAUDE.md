@@ -192,13 +192,8 @@ src/
 │   ├── case-studies/ # MDX case study files (placeholder)
 │   └── config/       # Site configuration
 ├── layouts/          # BaseLayout.astro (main layout with SEO)
-├── pages/            # Astro pages (routing)
-│   ├── index.astro         # English home page
-│   ├── about.astro         # English about page
-│   ├── services.astro      # English services page
-│   ├── contact.astro       # English contact page
-│   ├── case-studies/       # English case studies
-│   └── [lang]/             # Localized pages (e.g., /es/*)
+├── pages/            # Astro pages (i18n routing)
+│   └── [...lang]/          # Optional locale segment (e.g., /, /es/*)
 │       ├── index.astro
 │       ├── about.astro
 │       ├── services.astro
@@ -245,11 +240,12 @@ src/
 
 - **Languages:** English (default) and Spanish
 - **URL Structure:** English at root (`/about`), Spanish with prefix (`/es/about`)
-- **Routing:** Astro's built-in i18n with `prefixDefaultLocale: false`
+- **Routing:** Optional locale segment via `src/pages/[...lang]/` with Astro i18n `prefixDefaultLocale: false`
 - **Translations:** `src/i18n/translations.ts` with type-safe `TranslationStrings` interface
 - **Utilities:** `src/i18n/utils.ts` for path generation, language detection, localStorage
 - **SEO:** hreflang tags and og:locale meta tags per language
 - **Language Switcher:** In header, saves preference to localStorage
+- **Default selection:** On unprefixed URLs, a small inline script redirects to the preferred language based on stored preference → browser language → English
 
 ### Component Patterns
 
@@ -277,6 +273,10 @@ src/
 - Strict mode enabled
 - Explicit return types on exported functions
 - Use `type` imports for types only
+
+### Comments
+
+- Avoid writing comments that add no value and keep verbosity low
 
 ## Environment Variables
 
@@ -319,23 +319,30 @@ The pre-push hook (`.husky/pre-push`) also runs Chromium-only E2E tests locally 
 
 ### Adding a new page
 
-1. Create English page at `src/pages/new-page.astro`
-2. Create localized page at `src/pages/[lang]/new-page.astro` with `getStaticPaths()`
-3. Import `BaseLayout` and pass `lang` prop
-4. Add translations to `src/i18n/translations.ts` (both `en` and `es`)
-5. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
+1. Create localized page at `src/pages/[...lang]/new-page.astro` with `getStaticPaths()`
+2. Import `BaseLayout` and pass `lang` prop
+3. Add translations to `src/i18n/translations.ts` (both `en` and `es`)
+4. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
 
 **Page pattern example:**
 
 ```astro
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getTranslations, languages, type Language } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
 
 export function getStaticPaths() {
-  return (Object.keys(languages) as Language[])
-    .filter((lang) => lang !== 'en')
-    .map((lang) => ({ params: { lang }, props: { lang } }));
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: lang === defaultLanguage ? {} : { lang },
+      props: { lang },
+    };
+  });
 }
 
 const { lang } = Astro.props;

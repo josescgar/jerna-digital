@@ -1,18 +1,21 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTASection from '@/components/sections/CTASection.astro';
-import { getTranslations, languages, type Language } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
 
 export function getStaticPaths() {
-  // Only generate non-default language paths here
-  // Default language (English) is handled by src/pages/case-studies/index.astro
-  return (Object.keys(languages) as Language[])
-    .filter((lang) => lang !== 'en')
-    .map((lang) => ({
-      params: { lang },
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: { lang: lang === defaultLanguage ? undefined : lang },
       props: { lang },
-    }));
+    };
+  });
 }
 
 interface Props {

@@ -145,6 +145,12 @@ dist/
 ├── services/index.html
 ├── contact/index.html
 ├── case-studies/index.html
+├── es/
+│   ├── index.html
+│   ├── about/index.html
+│   ├── services/index.html
+│   ├── contact/index.html
+│   └── case-studies/index.html
 ├── _astro/
 │   ├── [hashed].css
 │   └── [hashed].js

@@ -27,6 +27,14 @@ async function clickThemeToggle(page: Page): Promise<void> {
 }
 
 test.describe('Theme System', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      if (!localStorage.getItem('jerna-lang')) {
+        localStorage.setItem('jerna-lang', 'en');
+      }
+    });
+  });
+
   test.describe('Default Theme', () => {
     test('should use dark theme by default when no stored preference and dark system preference', async ({
       page,

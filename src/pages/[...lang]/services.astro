@@ -1,13 +1,27 @@
 ---
-/**
- * English Services page - renders at /services
- * Spanish version is at /es/services
- */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTASection from '@/components/sections/CTASection.astro';
-import { getTranslations, defaultLanguage } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
 
-const lang = defaultLanguage;
+export function getStaticPaths() {
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: { lang: lang === defaultLanguage ? undefined : lang },
+      props: { lang },
+    };
+  });
+}
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
 const t = getTranslations(lang);
 
 interface ServiceDetail {

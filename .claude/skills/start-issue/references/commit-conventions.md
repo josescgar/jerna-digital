@@ -8,8 +8,6 @@ This document defines the commit message format and conventions for the jerna-di
 <type>(<scope>): <description>
 
 [optional body]
-
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 ```
 
 ### Components
@@ -111,8 +109,6 @@ feat(auth): add session timeout handling
 Users were experiencing data loss when sessions expired silently.
 This change adds a warning modal 5 minutes before timeout and
 automatically saves draft data before logout.
-
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 ```
 
 ---
@@ -165,7 +161,6 @@ feat(scope): short description
 Optional longer description that explains the change
 in more detail. Wrap at 72 characters.
 
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 EOF
 )"
 ```
@@ -182,7 +177,4 @@ docs(scope): documentation update
 refactor(scope): code restructuring
 test(scope): add or update tests
 style(scope): formatting changes
-
-Always end with:
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 ```
