@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   ci:
@@ -35,6 +36,7 @@ jobs:
         run: npm run typecheck
 
       - name: Cache Playwright browsers
+        if: github.event.pull_request.draft != true
         id: playwright-cache
         uses: actions/cache@v4
         with:
@@ -44,12 +46,17 @@ jobs:
             ${{ runner.os }}-playwright-
 
       - name: Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        if: github.event.pull_request.draft != true && steps.playwright-cache.outputs.cache-hit != 'true'
         run: npx playwright install --with-deps chromium webkit
 
       - name: Install Playwright system dependencies
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        if: github.event.pull_request.draft != true && steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium webkit
 
-      - name: Run Playwright tests
-        run: npm run test
+      - name: Run Playwright tests (Chromium)
+        if: github.event_name == 'pull_request' && github.event.pull_request.draft != true
+        run: npx playwright test --project=chromium
+
+      - name: Run Playwright tests (all browsers)
+        if: github.event_name == 'push'
+        run: npx playwright test
