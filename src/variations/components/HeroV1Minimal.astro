@@ -24,12 +24,21 @@ const servicesHref = getLocalizedPath(lang, '/services');
 <section class="section relative overflow-hidden">
   <div class="relative z-10 container">
     <div class="mx-auto max-w-3xl text-center">
-      <!-- Simple status line -->
-      <p
-        class="animate-fade-in-up text-foreground-subtle mb-8 text-sm font-medium tracking-widest uppercase"
-      >
-        {t.hero.availableForProjects}
-      </p>
+      <!-- Availability badge with animated ping dot -->
+      <div class="animate-fade-in-up mb-8">
+        <span
+          class="bg-primary/10 text-primary inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
+        >
+          <span class="relative flex h-2 w-2">
+            <span
+              class="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+            ></span>
+            <span class="bg-primary relative inline-flex h-2 w-2 rounded-full"
+            ></span>
+          </span>
+          {t.hero.availableForProjects}
+        </span>
+      </div>
 
       <!-- Main heading — large, clean, no decorative gradient -->
       <h1
@@ -38,6 +47,7 @@ const servicesHref = getLocalizedPath(lang, '/services');
       >
         <span class="text-foreground">{t.hero.greeting} </span>
         <span class="text-gradient">{t.hero.name}</span>
+        <span class="text-secondary inline-block animate-bounce">.</span>
       </h1>
 
       <!-- Subtitle — generous spacing -->
