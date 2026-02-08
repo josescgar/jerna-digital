@@ -1,4 +1,7 @@
 ---
+import logoLight from '@/assets/logo/jerna-digital-horizontal.png';
+import logoDark from '@/assets/logo/jerna-digital-horizontal-dark.png';
+
 interface Props {
   class?: string;
 }
@@ -7,17 +10,59 @@ const { class: className } = Astro.props;
 ---
 
 <div class:list={['flex items-center gap-2', className]}>
-  <!-- Logo mark -->
-  <div class="bg-gradient-primary relative h-8 w-8 overflow-hidden rounded-lg">
-    <span
-      class="text-primary-foreground absolute inset-0 flex items-center justify-center text-lg font-bold"
+  <!-- Default logo (shown on non-variation pages) -->
+  <div class="logo-default contents">
+    <!-- Logo mark -->
+    <div
+      class="bg-gradient-primary relative h-8 w-8 overflow-hidden rounded-lg"
     >
-      J
+      <span
+        class="text-primary-foreground absolute inset-0 flex items-center justify-center text-lg font-bold"
+      >
+        J
+      </span>
+    </div>
+    <!-- Logo text -->
+    <span class="text-lg font-semibold tracking-tight">
+      <span class="text-foreground">Jerna</span>
+      <span class="text-foreground-muted">Digital</span>
     </span>
   </div>
-  <!-- Logo text -->
-  <span class="text-lg font-semibold tracking-tight">
-    <span class="text-foreground">Jerna</span>
-    <span class="text-foreground-muted">Digital</span>
-  </span>
+
+  <!-- New logo for variation pages — light mode version (black text) -->
+  <img
+    src={logoLight.src}
+    alt="Jerna Digital"
+    width={logoLight.width}
+    height={logoLight.height}
+    class="logo-variation logo-variation--light hidden h-8 w-auto"
+  />
+  <!-- New logo for variation pages — dark mode version (white text) -->
+  <img
+    src={logoDark.src}
+    alt="Jerna Digital"
+    width={logoDark.width}
+    height={logoDark.height}
+    class="logo-variation logo-variation--dark hidden h-8 w-auto"
+  />
 </div>
+
+<style is:global>
+  /* On variation pages, hide the default logo */
+  [data-variation] .logo-default {
+    display: none;
+  }
+
+  /* Dark mode (default): show the dark variant (white text) */
+  [data-variation] .logo-variation--dark {
+    display: block;
+  }
+
+  /* Light mode: show the light variant (black text), hide dark */
+  [data-variation][data-theme='light'] .logo-variation--light {
+    display: block;
+  }
+  [data-variation][data-theme='light'] .logo-variation--dark {
+    display: none;
+  }
+</style>
