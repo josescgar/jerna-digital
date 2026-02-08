@@ -19,21 +19,21 @@ const servicesHref = getLocalizedPath(lang, '/services');
 
 <section class="section relative overflow-hidden">
   <div class="relative z-10 container">
-    <div class="mx-auto max-w-4xl text-center">
-      <!-- Greeting badge -->
-      <div
-        class="animate-fade-in-up border-border bg-background-elevated mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2"
-      >
-        <span class="relative flex h-2 w-2">
-          <span
-            class="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-          ></span>
-          <span class="bg-primary relative inline-flex h-2 w-2 rounded-full"
-          ></span>
-        </span>
-        <span class="text-foreground-muted text-sm"
-          >{t.hero.availableForProjects}</span
+    <div class="mx-auto max-w-3xl text-center">
+      <!-- Availability badge with animated ping dot -->
+      <div class="animate-fade-in-up mb-8">
+        <span
+          class="bg-primary/10 text-primary inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
         >
+          <span class="relative flex h-2 w-2">
+            <span
+              class="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+            ></span>
+            <span class="bg-primary relative inline-flex h-2 w-2 rounded-full"
+            ></span>
+          </span>
+          {t.hero.availableForProjects}
+        </span>
       </div>
 
       <!-- Main heading -->
@@ -43,11 +43,12 @@ const servicesHref = getLocalizedPath(lang, '/services');
       >
         <span class="text-foreground">{t.hero.greeting} </span>
         <span class="text-gradient">{t.hero.name}</span>
+        <span class="text-primary inline-block animate-bounce">.</span>
       </h1>
 
       <!-- Subtitle -->
       <p
-        class="animate-fade-in-up text-foreground-muted mx-auto mt-6 max-w-2xl text-lg sm:text-xl md:text-2xl"
+        class="animate-fade-in-up text-foreground-muted mx-auto mt-8 max-w-xl text-lg leading-relaxed sm:text-xl"
         style="animation-delay: 0.2s;"
       >
         {t.hero.title}
@@ -55,7 +56,7 @@ const servicesHref = getLocalizedPath(lang, '/services');
 
       <!-- Description -->
       <p
-        class="animate-fade-in-up text-foreground-subtle mx-auto mt-4 max-w-xl text-base sm:text-lg"
+        class="animate-fade-in-up text-foreground-subtle mx-auto mt-4 max-w-md text-base"
         style="animation-delay: 0.3s;"
       >
         {t.hero.subtitle}
@@ -63,32 +64,18 @@ const servicesHref = getLocalizedPath(lang, '/services');
 
       <!-- CTAs -->
       <div
-        class="animate-fade-in-up mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+        class="animate-fade-in-up mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         style="animation-delay: 0.4s;"
       >
         <a
           href={contactHref}
-          class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg px-8 text-base font-medium transition-all hover:scale-[1.02] sm:w-auto"
+          class="border-primary text-primary hover:bg-primary hover:text-primary-foreground inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border-2 px-8 text-base font-medium transition-all sm:w-auto"
         >
           {t.hero.cta}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
         </a>
         <a
           href={servicesHref}
-          class="border-border bg-background-elevated text-foreground hover:border-border-subtle hover:bg-background-muted inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg border px-8 text-base font-medium transition-all sm:w-auto"
+          class="text-foreground-muted hover:text-foreground inline-flex h-12 w-full items-center justify-center gap-2 px-8 text-base font-medium underline underline-offset-4 transition-all sm:w-auto"
         >
           {t.hero.secondaryCta}
         </a>
@@ -96,95 +83,15 @@ const servicesHref = getLocalizedPath(lang, '/services');
 
       <!-- Trust indicators -->
       <div
-        class="animate-fade-in-up text-foreground-subtle mt-16 flex flex-wrap items-center justify-center gap-6 text-sm"
+        class="animate-fade-in-up text-foreground-subtle mt-20 flex flex-wrap items-center justify-center gap-4 text-sm"
         style="animation-delay: 0.5s;"
       >
-        <div class="flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="text-primary"
-          >
-            <path
-              d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
-            ></path>
-            <path d="m9 12 2 2 4-4"></path>
-          </svg>
-          <span>{t.hero.experience}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="text-primary"
-          >
-            <path
-              d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
-            ></path>
-            <path d="m9 12 2 2 4-4"></path>
-          </svg>
-          <span>{t.hero.startupsScaleups}</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="text-primary"
-          >
-            <path
-              d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"
-            ></path>
-            <path d="m9 12 2 2 4-4"></path>
-          </svg>
-          <span>{t.hero.remoteFirst}</span>
-        </div>
+        <span>{t.hero.experience}</span>
+        <span class="text-foreground-subtle/40">&middot;</span>
+        <span>{t.hero.startupsScaleups}</span>
+        <span class="text-foreground-subtle/40">&middot;</span>
+        <span>{t.hero.remoteFirst}</span>
       </div>
-    </div>
-  </div>
-
-  <!-- Decorative elements -->
-  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-    <!-- Floating shapes -->
-    <div
-      class="animate-float border-primary/20 from-primary/10 absolute top-[20%] left-[10%] h-16 w-16 rounded-xl border bg-gradient-to-br to-transparent"
-      style="animation-delay: 0s;"
-    >
-    </div>
-    <div
-      class="animate-float border-secondary/20 from-secondary/10 absolute top-[30%] right-[15%] h-12 w-12 rounded-lg border bg-gradient-to-br to-transparent"
-      style="animation-delay: 1s;"
-    >
-    </div>
-    <div
-      class="animate-float border-primary/20 from-primary/10 absolute bottom-[25%] left-[20%] h-10 w-10 rounded-lg border bg-gradient-to-br to-transparent"
-      style="animation-delay: 2s;"
-    >
-    </div>
-    <div
-      class="animate-float border-secondary/20 from-secondary/10 absolute right-[10%] bottom-[20%] h-14 w-14 rounded-xl border bg-gradient-to-br to-transparent"
-      style="animation-delay: 3s;"
-    >
     </div>
   </div>
 </section>

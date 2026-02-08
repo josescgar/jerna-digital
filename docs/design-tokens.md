@@ -23,38 +23,38 @@ The site supports both dark (default) and light themes. Colors automatically adj
 | `--color-foreground-muted`  | `#a1a1aa`  | `#4b5563`   | Secondary text              |
 | `--color-foreground-subtle` | `#71717a`  | `#6b7280`   | Tertiary text, placeholders |
 
-### Primary Colors (Orange)
+### Primary Colors (Green)
 
 | Token                        | Value     | Usage                      |
 | ---------------------------- | --------- | -------------------------- |
-| `--color-primary`            | `#f97316` | Primary buttons, links     |
-| `--color-primary-light`      | `#fb923c` | Hover states               |
-| `--color-primary-dark`       | `#ea580c` | Active states              |
+| `--color-primary`            | `#22c55e` | Primary buttons, links     |
+| `--color-primary-light`      | `#4ade80` | Hover states               |
+| `--color-primary-dark`       | `#16a34a` | Active states              |
 | `--color-primary-foreground` | `#0a0a0b` | Text on primary background |
 
-### Secondary Colors (Coral/Pink)
+### Secondary Colors (Slate)
 
 | Token                     | Value     | Usage             |
 | ------------------------- | --------- | ----------------- |
-| `--color-secondary`       | `#f472b6` | Secondary accents |
-| `--color-secondary-light` | `#f9a8d4` | Hover states      |
-| `--color-secondary-dark`  | `#ec4899` | Active states     |
+| `--color-secondary`       | `#64748b` | Secondary accents |
+| `--color-secondary-light` | `#94a3b8` | Hover states      |
+| `--color-secondary-dark`  | `#475569` | Active states     |
 
 ### Accent Colors (Gradients)
 
 | Token                   | Value     | Usage           |
 | ----------------------- | --------- | --------------- |
-| `--color-accent-orange` | `#f97316` | Gradient start  |
-| `--color-accent-coral`  | `#fb7185` | Gradient middle |
-| `--color-accent-pink`   | `#f472b6` | Gradient end    |
+| `--color-accent-orange` | `#22c55e` | Gradient start  |
+| `--color-accent-coral`  | `#16a34a` | Gradient middle |
+| `--color-accent-pink`   | `#0d9488` | Gradient end    |
 
 ### Border Colors
 
-| Token                   | Dark Value                | Light Value | Usage           |
-| ----------------------- | ------------------------- | ----------- | --------------- |
-| `--color-border`        | `#27272a`                 | `#e5e7eb`   | Default borders |
-| `--color-border-subtle` | `#3f3f46`                 | `#d1d5db`   | Hover borders   |
-| `--color-border-accent` | `rgba(249, 115, 22, 0.3)` | (unchanged) | Accent borders  |
+| Token                   | Dark Value               | Light Value | Usage           |
+| ----------------------- | ------------------------ | ----------- | --------------- |
+| `--color-border`        | `#27272a`                | `#e5e7eb`   | Default borders |
+| `--color-border-subtle` | `#3f3f46`                | `#d1d5db`   | Hover borders   |
+| `--color-border-accent` | `rgba(34, 197, 94, 0.3)` | (unchanged) | Accent borders  |
 
 ### Status Colors
 
@@ -69,11 +69,11 @@ The site supports both dark (default) and light themes. Colors automatically adj
 
 ### Font Families
 
-| Token            | Value                             | Usage     |
-| ---------------- | --------------------------------- | --------- |
-| `--font-sans`    | `Inter, system-ui, sans-serif`    | Body text |
-| `--font-heading` | `Space Grotesk, var(--font-sans)` | Headings  |
-| `--font-mono`    | `JetBrains Mono, monospace`       | Code      |
+| Token            | Value                          | Usage     |
+| ---------------- | ------------------------------ | --------- |
+| `--font-sans`    | `Inter, system-ui, sans-serif` | Body text |
+| `--font-heading` | `DM Sans, var(--font-sans)`    | Headings  |
+| `--font-mono`    | `JetBrains Mono, monospace`    | Code      |
 
 ### Font Sizes
 
@@ -195,10 +195,10 @@ The site supports both dark (default) and light themes. Colors automatically adj
 ### Gradients
 
 ```css
-.text-gradient       /* Orange to coral to pink text */
-.bg-gradient-primary /* Orange to coral background */
-.bg-gradient-secondary /* Coral to pink background */
-.bg-gradient-full    /* Full orange to pink gradient */
+.text-gradient       /* Green to forest green to teal text */
+.bg-gradient-primary /* Green to forest green background */
+.bg-gradient-secondary /* Forest green to teal background */
+.bg-gradient-full    /* Full green to teal gradient */
 ```
 
 ### Glass Effect

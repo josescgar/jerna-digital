@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Accepted (V1 chosen, variations cleaned up)
 
 ## Context
 
@@ -131,3 +131,7 @@ Using JavaScript to dynamically switch between variations.
 
 - New Google Fonts are only loaded on variation pages (not on existing pages)
 - VariationNav bottom bar only appears on variation pages
+
+## Outcome
+
+V1 "Minimal" was chosen as the winning design, with V3's playful animations (ping dot availability badge, bouncing green dot) incorporated into the final design. The V1 green color scheme (DM Sans heading font, `#22c55e` primary) was promoted to the permanent design tokens in `global.css`, the V1 hero layout replaced the original `HeroSection.astro`, and the PNG logo became the default in `Logo.astro`. All variation infrastructure (`src/variations/`, variation page routes `/v1/`–`/v4/`, variation-related code in `BaseLayout.astro`) was deleted.
