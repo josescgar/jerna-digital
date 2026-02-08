@@ -5,14 +5,10 @@ import { getTranslations, languages, type Language } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
 
 export function getStaticPaths() {
-  // Only generate non-default language paths here
-  // Default language (English) is handled by src/pages/case-studies/index.astro
-  return (Object.keys(languages) as Language[])
-    .filter((lang) => lang !== 'en')
-    .map((lang) => ({
-      params: { lang },
-      props: { lang },
-    }));
+  return (Object.keys(languages) as Language[]).map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
 }
 
 interface Props {

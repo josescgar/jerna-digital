@@ -4,14 +4,10 @@ import ContactForm from '@/components/interactive/ContactForm';
 import { getTranslations, languages, type Language } from '@/i18n/translations';
 
 export function getStaticPaths() {
-  // Only generate non-default language paths here
-  // Default language (English) is handled by src/pages/contact.astro
-  return (Object.keys(languages) as Language[])
-    .filter((lang) => lang !== 'en')
-    .map((lang) => ({
-      params: { lang },
-      props: { lang },
-    }));
+  return (Object.keys(languages) as Language[]).map((lang) => ({
+    params: { lang },
+    props: { lang },
+  }));
 }
 
 interface Props {
