@@ -107,9 +107,11 @@ Get your access key from [Web3Forms](https://web3forms.com/).
 
 The site is deployed to GitHub Pages via GitHub Actions:
 
-1. Push to `main` branch
-2. GitHub Actions builds the site
+1. Push to `main` triggers CI (lint, format, typecheck, E2E tests)
+2. After CI passes, the deploy workflow builds the site
 3. Site is deployed to GitHub Pages
+
+Manual deployment is available via the Actions tab (`workflow_dispatch`), bypassing CI.
 
 ## License
 
