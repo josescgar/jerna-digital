@@ -1,13 +1,20 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTASection from '@/components/sections/CTASection.astro';
-import { getTranslations, languages, type Language } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
 
 export function getStaticPaths() {
-  return (Object.keys(languages) as Language[]).map((lang) => ({
-    params: { lang },
-    props: { lang },
-  }));
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: { lang: lang === defaultLanguage ? undefined : lang },
+      props: { lang },
+    };
+  });
 }
 
 interface Props {

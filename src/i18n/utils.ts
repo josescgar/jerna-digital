@@ -20,7 +20,8 @@ const LANGUAGE_STORAGE_KEY = 'jerna-lang';
 
 /**
  * Get the localized path for a given language and path.
- * All languages are prefixed (e.g., /en/about, /es/about).
+ * Default language stays at root (e.g., /about), other languages get prefixed
+ * (e.g., /es/about).
  */
 export function getLocalizedPath(lang: Language, path: string): string {
   // Normalize path to start with /
@@ -30,8 +31,11 @@ export function getLocalizedPath(lang: Language, path: string): string {
   const stripped = normalizedPath.replace(languagePrefixRegex, '');
   const pathWithoutLang = stripped === '' ? '/' : stripped;
 
-  // Always prefix, including the default language
-  return `/${lang}${pathWithoutLang}`;
+  if (lang === defaultLanguage) {
+    return pathWithoutLang;
+  }
+
+  return pathWithoutLang === '/' ? `/${lang}` : `/${lang}${pathWithoutLang}`;
 }
 
 /**

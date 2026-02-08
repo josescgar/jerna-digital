@@ -8,14 +8,6 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jernadigital.com',
-  redirects: {
-    // Legacy root URLs (previously default locale without prefix)
-    '/': { status: 301, destination: '/en/' },
-    '/about': { status: 301, destination: '/en/about' },
-    '/services': { status: 301, destination: '/en/services' },
-    '/contact': { status: 301, destination: '/en/contact' },
-    '/case-studies': { status: 301, destination: '/en/case-studies' },
-  },
   integrations: [
     react(),
     mdx(),
@@ -36,7 +28,7 @@ export default defineConfig({
     defaultLocale: 'en',
     locales: ['en', 'es'],
     routing: {
-      prefixDefaultLocale: true,
+      prefixDefaultLocale: false,
     },
   },
   build: {

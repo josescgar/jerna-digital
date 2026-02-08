@@ -118,6 +118,7 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
               (Object.keys(languages) as Language[]).map((langKey) => (
                 <a
                   href={getLocalizedPath(langKey, currentPath)}
+                  onclick={`try{localStorage.setItem('jerna-lang','${langKey}')}catch(e){}`}
                   class={`hover:bg-background-subtle flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
                     langKey === lang
                       ? 'text-primary font-medium'
@@ -256,6 +257,7 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
               (Object.keys(languages) as Language[]).map((langKey) => (
                 <a
                   href={getLocalizedPath(langKey, currentPath)}
+                  onclick={`try{localStorage.setItem('jerna-lang','${langKey}')}catch(e){}`}
                   class={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     langKey === lang
                       ? 'bg-primary/10 text-primary'

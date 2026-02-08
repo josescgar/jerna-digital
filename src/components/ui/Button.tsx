@@ -80,7 +80,7 @@ export interface ButtonProps
  * @example
  * <Button variant="primary" size="lg">Get Started</Button>
  * <Button variant="outline">Learn More</Button>
- * <Button asChild><a href="/en/contact">Contact</a></Button>
+ * <Button asChild><a href="/contact">Contact</a></Button>
  */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
