@@ -1,0 +1,36 @@
+---
+import VariationLayout from '@/variations/layouts/VariationLayout.astro';
+import HeroV4Corporate from '@/variations/components/HeroV4Corporate.astro';
+import ServicesSection from '@/components/sections/ServicesSection.astro';
+import AboutPreviewSection from '@/components/sections/AboutPreviewSection.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import { getTranslations, languages, type Language } from '@/i18n/translations';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as Language[])
+    .filter((lang) => lang !== 'en')
+    .map((lang) => ({
+      params: { lang },
+      props: { lang },
+    }));
+}
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+---
+
+<VariationLayout
+  variation="v4"
+  lang={lang}
+  title={`V4 Corporate | ${t.site.name}`}
+  description={t.site.description}
+>
+  <HeroV4Corporate lang={lang} />
+  <ServicesSection lang={lang} />
+  <AboutPreviewSection lang={lang} />
+  <CTASection lang={lang} />
+</VariationLayout>

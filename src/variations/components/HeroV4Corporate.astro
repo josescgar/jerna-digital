@@ -1,0 +1,147 @@
+---
+/**
+ * V4: Corporate Hero — Professional, Structured
+ * Two-column grid, metrics panel, geometric background, sharp corners
+ */
+import {
+  getTranslations,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
+
+interface Props {
+  lang?: Language;
+}
+
+const lang = Astro.props.lang ?? defaultLanguage;
+const t = getTranslations(lang);
+
+const contactHref = getLocalizedPath(lang, '/contact');
+const servicesHref = getLocalizedPath(lang, '/services');
+
+const metrics = [
+  { value: '10+', label: lang === 'es' ? 'Años' : 'Years' },
+  { value: '20+', label: lang === 'es' ? 'Equipos' : 'Teams' },
+  {
+    value: lang === 'es' ? 'Seed→Serie B' : 'Seed→Series B',
+    label: lang === 'es' ? 'Etapas' : 'Stages',
+  },
+  {
+    value: lang === 'es' ? 'Global' : 'Global',
+    label: lang === 'es' ? 'Cobertura' : 'Coverage',
+  },
+];
+---
+
+<section class="section relative overflow-hidden">
+  <div class="relative z-10 container">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <!-- Text side -->
+      <div>
+        <!-- Corporate status line -->
+        <div
+          class="animate-fade-in-up border-primary/30 text-primary mb-8 inline-flex items-center gap-2 border-l-2 pl-4 text-sm font-medium tracking-wider uppercase"
+        >
+          <span class="bg-primary inline-block h-1.5 w-1.5 rounded-full"></span>
+          {t.hero.availableForProjects}
+        </div>
+
+        <!-- Heading — structured, professional -->
+        <h1
+          class="animate-fade-in-up text-4xl leading-tight font-bold tracking-tight sm:text-5xl md:text-6xl"
+          style="animation-delay: 0.1s;"
+        >
+          <span class="text-foreground">{t.hero.greeting} </span>
+          <span class="text-gradient">{t.hero.name}</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p
+          class="animate-fade-in-up text-foreground-muted mt-6 max-w-lg text-lg leading-relaxed"
+          style="animation-delay: 0.2s;"
+        >
+          {t.hero.title}
+        </p>
+
+        <!-- Description -->
+        <p
+          class="animate-fade-in-up text-foreground-subtle mt-3 max-w-md text-base"
+          style="animation-delay: 0.3s;"
+        >
+          {t.hero.subtitle}
+        </p>
+
+        <!-- CTAs — sharp corners for corporate feel -->
+        <div
+          class="animate-fade-in-up mt-10 flex flex-col gap-4 sm:flex-row"
+          style="animation-delay: 0.4s;"
+        >
+          <a
+            href={contactHref}
+            class="bg-gradient-primary text-primary-foreground hover:shadow-glow inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-semibold transition-all hover:scale-[1.02]"
+          >
+            {t.hero.cta}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+          <a
+            href={servicesHref}
+            class="border-border bg-background-elevated text-foreground hover:border-border-subtle inline-flex h-12 items-center justify-center gap-2 rounded-md border px-8 text-base font-medium transition-all"
+          >
+            {t.hero.secondaryCta}
+          </a>
+        </div>
+      </div>
+
+      <!-- Metrics panel — structured grid -->
+      <div class="animate-fade-in-up" style="animation-delay: 0.3s;">
+        <div
+          class="border-border bg-background-elevated grid grid-cols-2 gap-px overflow-hidden rounded-lg border"
+        >
+          {
+            metrics.map((metric) => (
+              <div class="bg-background p-6 text-center sm:p-8">
+                <div class="text-gradient text-2xl font-bold sm:text-3xl">
+                  {metric.value}
+                </div>
+                <div class="text-foreground-subtle mt-1 text-sm font-medium tracking-wider uppercase">
+                  {metric.label}
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Geometric background elements -->
+  <div class="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <!-- Grid lines -->
+    <div
+      class="border-primary/5 absolute top-[20%] right-[10%] h-40 w-40 border"
+    >
+    </div>
+    <div
+      class="border-primary/5 absolute bottom-[15%] left-[5%] h-32 w-32 border"
+    >
+    </div>
+    <div class="bg-primary/5 absolute top-[40%] left-[50%] h-px w-[200px]">
+    </div>
+    <div class="bg-primary/5 absolute top-[30%] left-[60%] h-[200px] w-px">
+    </div>
+  </div>
+</section>
