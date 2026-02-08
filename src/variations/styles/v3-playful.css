@@ -1,0 +1,42 @@
+/* ============================================
+   V3: PLAYFUL — Energetic, Approachable
+   Font: Outfit | Colors: Bright green + amber
+   ============================================ */
+
+[data-variation='v3'] {
+  /* Primary - Bright Green */
+  --color-primary: #4ade80;
+  --color-primary-light: #86efac;
+  --color-primary-dark: #22c55e;
+  --color-primary-foreground: #0a0a0b;
+
+  /* Secondary - Amber */
+  --color-secondary: #fbbf24;
+  --color-secondary-light: #fcd34d;
+  --color-secondary-dark: #f59e0b;
+
+  /* Accent colors for gradients */
+  --color-accent-orange: #a3e635;
+  --color-accent-coral: #4ade80;
+  --color-accent-pink: #34d399;
+
+  /* Border accent */
+  --color-border-accent: rgba(74, 222, 128, 0.3);
+
+  /* Typography */
+  --font-heading: 'Outfit', var(--font-sans);
+
+  /* Glow effects */
+  --shadow-glow: 0 0 20px rgba(74, 222, 128, 0.3);
+  --shadow-glow-lg: 0 0 40px rgba(74, 222, 128, 0.4);
+}
+
+/* Light mode overrides */
+[data-variation='v3'][data-theme='light'] {
+  --color-primary-foreground: #ffffff;
+}
+
+/* Selection color */
+[data-variation='v3'] ::selection {
+  background-color: rgba(74, 222, 128, 0.3);
+}

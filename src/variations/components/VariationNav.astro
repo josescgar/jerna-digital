@@ -1,0 +1,70 @@
+---
+import { variations, variationIds } from '@/variations/config';
+import type { VariationId } from '@/variations/types';
+import { defaultLanguage, type Language } from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
+
+interface Props {
+  current: VariationId;
+  lang?: Language;
+}
+
+const { current, lang = defaultLanguage } = Astro.props;
+
+function getVariationPath(v: VariationId): string {
+  return getLocalizedPath(lang, `/${v}/`);
+}
+
+const currentHomePath = getLocalizedPath(lang, '/');
+---
+
+<nav
+  class="fixed right-0 bottom-0 left-0 z-50 border-t border-white/10 bg-black/90 backdrop-blur-lg"
+  aria-label="Design variation switcher"
+>
+  <div class="container flex items-center justify-between py-3">
+    <span class="hidden text-xs font-medium text-white/50 sm:inline"
+      >Design Variations</span
+    >
+    <div class="flex flex-1 items-center justify-center gap-2 sm:flex-initial">
+      <!-- Current design link -->
+      <a
+        href={currentHomePath}
+        class="rounded-lg px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+      >
+        Current
+      </a>
+
+      <span class="text-white/20">|</span>
+
+      {
+        variationIds.map((v) => {
+          const config = variations[v];
+          const isActive = v === current;
+          return (
+            <a
+              href={getVariationPath(v)}
+              class:list={[
+                'rounded-lg px-3 py-1.5 text-xs font-medium transition-colors',
+                isActive
+                  ? 'bg-white/20 text-white'
+                  : 'text-white/60 hover:bg-white/10 hover:text-white',
+              ]}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {config.name}
+            </a>
+          );
+        })
+      }
+    </div>
+    <span class="hidden text-xs text-white/30 sm:inline">Evaluation mode</span>
+  </div>
+</nav>
+
+<!-- Add bottom padding to body so content isn't hidden behind nav -->
+<style is:global>
+  body:has([aria-label='Design variation switcher']) {
+    padding-bottom: 3.5rem;
+  }
+</style>

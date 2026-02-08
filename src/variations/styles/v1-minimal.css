@@ -1,0 +1,42 @@
+/* ============================================
+   V1: MINIMAL — Clean, Swiss, Restrained
+   Font: DM Sans | Colors: Forest green + slate
+   ============================================ */
+
+[data-variation='v1'] {
+  /* Primary - Forest Green */
+  --color-primary: #22c55e;
+  --color-primary-light: #4ade80;
+  --color-primary-dark: #16a34a;
+  --color-primary-foreground: #0a0a0b;
+
+  /* Secondary - Slate */
+  --color-secondary: #64748b;
+  --color-secondary-light: #94a3b8;
+  --color-secondary-dark: #475569;
+
+  /* Accent colors for gradients */
+  --color-accent-orange: #22c55e;
+  --color-accent-coral: #16a34a;
+  --color-accent-pink: #0d9488;
+
+  /* Border accent */
+  --color-border-accent: rgba(34, 197, 94, 0.3);
+
+  /* Typography */
+  --font-heading: 'DM Sans', var(--font-sans);
+
+  /* Glow effects */
+  --shadow-glow: 0 0 20px rgba(34, 197, 94, 0.3);
+  --shadow-glow-lg: 0 0 40px rgba(34, 197, 94, 0.4);
+}
+
+/* Light mode overrides */
+[data-variation='v1'][data-theme='light'] {
+  --color-primary-foreground: #ffffff;
+}
+
+/* Selection color */
+[data-variation='v1'] ::selection {
+  background-color: rgba(34, 197, 94, 0.3);
+}

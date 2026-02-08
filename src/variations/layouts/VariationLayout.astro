@@ -1,0 +1,26 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import VariationNav from '@/variations/components/VariationNav.astro';
+import type { VariationId } from '@/variations/types';
+import { defaultLanguage, type Language } from '@/i18n/translations';
+
+interface Props {
+  variation: VariationId;
+  lang?: Language;
+  title?: string;
+  description?: string;
+}
+
+const { variation, title, description } = Astro.props;
+const lang = Astro.props.lang ?? defaultLanguage;
+---
+
+<BaseLayout
+  lang={lang}
+  variation={variation}
+  {...title !== undefined && { title }}
+  {...description !== undefined && { description }}
+>
+  <slot />
+  <VariationNav current={variation} lang={lang} />
+</BaseLayout>
