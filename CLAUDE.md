@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Jerna Digital is an interactive portfolio website for a software development and engineering management consulting business. The site features a personal-forward branding approach with a dark mode aesthetic and warm coral/orange accent colors.
+Jerna Digital is an interactive portfolio website for a software development and engineering management consulting business. The site features a personal-forward branding approach with a dark mode aesthetic and green accent colors.
 
 ## Tech Stack
 
@@ -227,9 +227,9 @@ src/
 ### Design System
 
 - Design tokens defined in `src/styles/global.css` using `@theme`
-- Colors: Dark backgrounds (#0a0a0b base) with warm gradient accents (#f97316 to #fb7185)
+- Colors: Dark backgrounds (#0a0a0b base) with green accent colors (#22c55e primary)
 - Light mode support via `[data-theme='light']` CSS overrides
-- Typography: Inter (body) + Space Grotesk (headings)
+- Typography: Inter (body) + DM Sans (headings)
 - Consistent spacing and border radius scales
 
 ### Theme System (Light/Dark Mode)
