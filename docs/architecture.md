@@ -141,12 +141,10 @@ Source Files
      ↓
 dist/
 ├── index.html
-├── en/
-│   ├── index.html
-│   ├── about/index.html
-│   ├── services/index.html
-│   ├── contact/index.html
-│   └── case-studies/index.html
+├── about/index.html
+├── services/index.html
+├── contact/index.html
+├── case-studies/index.html
 ├── es/
 │   ├── index.html
 │   ├── about/index.html

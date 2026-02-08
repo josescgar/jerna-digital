@@ -193,7 +193,7 @@ src/
 │   └── config/       # Site configuration
 ├── layouts/          # BaseLayout.astro (main layout with SEO)
 ├── pages/            # Astro pages (i18n routing)
-│   └── [lang]/             # Localized pages (e.g., /en/*, /es/*)
+│   └── [...lang]/          # Optional locale segment (e.g., /, /es/*)
 │       ├── index.astro
 │       ├── about.astro
 │       ├── services.astro
@@ -239,12 +239,13 @@ src/
 ### i18n Architecture
 
 - **Languages:** English (default) and Spanish
-- **URL Structure:** English at `/en/*`, Spanish at `/es/*` (legacy root URLs redirect to `/en/*`)
-- **Routing:** Astro's built-in i18n with `prefixDefaultLocale: true`
+- **URL Structure:** English at root (`/about`), Spanish with prefix (`/es/about`)
+- **Routing:** Optional locale segment via `src/pages/[...lang]/` with Astro i18n `prefixDefaultLocale: false`
 - **Translations:** `src/i18n/translations.ts` with type-safe `TranslationStrings` interface
 - **Utilities:** `src/i18n/utils.ts` for path generation, language detection, localStorage
 - **SEO:** hreflang tags and og:locale meta tags per language
 - **Language Switcher:** In header, saves preference to localStorage
+- **Default selection:** On unprefixed URLs, a small inline script redirects to the preferred language based on stored preference → browser language → English
 
 ### Component Patterns
 
@@ -318,7 +319,7 @@ The pre-push hook (`.husky/pre-push`) also runs Chromium-only E2E tests locally 
 
 ### Adding a new page
 
-1. Create localized page at `src/pages/[lang]/new-page.astro` with `getStaticPaths()`
+1. Create localized page at `src/pages/[...lang]/new-page.astro` with `getStaticPaths()`
 2. Import `BaseLayout` and pass `lang` prop
 3. Add translations to `src/i18n/translations.ts` (both `en` and `es`)
 4. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
@@ -328,13 +329,20 @@ The pre-push hook (`.husky/pre-push`) also runs Chromium-only E2E tests locally 
 ```astro
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getTranslations, languages, type Language } from '@/i18n/translations';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
 
 export function getStaticPaths() {
-  return (Object.keys(languages) as Language[]).map((lang) => ({
-    params: { lang },
-    props: { lang },
-  }));
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: lang === defaultLanguage ? {} : { lang },
+      props: { lang },
+    };
+  });
 }
 
 const { lang } = Astro.props;

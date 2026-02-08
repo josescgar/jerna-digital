@@ -4,8 +4,8 @@
 
 Superseded
 
-Superseded by ADR 0007 (prefixed default locale routing with consolidated
-`src/pages/[lang]/` pages).
+Superseded by ADR 0007 (optional locale segment routing with consolidated
+`src/pages/[...lang]/` pages).
 
 ## Context
 
