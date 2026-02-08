@@ -30,11 +30,12 @@ This skill follows a phase-based workflow to ensure safe and proper releases.
 1. Fetch PR details:
 
 ```bash
-gh pr view <pr-number> --repo josescgar/jerna-digital --json number,title,body,state,mergeable,headRefName,commits
+gh pr view <pr-number> --repo josescgar/jerna-digital --json number,title,body,state,mergeable,isDraft,headRefName,commits
 ```
 
 2. Extract and verify:
    - PR title and body
+   - Draft status (must **not** be a draft — draft PRs skip E2E in CI)
    - Mergeable status (must be `MERGEABLE`)
    - Branch name (store for later cleanup)
    - Related issue number (parse from "Closes #X" or "Fixes #X" in body)
@@ -42,6 +43,7 @@ gh pr view <pr-number> --repo josescgar/jerna-digital --json number,title,body,s
 
 3. Error handling:
    - If PR not found → inform user and stop
+   - If PR is still a draft → inform user to mark it as ready first (`gh pr ready <pr-number>`) and stop
    - If PR not mergeable → inform user of status and stop
    - If no related issue → continue (this is optional)
 

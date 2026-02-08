@@ -194,13 +194,13 @@ If validation fails:
 
 ## Phase 4: PR Creation
 
-### Step 4.1: Run Full Validation
+### Step 4.1: Run Validation
 
 ```bash
-npm run lint && npm run format:check && npm run build && npm run test
+npm run lint && npm run format:check && npm run build
 ```
 
-All checks must pass before creating the PR.
+All checks must pass before creating the PR. The pre-push hook will additionally run Chromium E2E tests locally before the push goes through.
 
 ### Step 4.2: Push Branch
 
@@ -208,11 +208,14 @@ All checks must pass before creating the PR.
 git push -u origin <branch-name>
 ```
 
-### Step 4.3: Create Pull Request
+### Step 4.3: Create Draft Pull Request
+
+Create the PR as a **draft**. This triggers only lint/format/typecheck in CI (no E2E), keeping feedback fast during development iterations.
 
 ```bash
 gh pr create \
   --repo josescgar/jerna-digital \
+  --draft \
   --title "<type>(<scope>): <description>" \
   --body "$(cat <<'EOF'
 ## Summary
@@ -232,7 +235,7 @@ Closes #<issue-number>
 - [ ] `npm run lint` passes
 - [ ] `npm run format:check` passes
 - [ ] `npm run build` succeeds
-- [ ] `npm run test` passes
+- [ ] E2E tests pass (Chromium via pre-push hook)
 - [ ] Manual testing completed
 
 ## Screenshots (if applicable)
@@ -245,12 +248,21 @@ EOF
 )"
 ```
 
-### Step 4.4: Report Success
+### Step 4.4: Mark PR as Ready for Review
+
+After the draft PR is created and CI passes the lint/format/typecheck tier, mark it as ready for review. This triggers CI to run Chromium E2E tests.
+
+```bash
+gh pr ready <pr-number> --repo josescgar/jerna-digital
+```
+
+### Step 4.5: Report Success
 
 Display:
 
 - PR URL
 - Summary of what was implemented
+- Note that CI is now running Chromium E2E tests
 - Any follow-up items or notes
 
 ---
@@ -296,12 +308,14 @@ Claude: [Phase 3: Implementation]
         [Makes changes, creates commits, validates]
 
         [Phase 4: PR Creation]
-        Running full validation...
+        Running validation...
         All checks passed!
 
-        Creating pull request...
+        Creating draft pull request...
+        Draft PR created: https://github.com/josescgar/jerna-digital/pull/2
 
-        PR created: https://github.com/josescgar/jerna-digital/pull/2
+        Marking PR as ready for review...
+        PR #2 is now ready — CI will run Chromium E2E tests.
 ```
 
 ## Error Handling
