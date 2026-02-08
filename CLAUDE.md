@@ -297,6 +297,18 @@ E2E tests in `tests/` directory:
 - `i18n.spec.ts` - Language switching, URL structure, localStorage preference
 - `theme.spec.ts` - Theme toggle, localStorage persistence, FOUC prevention
 
+### CI Testing Strategy (3-Tier)
+
+CI runs different levels of E2E testing based on PR state:
+
+| Tier             | Trigger                    | What runs                      | ~Time  |
+| ---------------- | -------------------------- | ------------------------------ | ------ |
+| **Draft PR**     | `pull_request` (draft)     | Lint + format + typecheck only | ~1 min |
+| **Ready PR**     | `pull_request` (not draft) | Above + E2E on Chromium only   | ~3 min |
+| **Push to main** | `push` (after merge)       | Above + E2E on all 4 browsers  | ~7 min |
+
+The pre-push hook (`.husky/pre-push`) also runs Chromium-only E2E tests locally before push.
+
 ## Known Constraints
 
 1. **Static Site:** No server-side code, forms via Web3Forms
