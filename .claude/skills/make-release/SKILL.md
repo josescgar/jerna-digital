@@ -173,7 +173,7 @@ Important: Display the exact branch name in the question so the user knows what 
 3. If user confirms deletion:
 
 ```bash
-git push origin --delete <branch-name>
+git push --no-verify origin --delete <branch-name>
 ```
 
 4. Report final summary:
