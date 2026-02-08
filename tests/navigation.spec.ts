@@ -24,42 +24,44 @@ test.describe('Navigation', () => {
 
   test.describe('English Navigation', () => {
     test('should load home page successfully', async ({ page }) => {
-      await page.goto('/');
+      await page.goto('/en');
       await expect(page).toHaveTitle(/Jerna Digital/);
     });
 
     test('should navigate to About page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/about');
-      await expect(page).toHaveURL('/about');
+      await page.goto('/en');
+      await navigateViaHeader(page, '/en/about');
+      await expect(page).toHaveURL(/\/en\/about\/?$/);
       await expect(page.locator('h1')).toContainText('About');
     });
 
     test('should navigate to Services page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/services');
-      await expect(page).toHaveURL('/services');
+      await page.goto('/en');
+      await navigateViaHeader(page, '/en/services');
+      await expect(page).toHaveURL(/\/en\/services\/?$/);
       await expect(page.locator('h1')).toContainText('Services');
     });
 
     test('should navigate to Case Studies page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/case-studies');
-      await expect(page).toHaveURL('/case-studies');
+      await page.goto('/en');
+      await navigateViaHeader(page, '/en/case-studies');
+      await expect(page).toHaveURL(/\/en\/case-studies\/?$/);
       await expect(page.locator('h1')).toContainText('Case Studies');
     });
 
     test('should navigate to Contact page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/contact');
-      await expect(page).toHaveURL('/contact');
+      await page.goto('/en');
+      await navigateViaHeader(page, '/en/contact');
+      await expect(page).toHaveURL(/\/en\/contact\/?$/);
       await expect(page.locator('h1')).toContainText('Get in Touch');
     });
 
     test('should have working logo link to home', async ({ page }) => {
-      await page.goto('/about');
-      await page.click('header a[href="/"]');
-      await expect(page).toHaveURL('/');
+      await page.goto('/en/about');
+      const logoLink = page.locator('header a[href="/en/"]').first();
+      await expect(logoLink).toBeVisible();
+      await logoLink.click();
+      await expect(page).toHaveURL(/\/en\/?$/);
     });
   });
 
