@@ -170,8 +170,6 @@ For each commit, use the conventional commit format:
 <type>(<scope>): <description>
 
 [optional body]
-
-Co-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>
 ```
 
 See `references/commit-conventions.md` for details.
