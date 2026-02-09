@@ -449,7 +449,7 @@ export const translations: Record<Language, TranslationStrings> = {
         successSubtitle: "I'll get back to you within 24-48 hours.",
         error: 'Something went wrong',
         errorSubtitle:
-          'Please try again or email me directly at hello@jernadigital.com',
+          'Please try again or email me directly at jose.escobar.dev@gmail.com',
         tryAgain: 'Try again',
         validation: {
           nameRequired: 'Name is required',
@@ -754,7 +754,7 @@ export const translations: Record<Language, TranslationStrings> = {
         successSubtitle: 'Te responderé en 24-48 horas.',
         error: 'Algo salió mal',
         errorSubtitle:
-          'Por favor intenta de nuevo o escríbeme directamente a hello@jernadigital.com',
+          'Por favor intenta de nuevo o escríbeme directamente a jose.escobar.dev@gmail.com',
         tryAgain: 'Intentar de nuevo',
         validation: {
           nameRequired: 'El nombre es obligatorio',

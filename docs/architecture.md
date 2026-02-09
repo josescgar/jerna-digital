@@ -167,8 +167,7 @@ dist/
 │  Transport: HTTPS (GitHub Pages enforced)                   │
 │                                                              │
 │  Headers (via meta tags):                                   │
-│  ├── X-Content-Type-Options: nosniff                       │
-│  ├── X-Frame-Options: SAMEORIGIN                           │
+│  ├── X-Content-Type-Options: nosniff                  │
 │  └── Referrer-Policy: strict-origin-when-cross-origin      │
 │                                                              │
 │  Form Protection:                                           │
