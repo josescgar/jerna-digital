@@ -1,1 +1,1 @@
-npm run test -- --project=chromium
+npm run test:local
