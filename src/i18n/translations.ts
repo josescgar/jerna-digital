@@ -127,7 +127,6 @@ export interface TranslationStrings {
     methods: {
       email: { title: string; description: string };
       linkedin: { title: string; description: string };
-      schedule: { title: string; description: string; comingSoon: string };
     };
     form: {
       name: string;
@@ -168,6 +167,7 @@ export interface TranslationStrings {
   cta: {
     title: string;
     titleHighlight: string;
+    titleSuffix: string;
     subtitle: string;
   };
   // Footer
@@ -204,9 +204,9 @@ export const translations: Record<Language, TranslationStrings> = {
   en: {
     site: {
       name: 'Jerna Digital',
-      tagline: 'Engineering Excellence, Delivered',
+      tagline: 'AI-First Technical Leadership',
       description:
-        'Software Development and Engineering Management Consulting. Helping startups and scale-ups build exceptional engineering teams and products.',
+        'Fractional CTO & Technical Consulting for early-stage startups. AI-augmented development, architecture, and engineering team building from first commit to Series A.',
     },
     nav: {
       home: 'Home',
@@ -219,50 +219,51 @@ export const translations: Record<Language, TranslationStrings> = {
       greeting: "Hi, I'm",
       name: 'Jose',
       title:
-        'I help companies build exceptional engineering teams and products.',
+        'I help startups build the right technical foundations from first commit to Series A.',
       subtitle:
-        'Fractional CTO, Engineering Management Consultant, and Technical Advisor for startups and scale-ups.',
+        'Fractional CTO & Technical Consultant. I use AI agents as force multipliers to ship faster without cutting corners.',
       cta: "Let's Talk",
       secondaryCta: 'View Services',
-      availableForProjects: 'Available for new projects',
-      experience: '10+ years experience',
-      startupsScaleups: 'Startups & Scale-ups',
-      remoteFirst: 'Remote-first',
+      availableForProjects: 'Open to new projects',
+      experience: 'Hands-on engineering leadership',
+      startupsScaleups: 'Seed to Series A',
+      remoteFirst: 'AI-augmented development',
     },
     services: {
       title: 'Services',
-      subtitle: 'How I can help your company succeed',
+      subtitle:
+        'Three ways I help early-stage startups get their technical foundations right',
       technical: {
         title: 'Technical Consulting',
         description:
-          'Architecture reviews, code quality assessments, tech stack decisions, and technical debt remediation. Get expert guidance on your most challenging technical decisions.',
+          'Software auditing, architecture reviews, and AI-augmented workflows. I review your code, define the right patterns, and set up the tooling your team will actually use.',
         features: [
-          'Architecture reviews',
-          'Code quality assessments',
-          'Tech stack decisions',
+          'Architecture reviews & audits',
+          'Code reviews & patterns',
+          'AI-augmented workflows',
           'Technical debt remediation',
         ],
       },
       management: {
         title: 'Engineering Management',
         description:
-          'Team building, hiring processes, engineering culture, agile practices, and leadership coaching. Build high-performing engineering teams that deliver results.',
+          'Team building, hiring, culture, and delivery processes. Pragmatic engineering management — no cargo-cult agile, no unnecessary ceremonies. Just what works for your stage.',
         features: [
           'Team building & hiring',
           'Engineering culture',
-          'Agile practices',
-          'Leadership coaching',
+          'Delivery processes',
+          'Modern tooling adoption',
         ],
       },
       fractional: {
-        title: 'Fractional CTO/VPE',
+        title: 'Fractional CTO',
         description:
-          'Part-time executive technical leadership for companies that need strategic technical direction without the full-time commitment. Scale your technical capabilities efficiently.',
+          "The technical co-founder you need but don't have yet. I provide senior technical leadership for non-technical founders — from architecture decisions to investor conversations about your tech.",
         features: [
-          'Strategic direction',
-          'Executive leadership',
-          'Stakeholder management',
-          'Technical roadmapping',
+          'Technical strategy',
+          'Founder partnership',
+          'Investor readiness',
+          'AI tooling strategy',
         ],
       },
       cta: 'Learn More',
@@ -270,27 +271,27 @@ export const translations: Record<Language, TranslationStrings> = {
       bestFor: 'Best for',
       howWeWork: 'How We Work Together',
       howWeWorkSubtitle:
-        'A straightforward process designed to get you results quickly.',
+        'A straightforward process from discovery to a clear action plan.',
       process: {
         discovery: {
           title: 'Discovery Call',
           description:
-            'We start with a free 30-minute call to understand your situation and determine if I can help.',
+            'A free 30-minute call to understand where you are and where you need to go. No pitch, just an honest conversation.',
         },
         assessment: {
           title: 'Assessment',
           description:
-            'I conduct a thorough assessment of your current state, challenges, and goals.',
+            'I dig into your codebase, team, and processes to find the real blockers — not just the symptoms.',
         },
         proposal: {
-          title: 'Proposal',
+          title: 'Action Plan',
           description:
-            'You receive a detailed proposal with recommendations and engagement options.',
+            'You get a concrete action plan with priorities, timelines, and clear next steps. No fluff.',
         },
         engagement: {
-          title: 'Engagement',
+          title: 'Advisory & Support',
           description:
-            'We work together to implement solutions and achieve your goals.',
+            'I guide your team through implementation with ongoing reviews, check-ins, and course corrections.',
         },
       },
       details: {
@@ -298,7 +299,7 @@ export const translations: Record<Language, TranslationStrings> = {
           'System architecture review and recommendations',
           'Code quality and best practices assessment',
           'Technology stack evaluation and selection',
-          'Technical debt identification and remediation planning',
+          'AI-augmented development workflow setup',
           'Performance optimization strategies',
           'Security posture review',
         ],
@@ -306,106 +307,106 @@ export const translations: Record<Language, TranslationStrings> = {
           'Engineering team structure and organization',
           'Hiring process design and interview training',
           'Engineering culture and values definition',
-          'Agile and delivery process optimization',
+          'Pragmatic delivery process optimization',
           'Career ladders and growth frameworks',
           'One-on-one coaching for engineering managers',
         ],
         fractional: [
-          'Strategic technical direction and roadmapping',
-          'Executive-level stakeholder communication',
-          'Board and investor relations on technical matters',
+          'Technical strategy and roadmapping',
+          'Founder-level partnership on technical decisions',
+          'Investor and board communication on tech matters',
           'Vendor and partnership evaluation',
           'Build vs. buy decision making',
-          'Technical risk management',
+          'AI tooling strategy and adoption',
         ],
       },
       useCases: {
         technical: [
           'Before a major refactoring initiative',
-          'When selecting technologies for a new project',
-          'During due diligence for M&A',
-          'When experiencing scaling challenges',
+          'When selecting technologies for a new product',
+          'During due diligence for fundraising',
+          'When scaling challenges start hitting',
         ],
         management: [
-          'Scaling from a small team to multiple teams',
+          'Scaling from founding engineers to multiple teams',
           'Improving engineering velocity and delivery',
-          'Building a strong engineering culture',
-          'Developing your engineering managers',
+          'Building an engineering culture from scratch',
+          'Developing your first engineering managers',
         ],
         fractional: [
-          'Startups needing senior technical leadership',
-          'Companies between CTOs/VPEs',
-          'Organizations needing part-time strategic guidance',
-          'Companies preparing for fundraising',
+          'Non-technical founders needing a technical partner',
+          'Pre-seed to Series A startups without a CTO',
+          'Companies preparing for their next funding round',
+          'Teams needing senior technical direction part-time',
         ],
       },
     },
     about: {
       title: 'About',
-      subtitle: 'Your trusted engineering partner',
+      subtitle: 'The technical partner startups need at their earliest stages',
       intro:
-        "I'm Jose, a software engineer and engineering leader with over a decade of experience building products and teams at startups and scale-ups. I've seen what works and what doesn't, and I'm here to help you avoid common pitfalls and accelerate your success.",
+        "I'm Jose, a software engineer and engineering leader who spent over a decade building products and scaling teams in the iGaming industry — one of the most regulated, high-stakes, and technically demanding sectors out there. I've held CTO and Head of Engineering roles at companies shipping software at massive scale under strict compliance. Now I bring that same rigor to early-stage startups, augmented by AI tools that multiply what a small team can deliver.",
       journey: 'My Journey',
       approach: {
         title: 'My Approach',
         description:
-          "I believe in pragmatic, results-oriented consulting. Every company is different, and cookie-cutter solutions don't work. I take the time to understand your unique challenges and work alongside your team to implement solutions that stick.",
+          "I've been the engineer, the tech lead, the engineering manager, the head of engineering and the CTO. I know what it's like at every level, and I bring that full-stack perspective to every engagement.",
         items: [
           {
-            title: 'Listen First',
+            title: 'Strategic, Then Tactical',
             description:
-              'Every engagement starts with understanding your unique situation, challenges, and goals.',
+              'I start with the big picture — architecture, strategy, priorities — then get into the details through reviews and guidance.',
           },
           {
-            title: 'Pragmatic Solutions',
+            title: 'AI as a Force Multiplier',
             description:
-              'No ivory tower advice. I focus on practical solutions that work in the real world.',
+              'I use AI agents daily to multiply output — and I teach your team to do the same.',
           },
           {
-            title: 'Knowledge Transfer',
+            title: 'Transfer Everything',
             description:
-              "I don't just solve problems—I help your team learn to solve them independently.",
+              'My goal is to make myself unnecessary. Every process, decision, and pattern gets documented and handed over.',
           },
           {
-            title: 'Long-term Thinking',
+            title: 'Startup-Stage Pragmatism',
             description:
-              'Solutions designed for sustainability, not just quick fixes that create tech debt.',
+              'Perfect is the enemy of shipped. I optimize for what moves the needle now, not what looks good in a design doc.',
           },
         ],
       },
       values: {
         title: 'Values',
         items: [
-          'Trust & Transparency',
-          'Pragmatic Problem Solving',
-          'Continuous Improvement',
-          'Human-Centered Leadership',
+          'Radical Honesty',
+          'Ship Over Perfect',
+          "Teach, Don't Just Do",
+          'People First',
         ],
       },
       milestones: [
         {
-          year: '2010s',
-          title: 'Started in Tech',
+          year: '2012',
+          title: 'Software Engineer',
           description:
-            'Began my career as a software engineer, working on web applications and learning the fundamentals of building scalable systems.',
+            'Started building web applications and backend systems, learning the fundamentals of scalable software from the ground up.',
         },
         {
-          year: 'Mid 2010s',
-          title: 'Engineering Leadership',
+          year: '2016',
+          title: 'Engineering Lead',
           description:
-            'Transitioned into engineering management, leading teams and discovering my passion for building high-performing engineering organizations.',
+            'Moved into technical leadership in the iGaming industry, leading teams building high-throughput, regulated platforms.',
         },
         {
-          year: 'Late 2010s',
-          title: 'Scale-up Experience',
+          year: '2019',
+          title: 'CTO & Head of Engineering',
           description:
-            'Helped scale engineering teams at fast-growing startups, navigating the challenges of rapid growth and technical complexity.',
+            'Held CTO and Head of Engineering roles in the iGaming industry, scaling teams and shipping products in one of the most demanding regulated sectors.',
         },
         {
-          year: '2020s',
-          title: 'Consulting & Advisory',
+          year: '2026',
+          title: 'Jerna Digital',
           description:
-            'Founded Jerna Digital to help other companies benefit from my experience building and leading engineering teams.',
+            'Founded Jerna Digital to help early-stage startups build their technical foundations right — with AI-augmented workflows from day one.',
         },
       ],
       learnMore: 'Learn more about my approach',
@@ -413,7 +414,7 @@ export const translations: Record<Language, TranslationStrings> = {
     contact: {
       title: 'Get in Touch',
       subtitle:
-        "Ready to take your engineering organization to the next level? Let's discuss how I can help.",
+        "Need a technical audit, a fractional CTO, or help building your engineering team? Let's figure out the right next step together.",
       sendMessage: 'Send a message',
       sendMessageSubtitle:
         "Fill out the form below and I'll get back to you within 24-48 hours.",
@@ -423,18 +424,12 @@ export const translations: Record<Language, TranslationStrings> = {
       whatToExpect: 'What to expect',
       expectations: [
         'Response within 24-48 hours',
-        'Free 30-minute discovery call',
         'No obligations or pressure',
-        'Confidential discussion',
+        "Honest assessment — if I can't help, I'll tell you",
       ],
       methods: {
         email: { title: 'Email', description: 'For general inquiries' },
         linkedin: { title: 'LinkedIn', description: 'Connect professionally' },
-        schedule: {
-          title: 'Schedule',
-          description: 'Book a discovery call',
-          comingSoon: 'Coming soon',
-        },
       },
       form: {
         name: 'Name',
@@ -442,7 +437,8 @@ export const translations: Record<Language, TranslationStrings> = {
         email: 'Email',
         emailPlaceholder: 'your@email.com',
         message: 'Message',
-        messagePlaceholder: 'Tell me about your project or challenge...',
+        messagePlaceholder:
+          'Tell me about your startup and where you need technical help...',
         submit: 'Send Message',
         sending: 'Sending...',
         success: 'Message sent successfully!',
@@ -463,7 +459,7 @@ export const translations: Record<Language, TranslationStrings> = {
     },
     caseStudies: {
       title: 'Case Studies',
-      subtitle: "See how I've helped companies like yours",
+      subtitle: 'Real problems, real solutions — from early-stage to scale',
       viewCase: 'View Case Study',
       comingSoon: 'Case studies coming soon',
       comingSoonBadge: 'Coming Soon',
@@ -473,17 +469,19 @@ export const translations: Record<Language, TranslationStrings> = {
       getInTouchToLearnMore: 'Get in touch to learn more',
     },
     cta: {
-      title: 'Ready to',
-      titleHighlight: 'transform',
+      title: 'Need a technical partner for',
+      titleHighlight: 'your startup',
+      titleSuffix: '?',
       subtitle:
-        "Let's discuss how I can help you build exceptional engineering teams and products. No commitment, just a conversation.",
+        "Drop me a message — no pitch deck required. Let's figure out if I can help.",
     },
     footer: {
-      copyright: '© {year} Jerna Digital. All rights reserved.',
+      copyright: '\u00A9 {year} Jerna Digital. All rights reserved.',
       builtWith: 'Built with Astro',
       navigation: 'Navigation',
       getInTouch: 'Get in Touch',
-      getInTouchSubtitle: "Ready to discuss your project? Let's talk.",
+      getInTouchSubtitle:
+        "Building something and need a technical partner? Let's talk.",
     },
     common: {
       learnMore: 'Learn More',
@@ -506,239 +504,235 @@ export const translations: Record<Language, TranslationStrings> = {
   es: {
     site: {
       name: 'Jerna Digital',
-      tagline: 'Excelencia en Ingeniería, Entregada',
+      tagline: 'Liderazgo T\u00E9cnico AI-First',
       description:
-        'Consultoría de Desarrollo de Software y Gestión de Ingeniería. Ayudando a startups y scale-ups a construir equipos de ingeniería y productos excepcionales.',
+        'CTO Fraccional y Consultor\u00EDa T\u00E9cnica para startups en fase inicial. Desarrollo potenciado por IA, arquitectura y construcci\u00F3n de equipos de ingenier\u00EDa desde el primer commit hasta la Serie A.',
     },
     nav: {
       home: 'Inicio',
-      about: 'Sobre mí',
+      about: 'Sobre m\u00ED',
       services: 'Servicios',
-      caseStudies: 'Casos de Éxito',
+      caseStudies: 'Casos de \u00C9xito',
       contact: 'Contacto',
     },
     hero: {
       greeting: 'Hola, soy',
       name: 'Jose',
       title:
-        'Ayudo a empresas a construir equipos de ingeniería y productos excepcionales.',
+        'Ayudo a startups a construir las bases t\u00E9cnicas correctas desde el primer commit hasta la Serie A.',
       subtitle:
-        'CTO Fraccional, Consultor de Gestión de Ingeniería y Asesor Técnico para startups y scale-ups.',
+        'CTO Fraccional y Consultor T\u00E9cnico. Uso agentes de IA como multiplicadores de fuerza para entregar m\u00E1s r\u00E1pido sin sacrificar calidad.',
       cta: 'Hablemos',
       secondaryCta: 'Ver Servicios',
-      availableForProjects: 'Disponible para nuevos proyectos',
-      experience: '+10 años de experiencia',
-      startupsScaleups: 'Startups y Scale-ups',
-      remoteFirst: 'Trabajo remoto',
+      availableForProjects: 'Abierto a nuevos proyectos',
+      experience: 'Liderazgo de ingenier\u00EDa hands-on',
+      startupsScaleups: 'De Seed a Serie A',
+      remoteFirst: 'Desarrollo potenciado por IA',
     },
     services: {
       title: 'Servicios',
-      subtitle: 'Cómo puedo ayudar a tu empresa a tener éxito',
+      subtitle:
+        'Tres formas en las que ayudo a startups en fase inicial a sentar sus bases t\u00E9cnicas',
       technical: {
-        title: 'Consultoría Técnica',
+        title: 'Consultor\u00EDa T\u00E9cnica',
         description:
-          'Revisiones de arquitectura, evaluaciones de calidad de código, decisiones de stack tecnológico y remediación de deuda técnica. Obtén orientación experta en tus decisiones técnicas más desafiantes.',
+          'Auditor\u00EDa de software, revisiones de arquitectura y flujos de trabajo potenciados por IA. Reviso tu c\u00F3digo, defino los patrones correctos y configuro las herramientas que tu equipo realmente usar\u00E1.',
         features: [
-          'Revisiones de arquitectura',
-          'Evaluaciones de calidad de código',
-          'Decisiones de stack tecnológico',
-          'Remediación de deuda técnica',
+          'Revisiones y auditor\u00EDas de arquitectura',
+          'Revisiones de c\u00F3digo y patrones',
+          'Flujos de trabajo con IA',
+          'Remediaci\u00F3n de deuda t\u00E9cnica',
         ],
       },
       management: {
-        title: 'Gestión de Ingeniería',
+        title: 'Engineering Management',
         description:
-          'Construcción de equipos, procesos de contratación, cultura de ingeniería, prácticas ágiles y coaching de liderazgo. Construye equipos de ingeniería de alto rendimiento que entregan resultados.',
+          'Construcci\u00F3n de equipos, contrataci\u00F3n, cultura y procesos de entrega. Gesti\u00F3n pragm\u00E1tica \u2014 sin agile de manual, sin ceremonias innecesarias. Solo lo que funciona para tu etapa.',
         features: [
-          'Construcción de equipos y contratación',
-          'Cultura de ingeniería',
-          'Prácticas ágiles',
-          'Coaching de liderazgo',
+          'Construcci\u00F3n de equipos y contrataci\u00F3n',
+          'Cultura de ingenier\u00EDa',
+          'Procesos de entrega',
+          'Adopci\u00F3n de herramientas modernas',
         ],
       },
       fractional: {
-        title: 'CTO/VPE Fraccional',
+        title: 'CTO Fraccional',
         description:
-          'Liderazgo técnico ejecutivo a tiempo parcial para empresas que necesitan dirección técnica estratégica sin el compromiso a tiempo completo. Escala tus capacidades técnicas de manera eficiente.',
+          'El cofundador t\u00E9cnico que necesitas pero a\u00FAn no tienes. Proporciono liderazgo t\u00E9cnico senior para founders no t\u00E9cnicos \u2014 desde decisiones de arquitectura hasta conversaciones con inversores sobre tu tecnolog\u00EDa.',
         features: [
-          'Dirección estratégica',
-          'Liderazgo ejecutivo',
-          'Gestión de stakeholders',
-          'Roadmapping técnico',
+          'Estrategia t\u00E9cnica',
+          'Partnership con founders',
+          'Preparaci\u00F3n para inversores',
+          'Estrategia de herramientas IA',
         ],
       },
-      cta: 'Saber Más',
-      whatsIncluded: 'Qué incluye',
+      cta: 'Saber M\u00E1s',
+      whatsIncluded: 'Qu\u00E9 incluye',
       bestFor: 'Ideal para',
-      howWeWork: 'Cómo Trabajamos Juntos',
+      howWeWork: 'C\u00F3mo Trabajamos Juntos',
       howWeWorkSubtitle:
-        'Un proceso sencillo diseñado para obtener resultados rápidamente.',
+        'Un proceso directo desde el descubrimiento hasta un plan de acci\u00F3n claro.',
       process: {
         discovery: {
           title: 'Llamada de Descubrimiento',
           description:
-            'Comenzamos con una llamada gratuita de 30 minutos para entender tu situación y determinar si puedo ayudar.',
+            'Una llamada gratuita de 30 minutos para entender d\u00F3nde est\u00E1s y a d\u00F3nde necesitas llegar. Sin pitch, solo una conversaci\u00F3n honesta.',
         },
         assessment: {
-          title: 'Evaluación',
+          title: 'Evaluaci\u00F3n',
           description:
-            'Realizo una evaluación exhaustiva de tu estado actual, desafíos y objetivos.',
+            'Analizo tu c\u00F3digo, equipo y procesos para encontrar los verdaderos bloqueos \u2014 no solo los s\u00EDntomas.',
         },
         proposal: {
-          title: 'Propuesta',
+          title: 'Plan de Acci\u00F3n',
           description:
-            'Recibes una propuesta detallada con recomendaciones y opciones de colaboración.',
+            'Recibes un plan de acci\u00F3n concreto con prioridades, plazos y pr\u00F3ximos pasos claros. Sin relleno.',
         },
         engagement: {
-          title: 'Colaboración',
+          title: 'Asesor\u00EDa y Soporte',
           description:
-            'Trabajamos juntos para implementar soluciones y alcanzar tus objetivos.',
+            'Gu\u00EDo a tu equipo durante la implementaci\u00F3n con revisiones continuas, seguimiento y correcciones de rumbo.',
         },
       },
       details: {
         technical: [
-          'Revisión de arquitectura de sistemas y recomendaciones',
-          'Evaluación de calidad de código y mejores prácticas',
-          'Evaluación y selección de stack tecnológico',
-          'Identificación de deuda técnica y planificación de remediación',
-          'Estrategias de optimización de rendimiento',
-          'Revisión de postura de seguridad',
+          'Revisi\u00F3n de arquitectura de sistemas y recomendaciones',
+          'Evaluaci\u00F3n de calidad de c\u00F3digo y mejores pr\u00E1cticas',
+          'Evaluaci\u00F3n y selecci\u00F3n de stack tecnol\u00F3gico',
+          'Configuraci\u00F3n de flujos de desarrollo con IA',
+          'Estrategias de optimizaci\u00F3n de rendimiento',
+          'Revisi\u00F3n de postura de seguridad',
         ],
         management: [
-          'Estructura y organización del equipo de ingeniería',
-          'Diseño de procesos de contratación y formación en entrevistas',
-          'Definición de cultura y valores de ingeniería',
-          'Optimización de procesos ágiles y de entrega',
+          'Estructura y organizaci\u00F3n del equipo de ingenier\u00EDa',
+          'Dise\u00F1o de procesos de contrataci\u00F3n y formaci\u00F3n en entrevistas',
+          'Definici\u00F3n de cultura y valores de ingenier\u00EDa',
+          'Optimizaci\u00F3n pragm\u00E1tica de procesos de entrega',
           'Planes de carrera y frameworks de crecimiento',
-          'Coaching individual para managers de ingeniería',
+          'Coaching individual para managers de ingenier\u00EDa',
         ],
         fractional: [
-          'Dirección técnica estratégica y roadmapping',
-          'Comunicación con stakeholders a nivel ejecutivo',
-          'Relaciones con inversores y junta directiva en temas técnicos',
-          'Evaluación de proveedores y partnerships',
+          'Estrategia t\u00E9cnica y roadmapping',
+          'Partnership a nivel de founder en decisiones t\u00E9cnicas',
+          'Comunicaci\u00F3n con inversores y junta sobre temas t\u00E9cnicos',
+          'Evaluaci\u00F3n de proveedores y partnerships',
           'Toma de decisiones build vs. buy',
-          'Gestión de riesgos técnicos',
+          'Estrategia de adopci\u00F3n de herramientas IA',
         ],
       },
       useCases: {
         technical: [
-          'Antes de una iniciativa de refactorización importante',
-          'Al seleccionar tecnologías para un nuevo proyecto',
-          'Durante la due diligence para M&A',
-          'Cuando se experimentan desafíos de escalabilidad',
+          'Antes de una iniciativa de refactorizaci\u00F3n importante',
+          'Al seleccionar tecnolog\u00EDas para un nuevo producto',
+          'Durante la due diligence para rondas de financiaci\u00F3n',
+          'Cuando empiezan los problemas de escalabilidad',
         ],
         management: [
-          'Escalando de un equipo pequeño a múltiples equipos',
-          'Mejorando la velocidad de ingeniería y entrega',
-          'Construyendo una cultura de ingeniería sólida',
-          'Desarrollando a tus managers de ingeniería',
+          'Escalando de los ingenieros fundadores a m\u00FAltiples equipos',
+          'Mejorando la velocidad de ingenier\u00EDa y entrega',
+          'Construyendo una cultura de ingenier\u00EDa desde cero',
+          'Desarrollando a tus primeros managers de ingenier\u00EDa',
         ],
         fractional: [
-          'Startups que necesitan liderazgo técnico senior',
-          'Empresas entre CTOs/VPEs',
-          'Organizaciones que necesitan guía estratégica a tiempo parcial',
-          'Empresas preparándose para rondas de financiación',
+          'Founders no t\u00E9cnicos que necesitan un socio t\u00E9cnico',
+          'Startups de pre-seed a Serie A sin CTO',
+          'Empresas prepar\u00E1ndose para su pr\u00F3xima ronda',
+          'Equipos que necesitan direcci\u00F3n t\u00E9cnica senior a tiempo parcial',
         ],
       },
     },
     about: {
-      title: 'Sobre mí',
-      subtitle: 'Tu socio de confianza en ingeniería',
+      title: 'Sobre m\u00ED',
+      subtitle:
+        'El socio t\u00E9cnico que las startups necesitan en sus primeras etapas',
       intro:
-        'Soy Jose, ingeniero de software y líder de ingeniería con más de una década de experiencia construyendo productos y equipos en startups y scale-ups. He visto qué funciona y qué no, y estoy aquí para ayudarte a evitar errores comunes y acelerar tu éxito.',
+        'Soy Jose, ingeniero de software y l\u00EDder de ingenier\u00EDa con m\u00E1s de una d\u00E9cada de experiencia construyendo productos y escalando equipos en la industria del iGaming \u2014 uno de los sectores m\u00E1s regulados, exigentes y t\u00E9cnicamente complejos que existen. He ocupado puestos de CTO y Head of Engineering en empresas que entregaban software a gran escala bajo estricto cumplimiento normativo. Ahora llevo ese mismo rigor a startups en fase inicial, potenciado por herramientas de IA que multiplican lo que un equipo peque\u00F1o puede entregar.',
       journey: 'Mi Trayectoria',
       approach: {
         title: 'Mi Enfoque',
         description:
-          'Creo en la consultoría pragmática y orientada a resultados. Cada empresa es diferente, y las soluciones genéricas no funcionan. Me tomo el tiempo para entender tus desafíos únicos y trabajo junto a tu equipo para implementar soluciones que perduren.',
+          'He sido el ingeniero, el tech lead, el engineering manager, el head of engineering y el CTO. S\u00E9 c\u00F3mo es en cada nivel, y llevo esa perspectiva completa a cada colaboraci\u00F3n.',
         items: [
           {
-            title: 'Escuchar Primero',
+            title: 'Estrat\u00E9gico, Luego T\u00E1ctico',
             description:
-              'Cada colaboración comienza entendiendo tu situación única, desafíos y objetivos.',
+              'Empiezo con la visi\u00F3n general \u2014 arquitectura, estrategia, prioridades \u2014 y luego entro en los detalles con revisiones y gu\u00EDa.',
           },
           {
-            title: 'Soluciones Pragmáticas',
+            title: 'IA como Multiplicador de Fuerza',
             description:
-              'Sin consejos teóricos. Me enfoco en soluciones prácticas que funcionan en el mundo real.',
+              'Uso agentes de IA a diario para multiplicar resultados \u2014 y ense\u00F1o a tu equipo a hacer lo mismo.',
           },
           {
-            title: 'Transferencia de Conocimiento',
+            title: 'Transferir Todo',
             description:
-              'No solo resuelvo problemas—ayudo a tu equipo a aprender a resolverlos de forma independiente.',
+              'Mi objetivo es hacerme innecesario. Cada proceso, decisi\u00F3n y patr\u00F3n queda documentado y entregado.',
           },
           {
-            title: 'Pensamiento a Largo Plazo',
+            title: 'Pragmatismo de Startup',
             description:
-              'Soluciones diseñadas para la sostenibilidad, no solo arreglos rápidos que crean deuda técnica.',
+              'Lo perfecto es enemigo de lo entregado. Optimizo para lo que mueve la aguja ahora, no para lo que queda bonito en un documento.',
           },
         ],
       },
       values: {
         title: 'Valores',
         items: [
-          'Confianza y Transparencia',
-          'Resolución Pragmática de Problemas',
-          'Mejora Continua',
-          'Liderazgo Centrado en las Personas',
+          'Honestidad Radical',
+          'Entregar Antes que Perfeccionar',
+          'Ense\u00F1ar, No Solo Hacer',
+          'Las Personas Primero',
         ],
       },
       milestones: [
         {
-          year: '2010s',
-          title: 'Inicio en Tecnología',
+          year: '2012',
+          title: 'Ingeniero de Software',
           description:
-            'Comencé mi carrera como ingeniero de software, trabajando en aplicaciones web y aprendiendo los fundamentos de construir sistemas escalables.',
+            'Comenc\u00E9 construyendo aplicaciones web y sistemas backend, aprendiendo los fundamentos del software escalable desde la base.',
         },
         {
-          year: 'Mediados 2010s',
-          title: 'Liderazgo en Ingeniería',
+          year: '2016',
+          title: 'L\u00EDder de Ingenier\u00EDa',
           description:
-            'Transicioné a gestión de ingeniería, liderando equipos y descubriendo mi pasión por construir organizaciones de ingeniería de alto rendimiento.',
+            'Pas\u00E9 al liderazgo t\u00E9cnico en la industria del iGaming, liderando equipos que constru\u00EDan plataformas reguladas de alto rendimiento.',
         },
         {
-          year: 'Finales 2010s',
-          title: 'Experiencia en Scale-ups',
+          year: '2019',
+          title: 'CTO y Head of Engineering',
           description:
-            'Ayudé a escalar equipos de ingeniería en startups de rápido crecimiento, navegando los desafíos del crecimiento rápido y la complejidad técnica.',
+            'Ocup\u00E9 roles de CTO y Head of Engineering en la industria del iGaming, escalando equipos y entregando productos en uno de los sectores regulados m\u00E1s exigentes.',
         },
         {
-          year: '2020s',
-          title: 'Consultoría y Asesoría',
+          year: '2026',
+          title: 'Jerna Digital',
           description:
-            'Fundé Jerna Digital para ayudar a otras empresas a beneficiarse de mi experiencia construyendo y liderando equipos de ingeniería.',
+            'Fund\u00E9 Jerna Digital para ayudar a startups en fase inicial a construir sus bases t\u00E9cnicas correctamente \u2014 con flujos de trabajo potenciados por IA desde el d\u00EDa uno.',
         },
       ],
-      learnMore: 'Conoce más sobre mi enfoque',
+      learnMore: 'Conoce m\u00E1s sobre mi enfoque',
     },
     contact: {
       title: 'Contacto',
       subtitle:
-        '¿Listo para llevar tu organización de ingeniería al siguiente nivel? Hablemos sobre cómo puedo ayudar.',
-      sendMessage: 'Envía un mensaje',
+        '\u00BFNecesitas una auditor\u00EDa t\u00E9cnica, un CTO fraccional o ayuda construyendo tu equipo de ingenier\u00EDa? Busquemos juntos el siguiente paso correcto.',
+      sendMessage: 'Env\u00EDa un mensaje',
       sendMessageSubtitle:
-        'Completa el formulario y te responderé en 24-48 horas.',
+        'Completa el formulario y te responder\u00E9 en 24-48 horas.',
       otherWays: 'Otras formas de contactarme',
       otherWaysSubtitle:
-        '¿Prefieres otro método? No dudes en contactarme por cualquiera de estos canales.',
-      whatToExpect: 'Qué esperar',
+        '\u00BFPrefieres otro m\u00E9todo? No dudes en contactarme por cualquiera de estos canales.',
+      whatToExpect: 'Qu\u00E9 esperar',
       expectations: [
         'Respuesta en 24-48 horas',
-        'Llamada de descubrimiento gratuita de 30 minutos',
-        'Sin obligaciones ni presión',
-        'Conversación confidencial',
+        'Sin obligaciones ni presi\u00F3n',
+        'Evaluaci\u00F3n honesta \u2014 si no puedo ayudar, te lo dir\u00E9',
       ],
       methods: {
         email: { title: 'Email', description: 'Para consultas generales' },
         linkedin: {
           title: 'LinkedIn',
           description: 'Conecta profesionalmente',
-        },
-        schedule: {
-          title: 'Agendar',
-          description: 'Reserva una llamada de descubrimiento',
-          comingSoon: 'Próximamente',
         },
       },
       form: {
@@ -747,54 +741,57 @@ export const translations: Record<Language, TranslationStrings> = {
         email: 'Email',
         emailPlaceholder: 'tu@email.com',
         message: 'Mensaje',
-        messagePlaceholder: 'Cuéntame sobre tu proyecto o desafío...',
+        messagePlaceholder:
+          'Cu\u00E9ntame sobre tu startup y d\u00F3nde necesitas ayuda t\u00E9cnica...',
         submit: 'Enviar Mensaje',
         sending: 'Enviando...',
-        success: '¡Mensaje enviado con éxito!',
-        successSubtitle: 'Te responderé en 24-48 horas.',
-        error: 'Algo salió mal',
+        success: '\u00A1Mensaje enviado con \u00E9xito!',
+        successSubtitle: 'Te responder\u00E9 en 24-48 horas.',
+        error: 'Algo sali\u00F3 mal',
         errorSubtitle:
-          'Por favor intenta de nuevo o escríbeme directamente a jose.escobar.dev@gmail.com',
+          'Por favor intenta de nuevo o escr\u00EDbeme directamente a jose.escobar.dev@gmail.com',
         tryAgain: 'Intentar de nuevo',
         validation: {
           nameRequired: 'El nombre es obligatorio',
           nameMinLength: 'El nombre debe tener al menos 2 caracteres',
           emailRequired: 'El email es obligatorio',
-          emailInvalid: 'Por favor ingresa un email válido',
+          emailInvalid: 'Por favor ingresa un email v\u00E1lido',
           messageRequired: 'El mensaje es obligatorio',
           messageMinLength: 'El mensaje debe tener al menos 10 caracteres',
         },
       },
     },
     caseStudies: {
-      title: 'Casos de Éxito',
-      subtitle: 'Descubre cómo he ayudado a empresas como la tuya',
-      viewCase: 'Ver Caso de Éxito',
-      comingSoon: 'Casos de éxito próximamente',
-      comingSoonBadge: 'Próximamente',
-      fullCaseStudyComingSoon: 'Caso de estudio completo próximamente',
+      title: 'Casos de \u00C9xito',
+      subtitle:
+        'Problemas reales, soluciones reales \u2014 desde fase inicial hasta escala',
+      viewCase: 'Ver Caso de \u00C9xito',
+      comingSoon: 'Casos de \u00E9xito pr\u00F3ximamente',
+      comingSoonBadge: 'Pr\u00F3ximamente',
+      fullCaseStudyComingSoon: 'Caso de estudio completo pr\u00F3ximamente',
       inTheMeantime:
-        'Los casos de estudio detallados están siendo preparados. Mientras tanto, no dudes en contactarme para discutir mi experiencia con desafíos similares.',
-      getInTouchToLearnMore: 'Contáctame para saber más',
+        'Los casos de estudio detallados est\u00E1n siendo preparados. Mientras tanto, no dudes en contactarme para discutir mi experiencia con desaf\u00EDos similares.',
+      getInTouchToLearnMore: 'Cont\u00E1ctame para saber m\u00E1s',
     },
     cta: {
-      title: '¿Listo para',
-      titleHighlight: 'transformar',
-      subtitle:
-        'Hablemos sobre cómo puedo ayudarte a construir equipos de ingeniería y productos excepcionales. Sin compromiso, solo una conversación.',
+      title: '\u00BFNecesitas un socio t\u00E9cnico para',
+      titleHighlight: 'tu startup',
+      titleSuffix: '?',
+      subtitle: 'Escr\u00EDbeme, sin pitch deck. Veamos si puedo ayudar.',
     },
     footer: {
-      copyright: '© {year} Jerna Digital. Todos los derechos reservados.',
+      copyright: '\u00A9 {year} Jerna Digital. Todos los derechos reservados.',
       builtWith: 'Construido con Astro',
-      navigation: 'Navegación',
+      navigation: 'Navegaci\u00F3n',
       getInTouch: 'Contacto',
-      getInTouchSubtitle: '¿Listo para discutir tu proyecto? Hablemos.',
+      getInTouchSubtitle:
+        '\u00BFConstruyendo algo y necesitas un socio t\u00E9cnico? Hablemos.',
     },
     common: {
-      learnMore: 'Saber Más',
+      learnMore: 'Saber M\u00E1s',
       getStarted: 'Comenzar',
       viewAll: 'Ver Todo',
-      readMore: 'Leer Más',
+      readMore: 'Leer M\u00E1s',
       backToTop: 'Volver Arriba',
     },
     languageSwitcher: {
