@@ -295,6 +295,10 @@ svg {
    UTILITY CLASSES
    ============================================ */
 
+.form-helper {
+  display: none;
+}
+
 /* Gradient text */
 .text-gradient {
   background: linear-gradient(

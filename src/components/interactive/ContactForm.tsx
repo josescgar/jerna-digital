@@ -67,7 +67,7 @@ const defaultTranslations: ContactFormTranslations = {
   successSubtitle: "I'll get back to you within 24-48 hours.",
   error: 'Something went wrong',
   errorSubtitle:
-    'Please try again or email me directly at hello@jernadigital.com',
+    'Please try again or email me directly at jose.escobar.dev@gmail.com',
   tryAgain: 'Try again',
   validation: {
     nameRequired: 'Name is required',
@@ -115,7 +115,7 @@ export default function ContactForm({
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<FormStatus>('idle');
-  const [honeypot, setHoneypot] = useState('');
+  const [website, setWebsite] = useState('');
 
   /**
    * Validates form data and returns errors object
@@ -168,8 +168,8 @@ export default function ContactForm({
     e.preventDefault();
 
     // Check honeypot (spam protection)
-    if (honeypot) {
-      console.log('Spam detected');
+    if (website.trim()) {
+      setStatus('error');
       return;
     }
 
@@ -205,6 +205,7 @@ export default function ContactForm({
       if (result.success) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        setWebsite('');
       } else {
         setStatus('error');
       }
@@ -219,18 +220,6 @@ export default function ContactForm({
       className="space-y-6"
       noValidate
     >
-      {/* Honeypot field - hidden from users, catches bots */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
-        <input
-          type="text"
-          name="honeypot"
-          value={honeypot}
-          onChange={(e) => setHoneypot(e.target.value)}
-          tabIndex={-1}
-          autoComplete="off"
-        />
-      </div>
-
       {/* Name field */}
       <div className="space-y-2">
         <Label htmlFor="name" required>
@@ -327,6 +316,15 @@ export default function ContactForm({
             </motion.p>
           )}
         </AnimatePresence>
+      </div>
+
+      <div className="form-helper">
+        <input
+          type="text"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+        />
       </div>
 
       {/* Submit button */}

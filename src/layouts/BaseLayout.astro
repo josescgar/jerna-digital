@@ -33,7 +33,7 @@ const {
 } = Astro.props;
 
 const fullTitle = title === t.site.name ? title : `${title} | ${t.site.name}`;
-const siteUrl = Astro.site ?? new URL('https://jernadigital.com');
+const siteUrl = Astro.site ?? new URL('https://jerna.digital');
 const ogImageUrl = new URL(image, siteUrl).href;
 
 // Get alternate URLs for hreflang tags
@@ -189,7 +189,6 @@ const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
 
     <!-- Security Headers (meta tags for static site) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <!-- Theme Color -->
