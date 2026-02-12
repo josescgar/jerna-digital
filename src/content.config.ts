@@ -2,13 +2,13 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 /**
- * Case studies collection schema.
- * Each case study is an MDX file with frontmatter.
+ * Portfolio collection schema.
+ * Each portfolio item is an MDX file with frontmatter.
  */
-const caseStudies = defineCollection({
+const portfolio = defineCollection({
   loader: glob({
     pattern: '**/*.{md,mdx}',
-    base: './src/content/case-studies',
+    base: './src/content/portfolio',
   }),
   schema: z.object({
     title: z.string(),
@@ -23,5 +23,5 @@ const caseStudies = defineCollection({
 });
 
 export const collections = {
-  'case-studies': caseStudies,
+  portfolio,
 };

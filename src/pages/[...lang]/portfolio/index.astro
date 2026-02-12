@@ -25,8 +25,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = getTranslations(lang);
 
-// Placeholder case studies - will be replaced with actual content
-interface CaseStudy {
+interface PortfolioItem {
   slug: string;
   title: string;
   client: string;
@@ -36,8 +35,7 @@ interface CaseStudy {
   comingSoon: boolean;
 }
 
-// Note: Case study content is in English for now, can be localized later
-const caseStudies: CaseStudy[] = [
+const portfolioItems: PortfolioItem[] = [
   {
     slug: 'ai-augmented-mvp-delivery',
     title: 'AI-Augmented MVP Delivery in 8 Weeks',
@@ -73,37 +71,30 @@ const caseStudies: CaseStudy[] = [
 
 <BaseLayout
   lang={lang}
-  title={t.caseStudies.title}
-  description={t.caseStudies.subtitle}
+  title={t.portfolio.title}
+  description={t.portfolio.subtitle}
 >
   <!-- Hero section -->
   <section class="section relative overflow-hidden">
     <div class="container">
       <div class="mx-auto max-w-3xl text-center">
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-          <span class="text-gradient">{t.caseStudies.title}</span>
+          <span class="text-gradient">{t.portfolio.title}</span>
         </h1>
         <p class="text-foreground-muted mt-6 text-xl">
-          {t.caseStudies.subtitle}
+          {t.portfolio.subtitle}
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Case studies grid -->
+  <!-- Portfolio grid -->
   <section class="section pt-0">
     <div class="container">
       <div class="grid gap-8 lg:grid-cols-3">
         {
-          caseStudies.map((study) => (
+          portfolioItems.map((item) => (
             <article class="group border-border bg-background-elevated duration-normal hover:border-border-subtle relative overflow-hidden rounded-2xl border transition-all hover:shadow-lg">
-              {/* Coming soon badge */}
-              {study.comingSoon && (
-                <div class="bg-primary/10 text-primary absolute top-4 right-4 z-10 rounded-full px-3 py-1 text-xs font-medium">
-                  {t.caseStudies.comingSoonBadge}
-                </div>
-              )}
-
               {/* Image placeholder */}
               <div class="bg-background-subtle aspect-video">
                 <div class="flex h-full items-center justify-center">
@@ -131,7 +122,7 @@ const caseStudies: CaseStudy[] = [
               <div class="p-6">
                 {/* Tags */}
                 <div class="mb-3 flex flex-wrap gap-2">
-                  {study.tags.slice(0, 2).map((tag) => (
+                  {item.tags.slice(0, 2).map((tag) => (
                     <span class="bg-background-subtle text-foreground-subtle rounded-full px-2 py-1 text-xs">
                       {tag}
                     </span>
@@ -139,17 +130,16 @@ const caseStudies: CaseStudy[] = [
                 </div>
 
                 <h2 class="group-hover:text-primary text-xl font-semibold tracking-tight transition-colors">
-                  {study.title}
+                  {item.title}
                 </h2>
 
                 <p class="text-foreground-subtle mt-2 text-sm">
-                  {study.client} • {study.industry}
+                  {item.client} &bull; {item.industry}
                 </p>
 
-                <p class="text-foreground-muted mt-4">{study.summary}</p>
+                <p class="text-foreground-muted mt-4">{item.summary}</p>
 
-                {/* Link (disabled for coming soon) */}
-                {study.comingSoon ? (
+                {item.comingSoon ? (
                   <div class="text-foreground-subtle mt-6 flex items-center gap-2 text-sm">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -165,14 +155,14 @@ const caseStudies: CaseStudy[] = [
                       <circle cx="12" cy="12" r="10" />
                       <polyline points="12 6 12 12 16 14" />
                     </svg>
-                    {t.caseStudies.fullCaseStudyComingSoon}
+                    Coming soon
                   </div>
                 ) : (
                   <a
-                    href={getLocalizedPath(lang, `/case-studies/${study.slug}`)}
+                    href={getLocalizedPath(lang, `/portfolio/${item.slug}`)}
                     class="text-primary hover:text-primary-light mt-6 inline-flex items-center gap-2 text-sm font-medium transition-colors"
                   >
-                    {t.caseStudies.viewCase}
+                    {t.portfolio.viewCase}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -193,33 +183,6 @@ const caseStudies: CaseStudy[] = [
             </article>
           ))
         }
-      </div>
-
-      {/* Empty state / CTA */}
-      <div class="mt-16 text-center">
-        <p class="text-foreground-muted">
-          {t.caseStudies.inTheMeantime}
-        </p>
-        <a
-          href={getLocalizedPath(lang, '/contact')}
-          class="text-primary hover:text-primary-light mt-6 inline-flex items-center gap-2 transition-colors"
-        >
-          {t.caseStudies.getInTouchToLearnMore}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M5 12h14"></path>
-            <path d="m12 5 7 7-7 7"></path>
-          </svg>
-        </a>
       </div>
     </div>
   </section>

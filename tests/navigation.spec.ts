@@ -50,11 +50,11 @@ test.describe('Navigation', () => {
       await expect(page.locator('h1')).toContainText('Services');
     });
 
-    test('should navigate to Case Studies page', async ({ page }) => {
+    test('should navigate to Portfolio page', async ({ page }) => {
       await page.goto('/');
-      await navigateViaHeader(page, '/case-studies');
-      await expect(page).toHaveURL(/\/case-studies\/?$/);
-      await expect(page.locator('h1')).toContainText('Case Studies');
+      await navigateViaHeader(page, '/portfolio');
+      await expect(page).toHaveURL(/\/portfolio\/?$/);
+      await expect(page.locator('h1')).toContainText('Portfolio');
     });
 
     test('should navigate to Contact page', async ({ page }) => {
