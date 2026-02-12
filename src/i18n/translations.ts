@@ -160,6 +160,9 @@ export interface TranslationStrings {
     title: string;
     subtitle: string;
     viewCase: string;
+    backToAll: string;
+    publishedOn: string;
+    featuredBadge: string;
   };
   // CTA section
   cta: {
@@ -459,6 +462,9 @@ export const translations: Record<Language, TranslationStrings> = {
       title: 'Portfolio',
       subtitle: 'Real problems, real solutions — from early-stage to scale',
       viewCase: 'View Case Study',
+      backToAll: 'Back to Portfolio',
+      publishedOn: 'Published on',
+      featuredBadge: 'Featured',
     },
     cta: {
       title: 'Need a technical partner for',
@@ -758,6 +764,9 @@ export const translations: Record<Language, TranslationStrings> = {
       subtitle:
         'Problemas reales, soluciones reales \u2014 desde fase inicial hasta escala',
       viewCase: 'Ver Caso de \u00C9xito',
+      backToAll: 'Volver al Portfolio',
+      publishedOn: 'Publicado el',
+      featuredBadge: 'Destacado',
     },
     cta: {
       title: '\u00BFNecesitas un socio t\u00E9cnico para',

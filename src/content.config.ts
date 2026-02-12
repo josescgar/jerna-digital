@@ -5,7 +5,8 @@ import { Language } from '@/i18n/translations';
 /**
  * Portfolio collection schema.
  * Each portfolio item is an MDX file with frontmatter.
- * Bilingual entries share the same `slug` and differ by `lang`.
+ * Bilingual entries share the same `urlSlug` and differ by `lang`.
+ * Note: `slug` is reserved by Astro's content layer — we use `urlSlug` instead.
  */
 const portfolio = defineCollection({
   loader: glob({
@@ -22,7 +23,7 @@ const portfolio = defineCollection({
     featured: z.boolean().default(false),
     draft: z.boolean().default(true),
     lang: z.nativeEnum(Language),
-    slug: z.string(),
+    urlSlug: z.string(),
   }),
 });
 
