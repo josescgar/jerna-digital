@@ -25,7 +25,7 @@ We implemented internationalization using Astro's built-in i18n feature with the
 
 ### URL Structure
 
-- **English (default):** Root URLs (`/`, `/about`, `/services`, `/contact`, `/case-studies`)
+- **English (default):** Root URLs (`/`, `/about`, `/services`, `/contact`, `/portfolio`)
 - **Spanish:** Prefixed URLs (`/es/`, `/es/about`, `/es/services`, etc.)
 
 This is configured in `astro.config.mjs` with `prefixDefaultLocale: false`.

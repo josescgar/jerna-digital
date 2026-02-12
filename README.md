@@ -78,7 +78,7 @@ src/
 │   ├── sections/     # Page sections
 │   └── interactive/  # React islands
 ├── content/
-│   └── case-studies/ # MDX case study files
+│   └── portfolio/    # MDX portfolio entries
 ├── layouts/          # Base layout with SEO
 ├── pages/            # Astro pages (i18n)
 │   └── [...lang]/    # Optional locale segment (e.g., /, /es/*)

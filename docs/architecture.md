@@ -144,13 +144,17 @@ dist/
 ├── about/index.html
 ├── services/index.html
 ├── contact/index.html
-├── case-studies/index.html
+├── portfolio/
+│   ├── index.html
+│   └── [slug]/index.html
 ├── es/
 │   ├── index.html
 │   ├── about/index.html
 │   ├── services/index.html
 │   ├── contact/index.html
-│   └── case-studies/index.html
+│   └── portfolio/
+│       ├── index.html
+│       └── [slug]/index.html
 ├── _astro/
 │   ├── [hashed].css
 │   └── [hashed].js
