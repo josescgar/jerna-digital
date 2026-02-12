@@ -3,14 +3,17 @@
  * Architecture supports adding new languages by extending the translations object.
  */
 
-export const languages = {
-  en: 'English',
-  es: 'Español',
-} as const;
+export enum Language {
+  EN = 'en',
+  ES = 'es',
+}
 
-export type Language = keyof typeof languages;
+export const languages: Record<Language, string> = {
+  [Language.EN]: 'English',
+  [Language.ES]: 'Español',
+};
 
-export const defaultLanguage: Language = 'en';
+export const defaultLanguage = Language.EN;
 
 /**
  * Locale metadata for SEO and i18n
@@ -19,8 +22,8 @@ export const localeMetadata: Record<
   Language,
   { locale: string; hreflang: string }
 > = {
-  en: { locale: 'en_US', hreflang: 'en' },
-  es: { locale: 'es_ES', hreflang: 'es' },
+  [Language.EN]: { locale: 'en_US', hreflang: 'en' },
+  [Language.ES]: { locale: 'es_ES', hreflang: 'es' },
 };
 
 export interface TranslationStrings {
@@ -201,7 +204,7 @@ export interface TranslationStrings {
 }
 
 export const translations: Record<Language, TranslationStrings> = {
-  en: {
+  [Language.EN]: {
     site: {
       name: 'Jerna Digital',
       tagline: 'AI-First Technical Leadership',
@@ -501,7 +504,7 @@ export const translations: Record<Language, TranslationStrings> = {
       dark: 'Dark',
     },
   },
-  es: {
+  [Language.ES]: {
     site: {
       name: 'Jerna Digital',
       tagline: 'Liderazgo T\u00E9cnico AI-First',

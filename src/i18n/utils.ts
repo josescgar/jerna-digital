@@ -3,10 +3,10 @@
  */
 
 import {
+  type Language,
   languages,
   defaultLanguage,
   localeMetadata,
-  type Language,
 } from './translations';
 
 const languagePrefixRegex = new RegExp(
