@@ -57,6 +57,17 @@ test.describe('Navigation', () => {
       await expect(page.locator('h1')).toContainText('Portfolio');
     });
 
+    test('should navigate to portfolio detail page from index', async ({
+      page,
+    }) => {
+      await page.goto('/portfolio');
+      const link = page.locator('a[href="/portfolio/jerna-digital"]').first();
+      await expect(link).toBeVisible();
+      await link.click();
+      await expect(page).toHaveURL(/\/portfolio\/jerna-digital\/?$/);
+      await expect(page.locator('h1')).toBeVisible();
+    });
+
     test('should navigate to Contact page', async ({ page }) => {
       await page.goto('/');
       await navigateViaHeader(page, '/contact');

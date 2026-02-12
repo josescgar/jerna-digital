@@ -89,6 +89,23 @@ test.describe('SEO', () => {
     expect(title).toContain('Jerna Digital');
   });
 
+  test('portfolio detail page should have proper meta tags', async ({
+    page,
+  }) => {
+    await page.goto('/portfolio/jerna-digital');
+
+    const title = await page.title();
+    expect(title).toContain('Jerna Digital');
+
+    const description = page.locator('meta[name="description"]');
+    await expect(description).toHaveAttribute('content', /.+/);
+
+    const hreflangEn = page.locator('link[hreflang="en"]');
+    const hreflangEs = page.locator('link[hreflang="es"]');
+    await expect(hreflangEn).toBeAttached();
+    await expect(hreflangEs).toBeAttached();
+  });
+
   test('should have viewport meta tag', async ({ page }) => {
     await page.goto('/');
 
