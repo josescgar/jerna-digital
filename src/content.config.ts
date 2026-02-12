@@ -1,9 +1,11 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { Language } from '@/i18n/translations';
 
 /**
  * Portfolio collection schema.
  * Each portfolio item is an MDX file with frontmatter.
+ * Bilingual entries share the same `slug` and differ by `lang`.
  */
 const portfolio = defineCollection({
   loader: glob({
@@ -19,6 +21,8 @@ const portfolio = defineCollection({
     publishedAt: z.date().optional(),
     featured: z.boolean().default(false),
     draft: z.boolean().default(true),
+    lang: z.nativeEnum(Language),
+    slug: z.string(),
   }),
 });
 
