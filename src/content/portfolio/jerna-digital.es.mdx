@@ -1,0 +1,101 @@
+---
+title: 'Construyendo Jerna Digital: Desarrollo 100% AI-Agéntico'
+client: Jerna Digital
+industry: Consultoría de Software
+summary: 'Un caso de estudio autoreferencial de cómo este mismo sitio web fue construido enteramente mediante desarrollo AI-agéntico — desde el primer commit hasta producción, sin código escrito a mano.'
+tags:
+  - Desarrollo AI-Agéntico
+  - Astro
+  - Full-Stack
+  - Design System
+publishedAt: 2026-02-12
+featured: true
+draft: false
+lang: es
+slug: jerna-digital
+---
+
+## El Desafío
+
+Todo negocio de consultoría necesita un sitio portfolio. Pero como consultor técnico que ayuda a startups a aprovechar la IA, el sitio en sí necesitaba ser la prueba de concepto. El desafío: construir un sitio portfolio de calidad profesional, multilingüe y accesible usando **desarrollo 100% AI-agéntico** — sin código escrito a mano, cada línea generada y commiteada por agentes de IA.
+
+No se trataba solo de lanzar un sitio. Se trataba de demostrar que los agentes de IA pueden manejar flujos de trabajo reales de ingeniería de software de principio a fin: decisiones de arquitectura, implementación, testing, iteración de diseño y despliegue.
+
+## Enfoque AI-First
+
+Todo el código fue construido usando Claude Code como agente de desarrollo principal. Cada commit en el repositorio fue autoría de un agente de IA, guiado por la intención y revisión humana. El flujo de trabajo fue así:
+
+- **Decisiones de arquitectura** se tomaron de forma colaborativa — el humano proporcionó requisitos y restricciones, la IA propuso soluciones documentadas como Architecture Decision Records (ADRs)
+- **Implementación** fue completamente dirigida por IA — desde scaffolding de componentes hasta estilos y escritura de tests
+- **Revisión de código** ocurrió a través de conversación — revisando diffs, pidiendo ajustes, iterando en los enfoques
+- **Puertas de calidad** fueron implementadas por hooks de pre-commit que la propia IA configuró
+
+## Stack Tecnológico
+
+Las elecciones tecnológicas se optimizaron para rendimiento de sitios estáticos y experiencia de desarrollo:
+
+- **Astro 5** — Arquitectura Islands para JavaScript casi nulo por defecto
+- **React** — Solo para componentes interactivos (formulario de contacto con Framer Motion)
+- **Tailwind CSS 4** — Estilos utility-first con design tokens personalizados
+- **TypeScript** — Modo estricto con `exactOptionalPropertyTypes` habilitado
+- **Playwright** — Testing end-to-end en múltiples navegadores
+- **GitHub Pages** — Hosting estático con CI/CD vía GitHub Actions
+
+## Flujo de Desarrollo
+
+El proyecto siguió desarrollo trunk-based con ramas de feature:
+
+1. Los issues se crearon con plantillas estructuradas
+2. Cada rama de feature obtuvo su propio PR con un alcance claro
+3. Hooks de pre-commit ejecutaron lint, verificación de formato, typecheck y build en cada commit
+4. Hooks de pre-push ejecutaron tests E2E antes de cualquier push
+5. CI ejecutó una estrategia de testing de 3 niveles: PRs en draft solo lint, PRs listos E2E en Chromium, y merges a main E2E completo cross-browser
+
+Este flujo aseguró que el código generado por IA cumpliera el mismo estándar de calidad que el código escrito por humanos — porque las barreras de seguridad estaban integradas en el proceso, no en el autor.
+
+## Evolución del Design System
+
+El sistema de diseño pasó por un proceso de evaluación estructurado:
+
+1. Se prototiparon cuatro direcciones visuales distintas
+2. Se configuró una comparación lado a lado para evaluación
+3. Se seleccionó la variación "Minimal" — base en modo oscuro con acento verde (#22c55e), tipografía DM Sans para títulos, estética geométrica limpia
+4. Toda la infraestructura de variaciones se eliminó después de la selección, manteniendo el código limpio
+
+Los design tokens finales se definen como propiedades CSS personalizadas en un único bloque `@theme`, con overrides de modo claro vía `[data-theme='light']`. El sistema de tema previene FOUC con un script inline que lee localStorage antes del primer render.
+
+## Internacionalización
+
+El sitio soporta inglés y español con una estructura de URLs limpia:
+
+- Inglés en la raíz: `/about`, `/services`, `/portfolio`
+- Español con prefijo: `/es/about`, `/es/services`, `/es/portfolio`
+
+El sistema i18n es type-safe — una interfaz `TranslationStrings` asegura que todos los idiomas tengan traducciones completas en tiempo de compilación. Un enum `Language` proporciona una única fuente de verdad para los códigos de idioma. La preferencia de idioma persiste en localStorage y se negocia automáticamente en la primera visita mediante detección del idioma del navegador.
+
+## Calidad y Testing
+
+La estrategia de testing cubre múltiples niveles:
+
+- **Tests E2E** — Navegación, validación del formulario de contacto, layout responsive, accesibilidad, meta tags SEO, estructura de URLs i18n y toggle de tema
+- **Verificación de tipos** — TypeScript estricto detecta problemas en tiempo de build
+- **Linting y formato** — ESLint y Prettier aseguran consistencia
+- **Validación de build** — Cada commit debe producir un build estático exitoso
+
+Todo esto se ejecuta automáticamente a través de git hooks y CI, creando una red de seguridad que hace el código generado por IA tan fiable como el código escrito a mano.
+
+## Resultados
+
+- **Código 100% autoría de IA** — Cada línea de código fue generada por agentes de IA
+- **10+ páginas** en 2 idiomas, todas generadas estáticamente
+- **LCP sub-2s** en producción con payload mínimo de JavaScript
+- **Cobertura E2E completa** en 4 navegadores
+- **i18n type-safe** con validación en tiempo de compilación de todas las cadenas de traducción
+- **Tema oscuro/claro** con cero FOUC
+
+## Conclusiones Clave
+
+1. **Los agentes de IA pueden manejar el ciclo de desarrollo completo** — no solo autocompletado, sino arquitectura, implementación, testing y despliegue
+2. **La calidad viene del proceso, no de la autoría** — hooks de pre-commit, CI y type safety funcionan independientemente de quién (o qué) escriba el código
+3. **La colaboración humano-IA funciona mejor como intención + revisión** — el humano establece la dirección y revisa los resultados; la IA maneja los detalles de implementación
+4. **La documentación es un multiplicador de fuerza** — ADRs y CLAUDE.md dieron al agente de IA contexto que hizo el trabajo posterior más rápido y consistente
