@@ -189,7 +189,7 @@ src/
 │   ├── sections/     # Page sections (Hero, Services, About, CTA)
 │   └── interactive/  # React islands (ContactForm with Framer Motion)
 ├── content/
-│   ├── case-studies/ # MDX case study files (placeholder)
+│   ├── portfolio/    # MDX portfolio entries (bilingual)
 │   └── config/       # Site configuration
 ├── layouts/          # BaseLayout.astro (main layout with SEO)
 ├── pages/            # Astro pages (i18n routing)
@@ -198,7 +198,9 @@ src/
 │       ├── about.astro
 │       ├── services.astro
 │       ├── contact.astro
-│       └── case-studies/
+│       └── portfolio/
+│           ├── index.astro
+│           └── [slug].astro
 ├── styles/
 │   └── global.css    # Design tokens + Tailwind config
 ├── lib/              # Utilities (cn function, formatters)
@@ -373,6 +375,15 @@ const t = getTranslations(lang);
 2. Add locale metadata to `localeMetadata` object
 3. Add complete translation object (e.g., `translations.fr`)
 4. Update `astro.config.mjs` to add the locale
+
+### Adding a new portfolio item
+
+1. Create MDX files in `src/content/portfolio/` using the pattern `{slug}-{lang}.mdx` (e.g., `project-name-en.mdx`, `project-name-es.mdx`)
+2. Include required frontmatter: `title`, `client`, `industry`, `summary`, `tags`, `lang` (Language enum value), `urlSlug` (URL-safe identifier)
+3. Set `draft: false` when ready to publish, `featured: true` for priority listing
+4. The detail page route (`[slug].astro`) and index page query the collection automatically
+
+**Note:** Use `urlSlug` (not `slug`) in frontmatter — Astro reserves `slug` for internal use.
 
 ### Modifying design tokens
 

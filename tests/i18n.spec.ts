@@ -24,8 +24,11 @@ test.describe('Internationalization (i18n)', () => {
       await page.goto('/contact');
       await expect(page).toHaveURL(/\/contact\/?$/);
 
-      await page.goto('/case-studies');
-      await expect(page).toHaveURL(/\/case-studies\/?$/);
+      await page.goto('/portfolio');
+      await expect(page).toHaveURL(/\/portfolio\/?$/);
+
+      await page.goto('/portfolio/jerna-digital');
+      await expect(page).toHaveURL(/\/portfolio\/jerna-digital\/?$/);
     });
 
     test('Spanish pages should have /es/ prefix', async ({ page }) => {
@@ -42,8 +45,11 @@ test.describe('Internationalization (i18n)', () => {
       await page.goto('/es/contact');
       await expect(page).toHaveURL(/\/es\/contact\/?$/);
 
-      await page.goto('/es/case-studies');
-      await expect(page).toHaveURL(/\/es\/case-studies\/?$/);
+      await page.goto('/es/portfolio');
+      await expect(page).toHaveURL(/\/es\/portfolio\/?$/);
+
+      await page.goto('/es/portfolio/jerna-digital');
+      await expect(page).toHaveURL(/\/es\/portfolio\/jerna-digital\/?$/);
     });
   });
 

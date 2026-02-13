@@ -3,14 +3,17 @@
  * Architecture supports adding new languages by extending the translations object.
  */
 
-export const languages = {
-  en: 'English',
-  es: 'Español',
-} as const;
+export enum Language {
+  EN = 'en',
+  ES = 'es',
+}
 
-export type Language = keyof typeof languages;
+export const languages: Record<Language, string> = {
+  [Language.EN]: 'English',
+  [Language.ES]: 'Español',
+};
 
-export const defaultLanguage: Language = 'en';
+export const defaultLanguage = Language.EN;
 
 /**
  * Locale metadata for SEO and i18n
@@ -19,8 +22,8 @@ export const localeMetadata: Record<
   Language,
   { locale: string; hreflang: string }
 > = {
-  en: { locale: 'en_US', hreflang: 'en' },
-  es: { locale: 'es_ES', hreflang: 'es' },
+  [Language.EN]: { locale: 'en_US', hreflang: 'en' },
+  [Language.ES]: { locale: 'es_ES', hreflang: 'es' },
 };
 
 export interface TranslationStrings {
@@ -35,7 +38,7 @@ export interface TranslationStrings {
     home: string;
     about: string;
     services: string;
-    caseStudies: string;
+    portfolio: string;
     contact: string;
   };
   // Hero section
@@ -152,16 +155,14 @@ export interface TranslationStrings {
       };
     };
   };
-  // Case studies
-  caseStudies: {
+  // Portfolio
+  portfolio: {
     title: string;
     subtitle: string;
     viewCase: string;
-    comingSoon: string;
-    comingSoonBadge: string;
-    fullCaseStudyComingSoon: string;
-    inTheMeantime: string;
-    getInTouchToLearnMore: string;
+    backToAll: string;
+    publishedOn: string;
+    featuredBadge: string;
   };
   // CTA section
   cta: {
@@ -201,7 +202,7 @@ export interface TranslationStrings {
 }
 
 export const translations: Record<Language, TranslationStrings> = {
-  en: {
+  [Language.EN]: {
     site: {
       name: 'Jerna Digital',
       tagline: 'AI-First Technical Leadership',
@@ -212,7 +213,7 @@ export const translations: Record<Language, TranslationStrings> = {
       home: 'Home',
       about: 'About',
       services: 'Services',
-      caseStudies: 'Case Studies',
+      portfolio: 'Portfolio',
       contact: 'Contact',
     },
     hero: {
@@ -457,16 +458,13 @@ export const translations: Record<Language, TranslationStrings> = {
         },
       },
     },
-    caseStudies: {
-      title: 'Case Studies',
+    portfolio: {
+      title: 'Portfolio',
       subtitle: 'Real problems, real solutions — from early-stage to scale',
       viewCase: 'View Case Study',
-      comingSoon: 'Case studies coming soon',
-      comingSoonBadge: 'Coming Soon',
-      fullCaseStudyComingSoon: 'Full case study coming soon',
-      inTheMeantime:
-        'Detailed case studies are being prepared. In the meantime, feel free to reach out to discuss my experience with similar challenges.',
-      getInTouchToLearnMore: 'Get in touch to learn more',
+      backToAll: 'Back to Portfolio',
+      publishedOn: 'Published on',
+      featuredBadge: 'Featured',
     },
     cta: {
       title: 'Need a technical partner for',
@@ -501,7 +499,7 @@ export const translations: Record<Language, TranslationStrings> = {
       dark: 'Dark',
     },
   },
-  es: {
+  [Language.ES]: {
     site: {
       name: 'Jerna Digital',
       tagline: 'Liderazgo T\u00E9cnico AI-First',
@@ -512,7 +510,7 @@ export const translations: Record<Language, TranslationStrings> = {
       home: 'Inicio',
       about: 'Sobre m\u00ED',
       services: 'Servicios',
-      caseStudies: 'Casos de \u00C9xito',
+      portfolio: 'Portfolio',
       contact: 'Contacto',
     },
     hero: {
@@ -761,17 +759,14 @@ export const translations: Record<Language, TranslationStrings> = {
         },
       },
     },
-    caseStudies: {
-      title: 'Casos de \u00C9xito',
+    portfolio: {
+      title: 'Portfolio',
       subtitle:
         'Problemas reales, soluciones reales \u2014 desde fase inicial hasta escala',
       viewCase: 'Ver Caso de \u00C9xito',
-      comingSoon: 'Casos de \u00E9xito pr\u00F3ximamente',
-      comingSoonBadge: 'Pr\u00F3ximamente',
-      fullCaseStudyComingSoon: 'Caso de estudio completo pr\u00F3ximamente',
-      inTheMeantime:
-        'Los casos de estudio detallados est\u00E1n siendo preparados. Mientras tanto, no dudes en contactarme para discutir mi experiencia con desaf\u00EDos similares.',
-      getInTouchToLearnMore: 'Cont\u00E1ctame para saber m\u00E1s',
+      backToAll: 'Volver al Portfolio',
+      publishedOn: 'Publicado el',
+      featuredBadge: 'Destacado',
     },
     cta: {
       title: '\u00BFNecesitas un socio t\u00E9cnico para',

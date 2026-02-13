@@ -1,0 +1,148 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
+
+export async function getStaticPaths() {
+  const items = await getCollection('portfolio', (entry) => !entry.data.draft);
+
+  const paths = (Object.keys(languages) as Language[]).flatMap((lang) =>
+    items
+      .filter((item) => item.data.lang === lang)
+      .map((item) => ({
+        params: {
+          lang: lang === defaultLanguage ? undefined : lang,
+          slug: item.data.urlSlug,
+        },
+        props: { lang, entry: item },
+      }))
+  );
+  return paths;
+}
+
+interface Props {
+  lang: Language;
+  entry: Awaited<ReturnType<typeof getCollection>>[number];
+}
+
+const { lang, entry } = Astro.props;
+const t = getTranslations(lang);
+const { Content } = await render(entry);
+
+const {
+  title,
+  client,
+  industry,
+  tags,
+  image,
+  imageAlt,
+  publishedAt,
+  featured,
+  summary,
+} = entry.data;
+
+const formattedDate = publishedAt
+  ? new Intl.DateTimeFormat(lang, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }).format(publishedAt)
+  : null;
+---
+
+<BaseLayout lang={lang} title={title} description={summary}>
+  <article class="section">
+    <div class="container">
+      <!-- Back link -->
+      <a
+        href={getLocalizedPath(lang, '/portfolio')}
+        class="text-foreground-muted hover:text-primary mb-8 inline-flex items-center gap-2 text-sm transition-colors"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m12 19-7-7 7-7"></path>
+          <path d="M19 12H5"></path>
+        </svg>
+        {t.portfolio.backToAll}
+      </a>
+
+      <!-- Hero -->
+      <header class="mx-auto max-w-3xl">
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+          {
+            featured && (
+              <span class="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-medium">
+                {t.portfolio.featuredBadge}
+              </span>
+            )
+          }
+          <span class="text-foreground-subtle text-sm">
+            {client} &bull; {industry}
+          </span>
+        </div>
+
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+          {title}
+        </h1>
+
+        <!-- Tags -->
+        <div class="mt-6 flex flex-wrap gap-2">
+          {
+            tags.map((tag) => (
+              <span class="bg-background-subtle text-foreground-subtle rounded-full px-3 py-1 text-sm">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
+
+        {
+          formattedDate && (
+            <p class="text-foreground-subtle mt-4 text-sm">
+              {t.portfolio.publishedOn} {formattedDate}
+            </p>
+          )
+        }
+      </header>
+
+      <!-- Hero image -->
+      {
+        image && (
+          <div class="border-border mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border shadow-lg">
+            <Image
+              src={image}
+              alt={imageAlt ?? title}
+              class="w-full"
+              widths={[600, 900, 1200]}
+              sizes="(max-width: 768px) 100vw, 900px"
+            />
+          </div>
+        )
+      }
+
+      <!-- Content -->
+      <div class="prose mx-auto mt-12 max-w-3xl">
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  <CTASection lang={lang} />
+</BaseLayout>

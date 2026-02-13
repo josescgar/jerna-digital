@@ -1,27 +1,35 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { Language } from '@/i18n/translations';
 
 /**
- * Case studies collection schema.
- * Each case study is an MDX file with frontmatter.
+ * Portfolio collection schema.
+ * Each portfolio item is an MDX file with frontmatter.
+ * Bilingual entries share the same `urlSlug` and differ by `lang`.
+ * Note: `slug` is reserved by Astro's content layer — we use `urlSlug` instead.
  */
-const caseStudies = defineCollection({
+const portfolio = defineCollection({
   loader: glob({
     pattern: '**/*.{md,mdx}',
-    base: './src/content/case-studies',
+    base: './src/content/portfolio',
   }),
-  schema: z.object({
-    title: z.string(),
-    client: z.string(),
-    industry: z.string(),
-    summary: z.string(),
-    tags: z.array(z.string()),
-    publishedAt: z.date().optional(),
-    featured: z.boolean().default(false),
-    draft: z.boolean().default(true),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      client: z.string(),
+      industry: z.string(),
+      summary: z.string(),
+      tags: z.array(z.string()),
+      image: image().optional(),
+      imageAlt: z.string().optional(),
+      publishedAt: z.date().optional(),
+      featured: z.boolean().default(false),
+      draft: z.boolean().default(true),
+      lang: z.nativeEnum(Language),
+      urlSlug: z.string(),
+    }),
 });
 
 export const collections = {
-  'case-studies': caseStudies,
+  portfolio,
 };

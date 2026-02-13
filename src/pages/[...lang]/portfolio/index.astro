@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CTASection from '@/components/sections/CTASection.astro';
+import {
+  getTranslations,
+  languages,
+  defaultLanguage,
+  type Language,
+} from '@/i18n/translations';
+import { getLocalizedPath } from '@/i18n/utils';
+
+export function getStaticPaths() {
+  return (Object.keys(languages) as Language[]).map((lang) => {
+    return {
+      params: { lang: lang === defaultLanguage ? undefined : lang },
+      props: { lang },
+    };
+  });
+}
+
+interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+
+const items = await getCollection(
+  'portfolio',
+  (entry) => !entry.data.draft && entry.data.lang === lang
+);
+
+items.sort((a, b) => {
+  if (a.data.featured !== b.data.featured) return a.data.featured ? -1 : 1;
+  const dateA = a.data.publishedAt?.getTime() ?? 0;
+  const dateB = b.data.publishedAt?.getTime() ?? 0;
+  return dateB - dateA;
+});
+---
+
+<BaseLayout
+  lang={lang}
+  title={t.portfolio.title}
+  description={t.portfolio.subtitle}
+>
+  <!-- Hero section -->
+  <section class="section relative overflow-hidden">
+    <div class="container">
+      <div class="mx-auto max-w-3xl text-center">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+          <span class="text-gradient">{t.portfolio.title}</span>
+        </h1>
+        <p class="text-foreground-muted mt-6 text-xl">
+          {t.portfolio.subtitle}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio grid -->
+  <section class="section pt-0">
+    <div class="container">
+      <div class="grid gap-8 lg:grid-cols-3">
+        {
+          items.map((item) => (
+            <a
+              href={getLocalizedPath(lang, `/portfolio/${item.data.urlSlug}`)}
+              class="group border-border bg-background-elevated duration-normal hover:border-border-subtle relative overflow-hidden rounded-2xl border transition-all hover:shadow-lg"
+            >
+              {item.data.featured && (
+                <div class="bg-primary/10 text-primary absolute top-4 right-4 z-10 rounded-full px-3 py-1 text-xs font-medium">
+                  {t.portfolio.featuredBadge}
+                </div>
+              )}
+
+              {/* Thumbnail */}
+              <div class="bg-background-subtle aspect-video overflow-hidden">
+                {item.data.image ? (
+                  <Image
+                    src={item.data.image}
+                    alt={item.data.imageAlt ?? item.data.title}
+                    class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                    widths={[400, 600]}
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
+                ) : (
+                  <div class="flex h-full items-center justify-center">
+                    <div class="bg-gradient-primary/20 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                        <line x1="12" y1="22.08" x2="12" y2="12" />
+                      </svg>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Content */}
+              <div class="p-6">
+                {/* Tags */}
+                <div class="mb-3 flex flex-wrap gap-2">
+                  {item.data.tags.slice(0, 2).map((tag) => (
+                    <span class="bg-background-subtle text-foreground-subtle rounded-full px-2 py-1 text-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                <h2 class="group-hover:text-primary text-xl font-semibold tracking-tight transition-colors">
+                  {item.data.title}
+                </h2>
+
+                <p class="text-foreground-subtle mt-2 text-sm">
+                  {item.data.client} &bull; {item.data.industry}
+                </p>
+
+                <p class="text-foreground-muted mt-4">{item.data.summary}</p>
+
+                <div class="text-primary mt-6 inline-flex items-center gap-2 text-sm font-medium">
+                  {t.portfolio.viewCase}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CTASection lang={lang} />
+</BaseLayout>
