@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CTASection from '@/components/sections/CTASection.astro';
 import {
@@ -74,27 +75,37 @@ items.sort((a, b) => {
                 </div>
               )}
 
-              {/* Image placeholder */}
-              <div class="bg-background-subtle aspect-video">
-                <div class="flex h-full items-center justify-center">
-                  <div class="bg-gradient-primary/20 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                      <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                      <line x1="12" y1="22.08" x2="12" y2="12" />
-                    </svg>
+              {/* Thumbnail */}
+              <div class="bg-background-subtle aspect-video overflow-hidden">
+                {item.data.image ? (
+                  <Image
+                    src={item.data.image}
+                    alt={item.data.imageAlt ?? item.data.title}
+                    class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                    widths={[400, 600]}
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
+                ) : (
+                  <div class="flex h-full items-center justify-center">
+                    <div class="bg-gradient-primary/20 text-primary flex h-16 w-16 items-center justify-center rounded-2xl">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                        <line x1="12" y1="22.08" x2="12" y2="12" />
+                      </svg>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               {/* Content */}

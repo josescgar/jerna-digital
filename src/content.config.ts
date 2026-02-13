@@ -13,18 +13,21 @@ const portfolio = defineCollection({
     pattern: '**/*.{md,mdx}',
     base: './src/content/portfolio',
   }),
-  schema: z.object({
-    title: z.string(),
-    client: z.string(),
-    industry: z.string(),
-    summary: z.string(),
-    tags: z.array(z.string()),
-    publishedAt: z.date().optional(),
-    featured: z.boolean().default(false),
-    draft: z.boolean().default(true),
-    lang: z.nativeEnum(Language),
-    urlSlug: z.string(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      client: z.string(),
+      industry: z.string(),
+      summary: z.string(),
+      tags: z.array(z.string()),
+      image: image().optional(),
+      imageAlt: z.string().optional(),
+      publishedAt: z.date().optional(),
+      featured: z.boolean().default(false),
+      draft: z.boolean().default(true),
+      lang: z.nativeEnum(Language),
+      urlSlug: z.string(),
+    }),
 });
 
 export const collections = {
