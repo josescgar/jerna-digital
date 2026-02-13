@@ -19,83 +19,82 @@ urlSlug: jerna-digital
 
 Todo negocio de consultoría necesita un sitio portfolio. Pero como consultor técnico que ayuda a startups a aprovechar la IA, el sitio en sí necesitaba ser la prueba de concepto. El desafío: construir un sitio portfolio de calidad profesional, multilingüe y accesible usando **desarrollo 100% AI-agéntico** — sin código escrito a mano, cada línea generada y commiteada por agentes de IA.
 
-No se trataba solo de lanzar un sitio. Se trataba de demostrar que los agentes de IA pueden manejar flujos de trabajo reales de ingeniería de software de principio a fin: decisiones de arquitectura, implementación, testing, iteración de diseño y despliegue.
+No se trataba solo de lanzar un sitio. Se trataba de demostrar que los agentes de IA pueden manejar flujos de trabajo reales de ingeniería de software de principio a fin: decisiones de arquitectura, implementación, testing, iteración de diseño y despliegue. El repositorio completo es [open source en GitHub](https://github.com/josescgar/jerna-digital) — cada commit, cada PR, cada registro de decisión está disponible para inspección.
 
-## Enfoque AI-First
+## El Motor del Flujo de Trabajo: Claude Code Skills
 
-Todo el código fue construido usando Claude Code como agente de desarrollo principal. Cada commit en el repositorio fue autoría de un agente de IA, guiado por la intención y revisión humana. El flujo de trabajo fue así:
+La columna vertebral de este proyecto es un conjunto de **skills personalizados de Claude Code** — comandos reutilizables almacenados en `.claude/skills/` que codifican el proceso de desarrollo del equipo en flujos de trabajo repetibles. Tres skills impulsan todo el ciclo de vida:
 
-- **Decisiones de arquitectura** se tomaron de forma colaborativa — el humano proporcionó requisitos y restricciones, la IA propuso soluciones documentadas como Architecture Decision Records (ADRs)
-- **Implementación** fue completamente dirigida por IA — desde scaffolding de componentes hasta estilos y escritura de tests
-- **Revisión de código** ocurrió a través de conversación — revisando diffs, pidiendo ajustes, iterando en los enfoques
-- **Puertas de calidad** fueron implementadas por hooks de pre-commit que la propia IA configuró
+### `/create-issue` — Creación Estructurada de Issues
 
-## Stack Tecnológico
+En lugar de escribir issues en formato libre, este skill convierte un simple prompt como `/create-issue feature Añadir toggle de modo oscuro` en un flujo de trabajo estructurado:
 
-Las elecciones tecnológicas se optimizaron para rendimiento de sitios estáticos y experiencia de desarrollo:
+- Hace preguntas clarificadoras según el tipo de issue (features, bugs, hotfixes, refactors, etc.)
+- Asegura que los labels de GitHub existan y sean consistentes
+- Genera un cuerpo estructurado desde plantillas con criterios de aceptación
+- Crea el issue con los labels apropiados automáticamente
 
-- **Astro 5** — Arquitectura Islands para JavaScript casi nulo por defecto
-- **React** — Solo para componentes interactivos (formulario de contacto con Framer Motion)
-- **Tailwind CSS 4** — Estilos utility-first con design tokens personalizados
-- **TypeScript** — Modo estricto con `exactOptionalPropertyTypes` habilitado
-- **Playwright** — Testing end-to-end en múltiples navegadores
-- **GitHub Pages** — Hosting estático con CI/CD vía GitHub Actions
+Cada issue en este repositorio fue creado a través de este skill, asegurando una estructura consistente y requisitos completos desde el inicio.
 
-## Flujo de Desarrollo
+### `/start-issue` — Desarrollo Plan-First
 
-El proyecto siguió desarrollo trunk-based con ramas de feature:
+Aquí es donde ocurre el comportamiento AI-agéntico más interesante. Dado un número de issue, el skill impone un **flujo de trabajo plan-first obligatorio**:
 
-1. Los issues se crearon con plantillas estructuradas
-2. Cada rama de feature obtuvo su propio PR con un alcance claro
-3. Hooks de pre-commit ejecutaron lint, verificación de formato, typecheck y build en cada commit
-4. Hooks de pre-push ejecutaron tests E2E antes de cualquier push
-5. CI ejecutó una estrategia de testing de 3 niveles: PRs en draft solo lint, PRs listos E2E en Chromium, y merges a main E2E completo cross-browser
+1. **Setup**: Obtiene el issue, lo asigna, determina el tipo de rama desde los labels y crea una rama de feature con nombre adecuado
+2. **Planificación (obligatoria)**: Entra en un modo de exploración de solo lectura donde la IA analiza el código existente, entiende los patrones y escribe un plan de implementación detallado — todo antes de escribir una sola línea de código
+3. **Revisión humana**: El plan se presenta para aprobación. No se escribe código hasta que el humano da el visto bueno
+4. **Implementación**: Solo después de la aprobación la IA implementa los cambios, creando commits atómicos con mensajes de conventional commits
+5. **Creación del PR**: Crea un PR en draft, ejecuta validación, y luego lo marca como listo para revisión
 
-Este flujo aseguró que el código generado por IA cumpliera el mismo estándar de calidad que el código escrito por humanos — porque las barreras de seguridad estaban integradas en el proceso, no en el autor.
+Este enfoque plan-first es crítico. Significa que la IA no empieza a escribir código basándose en una comprensión vaga — primero demuestra su entendimiento, y el humano puede corregir el rumbo antes de que se invierta esfuerzo.
 
-## Evolución del Design System
+### `/make-release` — Releases Automatizados
 
-El sistema de diseño pasó por un proceso de evaluación estructurado:
+Una vez que un PR está revisado y listo, el skill de release se encarga del resto:
 
-1. Se prototiparon cuatro direcciones visuales distintas
-2. Se configuró una comparación lado a lado para evaluación
-3. Se seleccionó la variación "Minimal" — base en modo oscuro con acento verde (#22c55e), tipografía DM Sans para títulos, estética geométrica limpia
-4. Toda la infraestructura de variaciones se eliminó después de la selección, manteniendo el código limpio
+- Valida que el PR sea mergeable y que no esté todavía en draft
+- Pregunta por el tipo de release (patch, minor, major) y calcula la siguiente versión semver
+- Mergea con squash, genera un changelog desde los commits y crea un release en GitHub con tags
+- Cierra el issue relacionado con un enlace al release
+- Opcionalmente limpia la rama de feature
 
-Los design tokens finales se definen como propiedades CSS personalizadas en un único bloque `@theme`, con overrides de modo claro vía `[data-theme='light']`. El sistema de tema previene FOUC con un script inline que lee localStorage antes del primer render.
+Esto convierte lo que sería un proceso manual de 10 pasos en un solo comando con checkpoints humanos en los momentos correctos.
 
-## Internacionalización
+## El Ciclo de Desarrollo en la Práctica
 
-El sitio soporta inglés y español con una estructura de URLs limpia:
+Así es como se ve una feature típica en este proyecto, desde la idea hasta producción:
 
-- Inglés en la raíz: `/about`, `/services`, `/portfolio`
-- Español con prefijo: `/es/about`, `/es/services`, `/es/portfolio`
+**1. Creación del issue** — `/create-issue feature Añadir soporte de internacionalización` genera un issue estructurado con preguntas clarificadoras y criterios de aceptación.
 
-El sistema i18n es type-safe — una interfaz `TranslationStrings` asegura que todos los idiomas tengan traducciones completas en tiempo de compilación. Un enum `Language` proporciona una única fuente de verdad para los códigos de idioma. La preferencia de idioma persiste en localStorage y se negocia automáticamente en la primera visita mediante detección del idioma del navegador.
+**2. Rama y plan** — `/start-issue 4` crea `feature/4-i18n-implementation`, entra en modo plan, explora el código y propone una arquitectura con ADRs. El humano revisa y aprueba.
 
-## Calidad y Testing
+**3. Implementación** — La IA implementa el plan aprobado en commits atómicos: `feat(i18n): add translation system`, `feat(i18n): add language switcher`, `test(i18n): add E2E tests`. Cada commit pasa los hooks de pre-commit (lint, formato, typecheck, build) automáticamente.
 
-La estrategia de testing cubre múltiples niveles:
+**4. Puertas de calidad** — Los hooks de pre-push ejecutan tests E2E en Chromium localmente. CI ejecuta una estrategia de 3 niveles: PRs en draft reciben validación rápida solo de lint, PRs listos reciben E2E en Chromium, y los merges a main reciben E2E completo en todos los navegadores.
 
-- **Tests E2E** — Navegación, validación del formulario de contacto, layout responsive, accesibilidad, meta tags SEO, estructura de URLs i18n y toggle de tema
-- **Verificación de tipos** — TypeScript estricto detecta problemas en tiempo de build
-- **Linting y formato** — ESLint y Prettier aseguran consistencia
-- **Validación de build** — Cada commit debe producir un build estático exitoso
+**5. Release** — `/make-release 5` mergea el PR, crea `v0.3.0`, genera el changelog, cierra el issue y limpia la rama.
 
-Todo esto se ejecuta automáticamente a través de git hooks y CI, creando una red de seguridad que hace el código generado por IA tan fiable como el código escrito a mano.
+¿El rol del humano durante todo el proceso? Establecer la dirección, revisar planes, aprobar releases. La IA se encarga de todo lo demás.
+
+## Documentación como Contexto
+
+Uno de los patrones más poderosos en este proyecto es la **documentación como contexto para la IA**. El archivo `CLAUDE.md` en la raíz del proyecto sirve como instrucciones persistentes para el agente de IA — convenciones de código, estructura del proyecto, tareas comunes, decisiones arquitectónicas. Cada vez que la IA inicia una nueva sesión, lee este archivo y retoma donde lo dejó con contexto completo.
+
+Los Architecture Decision Records (ADRs) en `docs/decisions/` documentan el _por qué_ detrás de las decisiones técnicas. Cuando la IA necesita tomar una nueva decisión, puede referenciar ADRs existentes para mantener la consistencia. Cuando un humano revisa un plan, los ADRs proporcionan el rastro de razonamiento.
+
+Esto crea un efecto flywheel: cuanto más documenta la IA, mejor contexto tienen las sesiones futuras, lo que lleva a un desarrollo más consistente y rápido.
 
 ## Resultados
 
-- **Código 100% autoría de IA** — Cada línea de código fue generada por agentes de IA
-- **10+ páginas** en 2 idiomas, todas generadas estáticamente
-- **LCP sub-2s** en producción con payload mínimo de JavaScript
-- **Cobertura E2E completa** en 4 navegadores
-- **i18n type-safe** con validación en tiempo de compilación de todas las cadenas de traducción
-- **Tema oscuro/claro** con cero FOUC
+- **Código 100% autoría de IA** — Cada línea, cada commit, generado por agentes de IA
+- **Ciclo de desarrollo completo** — Issues, ramas, PRs, releases, todo gestionado a través de skills personalizados
+- **Calidad de producción** — Tests E2E completos, TypeScript estricto, puertas de calidad automatizadas
+- **Completamente open source** — El [repositorio completo](https://github.com/josescgar/jerna-digital) está disponible para inspección, incluyendo todos los skills, ADRs e historial de commits
 
 ## Conclusiones Clave
 
-1. **Los agentes de IA pueden manejar el ciclo de desarrollo completo** — no solo autocompletado, sino arquitectura, implementación, testing y despliegue
-2. **La calidad viene del proceso, no de la autoría** — hooks de pre-commit, CI y type safety funcionan independientemente de quién (o qué) escriba el código
-3. **La colaboración humano-IA funciona mejor como intención + revisión** — el humano establece la dirección y revisa los resultados; la IA maneja los detalles de implementación
-4. **La documentación es un multiplicador de fuerza** — ADRs y CLAUDE.md dieron al agente de IA contexto que hizo el trabajo posterior más rápido y consistente
+1. **Los skills convierten agentes de IA en miembros del equipo** — Al codificar tu proceso de desarrollo en comandos reutilizables, los agentes de IA no solo escriben código; siguen el flujo de trabajo de tu equipo
+2. **El desarrollo plan-first evita desperdicio** — Forzar a la IA a explicar su enfoque antes de escribir código detecta malentendidos temprano y genera confianza
+3. **La calidad viene del proceso, no de la autoría** — Hooks de pre-commit, pipelines de CI y type safety funcionan independientemente de quién (o qué) escriba el código
+4. **La documentación es un multiplicador de fuerza** — `CLAUDE.md` y ADRs dan al agente de IA contexto que hace cada sesión más rápida y consistente que la anterior
+5. **El rol humano se traslada a dirección y revisión** — El patrón más efectivo es: el humano establece la intención, la IA propone un plan, el humano aprueba, la IA implementa, las puertas automatizadas verifican

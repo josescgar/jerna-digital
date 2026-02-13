@@ -19,83 +19,82 @@ urlSlug: jerna-digital
 
 Every consulting business needs a portfolio site. But as a technical consultant who helps startups leverage AI, the site itself needed to be the proof of concept. The challenge: build a production-grade, multilingual, accessible portfolio website using **100% AI-agentic development** — no hand-written code, every line generated and committed by AI agents.
 
-This wasn't just about shipping a site. It was about proving that AI agents can handle real software engineering workflows end-to-end: architecture decisions, implementation, testing, design iteration, and deployment.
+This wasn't just about shipping a site. It was about proving that AI agents can handle real software engineering workflows end-to-end: architecture decisions, implementation, testing, design iteration, and deployment. The entire repository is [open source on GitHub](https://github.com/josescgar/jerna-digital) — every commit, every PR, every decision record is available for inspection.
 
-## AI-First Approach
+## The Workflow Engine: Claude Code Skills
 
-The entire codebase was built using Claude Code as the primary development agent. Every commit in the repository was authored by an AI agent, guided by human intent and review. The workflow looked like this:
+The backbone of this project is a set of **custom Claude Code skills** — reusable slash commands stored in `.claude/skills/` that encode the team's development process into repeatable workflows. Three skills drive the entire lifecycle:
 
-- **Architecture decisions** were made collaboratively — the human provided requirements and constraints, the AI proposed solutions documented as Architecture Decision Records (ADRs)
-- **Implementation** was fully AI-driven — from component scaffolding to styling to test writing
-- **Code review** happened through conversation — reviewing diffs, asking for adjustments, iterating on approaches
-- **Quality gates** were enforced by pre-commit hooks that the AI itself set up
+### `/create-issue` — Structured Issue Creation
 
-## Tech Stack
+Instead of writing free-form issues, this skill turns a simple prompt like `/create-issue feature Add dark mode toggle` into a structured workflow:
 
-The technology choices were optimized for static-site performance and developer experience:
+- Asks targeted clarifying questions based on the issue type (features, bugs, hotfixes, refactors, etc.)
+- Ensures GitHub labels exist and are consistent
+- Generates a structured issue body from templates with acceptance criteria
+- Creates the issue with proper labels automatically
 
-- **Astro 5** — Islands architecture for near-zero JavaScript by default
-- **React** — Only for interactive components (contact form with Framer Motion)
-- **Tailwind CSS 4** — Utility-first styling with custom design tokens
-- **TypeScript** — Strict mode with `exactOptionalPropertyTypes` enabled
-- **Playwright** — End-to-end testing across multiple browsers
-- **GitHub Pages** — Static hosting with CI/CD via GitHub Actions
+Every issue in this repository was created through this skill, ensuring consistent structure and complete requirements from the start.
 
-## Development Workflow
+### `/start-issue` — Plan-First Development
 
-The project followed trunk-based development with feature branches:
+This is where the most interesting AI-agentic behavior happens. When given an issue number, the skill enforces a **mandatory plan-first workflow**:
 
-1. Issues were created with structured templates
-2. Each feature branch got its own PR with a clear scope
-3. Pre-commit hooks ran lint, format check, typecheck, and build on every commit
-4. Pre-push hooks ran E2E tests before any push
-5. CI ran a 3-tier testing strategy: draft PRs got lint-only, ready PRs got Chromium E2E, and merges to main got full cross-browser E2E
+1. **Setup**: Fetches the issue, assigns it, determines the branch type from labels, and creates a properly named feature branch
+2. **Planning (mandatory)**: Enters a read-only exploration mode where the AI analyzes the codebase, understands existing patterns, and writes a detailed implementation plan — all before a single line of code is written
+3. **Human review**: The plan is presented for approval. No code is written until the human signs off
+4. **Implementation**: Only after approval does the AI implement the changes, creating atomic commits with conventional commit messages
+5. **PR creation**: Creates a draft PR, runs validation, then marks it ready for review
 
-This workflow ensured that AI-generated code met the same quality bar as human-written code — because the guardrails were baked into the process, not the author.
+This plan-first approach is critical. It means the AI doesn't just start writing code based on a vague understanding — it demonstrates its understanding first, and the human can course-correct before any investment is made.
 
-## Design System Evolution
+### `/make-release` — Automated Releases
 
-The design system went through a structured evaluation process:
+Once a PR is reviewed and ready, the release skill handles the rest:
 
-1. Four distinct visual directions were prototyped
-2. A side-by-side comparison was set up for evaluation
-3. The "Minimal" variation was selected — dark mode base with green accent (#22c55e), DM Sans headings, clean geometric feel
-4. All variation infrastructure was removed after selection, keeping the codebase clean
+- Validates the PR is mergeable and not still in draft
+- Asks for the release type (patch, minor, major) and calculates the next semver version
+- Merges with squash, generates a changelog from commits, and creates a GitHub release with tags
+- Closes the related issue with a link to the release
+- Optionally cleans up the feature branch
 
-The final design tokens are defined as CSS custom properties in a single `@theme` block, with light mode overrides via `[data-theme='light']`. The theme system prevents FOUC with an inline script that reads localStorage before first render.
+This turns what would be a 10-step manual process into a single command with human checkpoints at the right moments.
 
-## Internationalization
+## The Development Lifecycle in Practice
 
-The site supports English and Spanish with a clean URL structure:
+Here's what a typical feature looks like in this project, from idea to production:
 
-- English at root: `/about`, `/services`, `/portfolio`
-- Spanish with prefix: `/es/about`, `/es/services`, `/es/portfolio`
+**1. Issue creation** — `/create-issue feature Add internationalization support` generates a structured issue with clarifying questions and acceptance criteria.
 
-The i18n system is type-safe — a `TranslationStrings` interface ensures all languages have complete translations at compile time. A `Language` enum provides a single source of truth for language codes. Language preference persists in localStorage and is negotiated automatically on first visit via browser language detection.
+**2. Branch & plan** — `/start-issue 4` creates `feature/4-i18n-implementation`, enters plan mode, explores the codebase, and proposes an architecture with ADRs. The human reviews and approves.
 
-## Quality & Testing
+**3. Implementation** — The AI implements the approved plan in atomic commits: `feat(i18n): add translation system`, `feat(i18n): add language switcher`, `test(i18n): add E2E tests`. Each commit passes pre-commit hooks (lint, format, typecheck, build) automatically.
 
-The testing strategy covers multiple levels:
+**4. Quality gates** — Pre-push hooks run Chromium E2E tests locally. CI runs a 3-tier strategy: draft PRs get fast lint-only checks, ready PRs get Chromium E2E, and merges to main get full cross-browser E2E testing.
 
-- **E2E tests** — Navigation, contact form validation, responsive layout, accessibility, SEO meta tags, i18n URL structure, and theme toggle
-- **Type checking** — Strict TypeScript catches issues at build time
-- **Linting & formatting** — ESLint and Prettier enforce consistency
-- **Build validation** — Every commit must produce a successful static build
+**5. Release** — `/make-release 5` merges the PR, creates `v0.3.0`, generates the changelog, closes the issue, and cleans up the branch.
 
-All of this runs automatically through git hooks and CI, creating a safety net that makes AI-generated code just as reliable as hand-written code.
+The human's role throughout? Setting direction, reviewing plans, approving releases. The AI handles everything else.
+
+## Documentation as Context
+
+One of the most powerful patterns in this project is **documentation as AI context**. The `CLAUDE.md` file at the project root serves as persistent instructions for the AI agent — coding conventions, project structure, common tasks, architectural decisions. Every time the AI starts a new session, it reads this file and picks up where it left off with full context.
+
+Architecture Decision Records (ADRs) in `docs/decisions/` document the _why_ behind technical choices. When the AI needs to make a new decision, it can reference existing ADRs to stay consistent. When a human reviews a plan, the ADRs provide the reasoning trail.
+
+This creates a flywheel effect: the more the AI documents, the better context future sessions have, leading to more consistent and faster development.
 
 ## Results
 
-- **100% AI-authored code** — Every line of code was generated by AI agents
-- **10+ pages** across 2 languages, all statically generated
-- **Sub-2s LCP** on production with minimal JavaScript payload
-- **Comprehensive E2E coverage** across 4 browsers
-- **Type-safe i18n** with compile-time validation of all translation strings
-- **Dark/light theme** with zero FOUC
+- **100% AI-authored code** — Every line, every commit, generated by AI agents
+- **Complete development lifecycle** — Issues, branches, PRs, releases, all managed through custom skills
+- **Production-grade quality** — Comprehensive E2E tests, strict TypeScript, automated quality gates
+- **Fully open source** — The [entire repository](https://github.com/josescgar/jerna-digital) is available for inspection, including all skills, ADRs, and commit history
 
 ## Key Takeaways
 
-1. **AI agents can own the full development lifecycle** — not just autocomplete, but architecture, implementation, testing, and deployment
-2. **Quality comes from process, not authorship** — pre-commit hooks, CI, and type safety work regardless of who (or what) writes the code
-3. **Human-AI collaboration works best as intent + review** — the human sets direction and reviews outcomes; the AI handles implementation details
-4. **Documentation is a force multiplier** — ADRs and CLAUDE.md gave the AI agent context that made subsequent work faster and more consistent
+1. **Skills turn AI agents into team members** — By encoding your development process into reusable commands, AI agents don't just write code; they follow your team's workflow
+2. **Plan-first development prevents waste** — Forcing the AI to explain its approach before writing code catches misunderstandings early and builds trust
+3. **Quality comes from process, not authorship** — Pre-commit hooks, CI pipelines, and type safety work regardless of who (or what) writes the code
+4. **Documentation is a force multiplier** — `CLAUDE.md` and ADRs give the AI agent context that makes each session faster and more consistent than the last
+5. **The human role shifts to direction and review** — The most effective pattern is: human sets intent, AI proposes a plan, human approves, AI implements, automated gates verify
