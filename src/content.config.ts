@@ -27,6 +27,8 @@ const portfolio = defineCollection({
       draft: z.boolean().default(true),
       lang: z.nativeEnum(Language),
       urlSlug: z.string(),
+      ogTitle: z.string().optional(),
+      ogDescription: z.string().optional(),
     }),
 });
 

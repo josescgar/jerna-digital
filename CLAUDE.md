@@ -249,6 +249,14 @@ src/
 - **Language Switcher:** In header, saves preference to localStorage
 - **Default selection:** On unprefixed URLs, a small inline script redirects to the preferred language based on stored preference → browser language → English
 
+### SEO / OG Meta Tags
+
+- **Dedicated SEO keys:** `seo` section in `TranslationStrings` provides per-page `ogTitle` and `ogDescription` optimized for social sharing (decoupled from visible `<title>` and `<meta name="description">`)
+- **BaseLayout props:** `ogTitle` and `ogDescription` are optional; when provided they override only `og:title`, `og:description`, `twitter:title`, and `twitter:description`
+- **OG image:** `public/og-image.png` (1200x630), generated via `scripts/generate-og-image.ts`
+- **Portfolio entries:** Can optionally specify `ogTitle` and `ogDescription` in MDX frontmatter
+- **Target lengths:** `og:title` 40-65 chars, `og:description` 110-160 chars
+
 ### Component Patterns
 
 - UI components follow shadcn/ui patterns (forwardRef, CVA variants)
@@ -324,7 +332,9 @@ The pre-push hook (`.husky/pre-push`) also runs Chromium-only E2E tests locally 
 1. Create localized page at `src/pages/[...lang]/new-page.astro` with `getStaticPaths()`
 2. Import `BaseLayout` and pass `lang` prop
 3. Add translations to `src/i18n/translations.ts` (both `en` and `es`)
-4. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
+4. Add `seo.newPage` entries with `ogTitle` (40-65 chars) and `ogDescription` (110-160 chars) to both language objects
+5. Pass `ogTitle={t.seo.newPage.ogTitle} ogDescription={t.seo.newPage.ogDescription}` to `BaseLayout`
+6. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
 
 **Page pattern example:**
 

@@ -25,7 +25,13 @@ const { lang } = Astro.props;
 const t = getTranslations(lang);
 ---
 
-<BaseLayout lang={lang} title={t.nav.about} description={t.about.intro}>
+<BaseLayout
+  lang={lang}
+  title={t.nav.about}
+  description={t.about.intro}
+  ogTitle={t.seo.about.ogTitle}
+  ogDescription={t.seo.about.ogDescription}
+>
   <!-- Hero section -->
   <section class="section relative overflow-hidden">
     <div class="container">

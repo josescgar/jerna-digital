@@ -199,6 +199,14 @@ export interface TranslationStrings {
     light: string;
     dark: string;
   };
+  // SEO-specific metadata (decoupled from visible UI text)
+  seo: {
+    home: { ogTitle: string; ogDescription: string };
+    about: { ogTitle: string; ogDescription: string };
+    services: { ogTitle: string; ogDescription: string };
+    contact: { ogTitle: string; ogDescription: string };
+    portfolio: { ogTitle: string; ogDescription: string };
+  };
 }
 
 export const translations: Record<Language, TranslationStrings> = {
@@ -497,6 +505,38 @@ export const translations: Record<Language, TranslationStrings> = {
       toggleTheme: 'Toggle theme',
       light: 'Light',
       dark: 'Dark',
+    },
+    seo: {
+      home: {
+        ogTitle:
+          'Jerna Digital \u2014 AI-First Technical Leadership for Startups',
+        ogDescription:
+          'Fractional CTO & Technical Consulting for early-stage startups. AI-augmented development, architecture, and engineering team building.',
+      },
+      about: {
+        ogTitle:
+          'About Jose Escobar \u2014 Fractional CTO & Engineering Leader',
+        ogDescription:
+          'Engineering leader turned startup advisor. Former CTO in iGaming, now helping early-stage teams build the right technical foundations with AI.',
+      },
+      services: {
+        ogTitle:
+          'Services \u2014 Technical Consulting & Fractional CTO Leadership',
+        ogDescription:
+          'Technical consulting, engineering management, and fractional CTO services for early-stage startups. From first commit to Series A.',
+      },
+      contact: {
+        ogTitle:
+          'Get in Touch \u2014 Start Your Technical Partnership with Jerna',
+        ogDescription:
+          'Need a technical audit, a fractional CTO, or help building your engineering team? Book a free 30-minute discovery call to get started.',
+      },
+      portfolio: {
+        ogTitle:
+          'Portfolio \u2014 Real Startup Problems, Real Technical Solutions',
+        ogDescription:
+          'Case studies showing how early-stage startups solve real technical challenges: architecture, team building, AI-augmented development.',
+      },
     },
   },
   [Language.ES]: {
@@ -798,6 +838,38 @@ export const translations: Record<Language, TranslationStrings> = {
       toggleTheme: 'Cambiar tema',
       light: 'Claro',
       dark: 'Oscuro',
+    },
+    seo: {
+      home: {
+        ogTitle:
+          'Jerna Digital \u2014 Liderazgo T\u00E9cnico AI-First para Startups',
+        ogDescription:
+          'CTO Fraccional y Consultor\u00EDa T\u00E9cnica para startups en fase inicial. Desarrollo potenciado por IA, arquitectura y equipos de ingenier\u00EDa.',
+      },
+      about: {
+        ogTitle:
+          'Sobre Jose Escobar \u2014 CTO Fraccional y L\u00EDder de Ingenier\u00EDa',
+        ogDescription:
+          'L\u00EDder de ingenier\u00EDa reconvertido en asesor de startups. Ex-CTO en iGaming, ahora ayudando a equipos a construir bases t\u00E9cnicas con IA.',
+      },
+      services: {
+        ogTitle:
+          'Servicios \u2014 Consultor\u00EDa T\u00E9cnica y Liderazgo CTO Fraccional',
+        ogDescription:
+          'Consultor\u00EDa t\u00E9cnica, gesti\u00F3n de ingenier\u00EDa y CTO fraccional para startups en fase inicial. Del primer commit a la Serie A.',
+      },
+      contact: {
+        ogTitle:
+          'Contacto \u2014 Inicia Tu Partnership T\u00E9cnico con Jerna Digital',
+        ogDescription:
+          '\u00BFNecesitas una auditor\u00EDa t\u00E9cnica, un CTO fraccional o ayuda con tu equipo? Agenda una llamada de descubrimiento gratuita de 30 minutos.',
+      },
+      portfolio: {
+        ogTitle:
+          'Portfolio \u2014 Problemas Reales de Startups, Soluciones Reales',
+        ogDescription:
+          'Casos de \u00E9xito de startups resolviendo desaf\u00EDos t\u00E9cnicos reales: arquitectura, construcci\u00F3n de equipos y desarrollo potenciado por IA.',
+      },
     },
   },
 };
