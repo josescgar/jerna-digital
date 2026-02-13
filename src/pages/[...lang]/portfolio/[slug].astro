@@ -49,13 +49,12 @@ const {
   summary,
 } = entry.data;
 
-const pubDate: Date | undefined = publishedAt;
-const formattedDate = pubDate
+const formattedDate = publishedAt
   ? new Intl.DateTimeFormat(lang, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-    }).format(pubDate)
+    }).format(publishedAt)
   : null;
 ---
 
