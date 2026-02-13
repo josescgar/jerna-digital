@@ -28,7 +28,13 @@ const { lang } = Astro.props;
 const t = getTranslations(lang);
 ---
 
-<BaseLayout lang={lang} title={t.site.name} description={t.site.description}>
+<BaseLayout
+  lang={lang}
+  title={t.site.name}
+  description={t.site.description}
+  ogTitle={t.seo.home.ogTitle}
+  ogDescription={t.seo.home.ogDescription}
+>
   <HeroSection lang={lang} />
   <ServicesSection lang={lang} />
   <AboutPreviewSection lang={lang} />

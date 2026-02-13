@@ -58,7 +58,15 @@ const formattedDate = publishedAt
   : null;
 ---
 
-<BaseLayout lang={lang} title={title} description={summary}>
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={summary}
+  {...entry.data.ogTitle !== undefined && { ogTitle: entry.data.ogTitle }}
+  {...entry.data.ogDescription !== undefined && {
+    ogDescription: entry.data.ogDescription,
+  }}
+>
   <article class="section">
     <div class="container">
       <!-- Back link -->
