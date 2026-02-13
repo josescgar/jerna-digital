@@ -180,4 +180,67 @@ test.describe('SEO', () => {
       expect(title).toContain('Jerna Digital');
     });
   });
+
+  test.describe('OG meta tag quality', () => {
+    const enPages = [
+      { path: '/', name: 'home' },
+      { path: '/about', name: 'about' },
+      { path: '/services', name: 'services' },
+      { path: '/contact', name: 'contact' },
+      { path: '/portfolio', name: 'portfolio' },
+    ];
+
+    const esPages = [
+      { path: '/es', name: 'home (es)' },
+      { path: '/es/about', name: 'about (es)' },
+      { path: '/es/services', name: 'services (es)' },
+      { path: '/es/contact', name: 'contact (es)' },
+      { path: '/es/portfolio', name: 'portfolio (es)' },
+    ];
+
+    for (const { path, name } of [...enPages, ...esPages]) {
+      test(`${name} page should have og:image as absolute URL`, async ({
+        page,
+      }) => {
+        await page.goto(path);
+        const ogImage = await page
+          .locator('meta[property="og:image"]')
+          .getAttribute('content');
+        expect(ogImage).toBeTruthy();
+        expect(ogImage!).toMatch(/^https?:\/\//);
+      });
+
+      test(`${name} page should have og:title length 40-65`, async ({
+        page,
+      }) => {
+        await page.goto(path);
+        const ogTitle = await page
+          .locator('meta[property="og:title"]')
+          .getAttribute('content');
+        expect(ogTitle).toBeTruthy();
+        expect(ogTitle!.length).toBeGreaterThanOrEqual(40);
+        expect(ogTitle!.length).toBeLessThanOrEqual(65);
+      });
+
+      test(`${name} page should have og:description length 110-160`, async ({
+        page,
+      }) => {
+        await page.goto(path);
+        const ogDescription = await page
+          .locator('meta[property="og:description"]')
+          .getAttribute('content');
+        expect(ogDescription).toBeTruthy();
+        expect(ogDescription!.length).toBeGreaterThanOrEqual(110);
+        expect(ogDescription!.length).toBeLessThanOrEqual(160);
+      });
+
+      test(`${name} page should have og:image dimensions`, async ({ page }) => {
+        await page.goto(path);
+        const ogWidth = page.locator('meta[property="og:image:width"]');
+        const ogHeight = page.locator('meta[property="og:image:height"]');
+        await expect(ogWidth).toHaveAttribute('content', '1200');
+        await expect(ogHeight).toHaveAttribute('content', '630');
+      });
+    }
+  });
 });
