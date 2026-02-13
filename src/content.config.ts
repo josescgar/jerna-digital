@@ -13,8 +13,8 @@ const portfolio = defineCollection({
     pattern: '**/*.{md,mdx}',
     base: './src/content/portfolio',
   }),
-  schema: ({ image }) =>
-    z.object({
+  schema: ({ image }) => {
+    return z.object({
       title: z.string(),
       client: z.string(),
       industry: z.string(),
@@ -27,7 +27,8 @@ const portfolio = defineCollection({
       draft: z.boolean().default(true),
       lang: z.nativeEnum(Language),
       urlSlug: z.string(),
-    }),
+    });
+  },
 });
 
 export const collections = {
