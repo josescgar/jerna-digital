@@ -114,6 +114,8 @@ The site is deployed to GitHub Pages via GitHub Actions:
 2. After CI passes, the deploy workflow builds the site
 3. Site is deployed to GitHub Pages
 
+`PUBLIC_WEB3FORMS_ACCESS_KEY` must be configured in the `github-pages` environment secrets so it is available during the deploy build job.
+
 Manual deployment is available via the Actions tab (`workflow_dispatch`), bypassing CI.
 
 ## License
