@@ -10,6 +10,7 @@ import {
   type Language,
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
+import { Route } from '@/lib/routes';
 
 export async function getStaticPaths() {
   const items = await getCollection('portfolio', (entry) => !entry.data.draft);
@@ -71,7 +72,7 @@ const formattedDate = publishedAt
     <div class="container">
       <!-- Back link -->
       <a
-        href={getLocalizedPath(lang, '/portfolio')}
+        href={getLocalizedPath(lang, Route.Portfolio)}
         class="text-foreground-muted hover:text-primary mb-8 inline-flex items-center gap-2 text-sm transition-colors"
       >
         <svg

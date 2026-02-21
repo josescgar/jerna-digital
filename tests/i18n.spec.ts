@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { Route, spanishPath } from './utils/routes';
 
 test.describe('Internationalization (i18n)', () => {
   test.describe('URL Structure', () => {
@@ -11,44 +12,44 @@ test.describe('Internationalization (i18n)', () => {
     });
 
     test('English pages should be at root URLs', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
       await expect(page).toHaveURL(/\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'en');
 
-      await page.goto('/about');
+      await page.goto(Route.About);
       await expect(page).toHaveURL(/\/about\/?$/);
 
-      await page.goto('/services');
+      await page.goto(Route.Services);
       await expect(page).toHaveURL(/\/services\/?$/);
 
-      await page.goto('/contact');
+      await page.goto(Route.Contact);
       await expect(page).toHaveURL(/\/contact\/?$/);
 
-      await page.goto('/portfolio');
+      await page.goto(Route.Portfolio);
       await expect(page).toHaveURL(/\/portfolio\/?$/);
 
-      await page.goto('/portfolio/jerna-digital');
+      await page.goto(`${Route.Portfolio}/jerna-digital`);
       await expect(page).toHaveURL(/\/portfolio\/jerna-digital\/?$/);
     });
 
     test('Spanish pages should have /es/ prefix', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
       await expect(page).toHaveURL(/\/es\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
 
-      await page.goto('/es/about');
+      await page.goto(spanishPath(Route.About));
       await expect(page).toHaveURL(/\/es\/about\/?$/);
 
-      await page.goto('/es/services');
+      await page.goto(spanishPath(Route.Services));
       await expect(page).toHaveURL(/\/es\/services\/?$/);
 
-      await page.goto('/es/contact');
+      await page.goto(spanishPath(Route.Contact));
       await expect(page).toHaveURL(/\/es\/contact\/?$/);
 
-      await page.goto('/es/portfolio');
+      await page.goto(spanishPath(Route.Portfolio));
       await expect(page).toHaveURL(/\/es\/portfolio\/?$/);
 
-      await page.goto('/es/portfolio/jerna-digital');
+      await page.goto(spanishPath(`${Route.Portfolio}/jerna-digital`));
       await expect(page).toHaveURL(/\/es\/portfolio\/jerna-digital\/?$/);
     });
   });
@@ -64,7 +65,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.removeItem('jerna-lang');
         });
 
-        await page.goto('/');
+        await page.goto(Route.Home);
         await expect(page).toHaveURL(/\/es\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'es');
       });
@@ -80,7 +81,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.removeItem('jerna-lang');
         });
 
-        await page.goto('/');
+        await page.goto(Route.Home);
         await expect(page).toHaveURL(/\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'en');
       });
@@ -96,7 +97,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.setItem('jerna-lang', 'en');
         });
 
-        await page.goto('/about');
+        await page.goto(Route.About);
         await expect(page).toHaveURL(/\/about\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'en');
       });
@@ -108,7 +109,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.setItem('jerna-lang', 'es');
         });
 
-        await page.goto('/about');
+        await page.goto(Route.About);
         await expect(page).toHaveURL(/\/es\/about\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'es');
       });
@@ -163,7 +164,7 @@ test.describe('Internationalization (i18n)', () => {
     }
 
     test('should show language switcher in header', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();
@@ -187,13 +188,13 @@ test.describe('Internationalization (i18n)', () => {
       const isMobile = await mobileMenuBtn.isVisible();
       if (isMobile) {
         // On mobile, directly navigate to verify the Spanish URL exists
-        await page.goto('/es');
+        await page.goto(spanishPath(Route.Home));
         await expect(page).toHaveURL(/\/es\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'es');
         return;
       }
 
-      await page.goto('/');
+      await page.goto(Route.Home);
       await switchLanguage(page, 'es');
 
       // Should navigate to Spanish version
@@ -207,13 +208,13 @@ test.describe('Internationalization (i18n)', () => {
       const isMobile = await mobileMenuBtn.isVisible();
       if (isMobile) {
         // On mobile, directly navigate to verify the English URL exists
-        await page.goto('/');
+        await page.goto(Route.Home);
         await expect(page).toHaveURL(/\/?$/);
         await expect(page.locator('html')).toHaveAttribute('lang', 'en');
         return;
       }
 
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
       await switchLanguage(page, 'en');
 
       // Should navigate to English version
@@ -229,12 +230,12 @@ test.describe('Internationalization (i18n)', () => {
       const isMobile = await mobileMenuBtn.isVisible();
       if (isMobile) {
         // On mobile, directly navigate to verify the Spanish about URL exists
-        await page.goto('/es/about');
+        await page.goto(spanishPath(Route.About));
         await expect(page).toHaveURL(/\/es\/about\/?$/);
         return;
       }
 
-      await page.goto('/about');
+      await page.goto(Route.About);
       await switchLanguage(page, 'es');
 
       await expect(page).toHaveURL(/\/es\/about\/?$/);
@@ -248,7 +249,7 @@ test.describe('Internationalization (i18n)', () => {
       const isMobile = await mobileMenuBtn.isVisible();
       if (isMobile) {
         // On mobile, verify localStorage is set when clicking language link directly
-        await page.goto('/');
+        await page.goto(Route.Home);
         await mobileMenuBtn.click();
         const mobileMenu = page.locator('#mobile-menu');
         await expect(mobileMenu).toHaveAttribute('aria-hidden', 'false');
@@ -262,7 +263,7 @@ test.describe('Internationalization (i18n)', () => {
         return;
       }
 
-      await page.goto('/');
+      await page.goto(Route.Home);
       await switchLanguage(page, 'es');
 
       // Wait for navigation to complete
@@ -283,7 +284,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.setItem('jerna-lang', 'en');
         }
       });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Check for English-specific content in h1 ("Hi, I'm Jose")
       const h1 = page.locator('h1');
@@ -293,7 +294,7 @@ test.describe('Internationalization (i18n)', () => {
     });
 
     test('Spanish home page should show Spanish content', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       // Check for Spanish-specific content in h1 ("Hola, soy Jose")
       const h1 = page.locator('h1');
@@ -305,7 +306,7 @@ test.describe('Internationalization (i18n)', () => {
     test('Spanish contact page should show Spanish form labels', async ({
       page,
     }) => {
-      await page.goto('/es/contact');
+      await page.goto(spanishPath(Route.Contact));
 
       // Wait for page to load
       await page.waitForLoadState('networkidle');
@@ -332,7 +333,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.setItem('jerna-lang', 'en');
         }
       });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Check for hreflang tags
       const hreflangEn = page.locator('link[hreflang="en"]');
@@ -345,7 +346,7 @@ test.describe('Internationalization (i18n)', () => {
     });
 
     test('Spanish page should have correct hreflang tags', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       const hreflangEn = page.locator('link[hreflang="en"]');
       const hreflangEs = page.locator('link[hreflang="es"]');
@@ -362,7 +363,7 @@ test.describe('Internationalization (i18n)', () => {
           localStorage.setItem('jerna-lang', 'en');
         }
       });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const ogLocale = page.locator('meta[property="og:locale"]');
       await expect(ogLocale).toHaveAttribute('content', 'en_US');
@@ -371,7 +372,7 @@ test.describe('Internationalization (i18n)', () => {
     test('Spanish page should have og:locale set to es_ES', async ({
       page,
     }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       const ogLocale = page.locator('meta[property="og:locale"]');
       await expect(ogLocale).toHaveAttribute('content', 'es_ES');
@@ -380,7 +381,7 @@ test.describe('Internationalization (i18n)', () => {
 
   test.describe('Navigation in Spanish', () => {
     test('should navigate between Spanish pages', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       // Navigate to about page via header (handle mobile)
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
@@ -394,8 +395,12 @@ test.describe('Internationalization (i18n)', () => {
 
       // Click the About link (mobile menu vs desktop header)
       const aboutLink = isMobile
-        ? page.locator('#mobile-menu a[href="/es/about"]').first()
-        : page.locator('#site-header a[href="/es/about"]').first();
+        ? page
+            .locator(`#mobile-menu a[href="${spanishPath(Route.About)}"]`)
+            .first()
+        : page
+            .locator(`#site-header a[href="${spanishPath(Route.About)}"]`)
+            .first();
       await aboutLink.click();
       await expect(page).toHaveURL(/\/es\/about\/?$/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
@@ -404,10 +409,12 @@ test.describe('Internationalization (i18n)', () => {
     test('logo link should go to Spanish home on Spanish pages', async ({
       page,
     }) => {
-      await page.goto('/es/about');
+      await page.goto(spanishPath(Route.About));
 
       // Click logo - the link should be to /es
-      const logoLink = page.locator('header a[href="/es"]').first();
+      const logoLink = page
+        .locator(`header a[href="${spanishPath(Route.Home)}"]`)
+        .first();
       await expect(logoLink).toBeVisible();
       await logoLink.click();
       await expect(page).toHaveURL(/\/es\/?$/);

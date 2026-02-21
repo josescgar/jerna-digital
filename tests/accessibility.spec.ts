@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { Route } from './utils/routes';
 
 test.describe('Accessibility', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,7 +11,7 @@ test.describe('Accessibility', () => {
   });
 
   test('should have skip to main content link', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const skipLink = page.locator('a[href="#main-content"]');
 
@@ -27,7 +28,7 @@ test.describe('Accessibility', () => {
   test('should have proper heading hierarchy on home page', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     // Should have exactly one h1
     const h1Elements = page.locator('h1');
@@ -41,7 +42,7 @@ test.describe('Accessibility', () => {
   test('should have proper heading hierarchy on about page', async ({
     page,
   }) => {
-    await page.goto('/about');
+    await page.goto(Route.About);
 
     const h1Elements = page.locator('h1');
     await expect(h1Elements).toHaveCount(1);
@@ -50,7 +51,7 @@ test.describe('Accessibility', () => {
   test('should have alt text or aria-labels for interactive elements', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     // Check header navigation has proper labels
     const mobileMenuBtn = page.locator('#mobile-menu-btn');
@@ -65,7 +66,7 @@ test.describe('Accessibility', () => {
   });
 
   test('should have proper focus indicators', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     // Focus the logo link directly and verify it has visible focus
     const logoLink = page
@@ -82,7 +83,7 @@ test.describe('Accessibility', () => {
     page,
   }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const mobileMenuBtn = page.locator('#mobile-menu-btn');
     const mobileMenu = page.locator('#mobile-menu');
@@ -101,7 +102,7 @@ test.describe('Accessibility', () => {
 
   test('should close mobile menu on Escape key', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const mobileMenuBtn = page.locator('#mobile-menu-btn');
     const mobileMenu = page.locator('#mobile-menu');
@@ -118,7 +119,7 @@ test.describe('Accessibility', () => {
   });
 
   test('form inputs should have proper labels', async ({ page }) => {
-    await page.goto('/contact');
+    await page.goto(Route.Contact);
 
     // Check that labels are properly associated
     const nameLabel = page.locator('label[for="name"]');
