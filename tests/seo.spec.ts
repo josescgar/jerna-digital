@@ -181,6 +181,17 @@ test.describe('SEO', () => {
     });
   });
 
+  test.describe('robots.txt', () => {
+    test('should contain only standard directives', async ({ request }) => {
+      const response = await request.get('/robots.txt');
+      expect(response.ok()).toBeTruthy();
+      const body = await response.text();
+      expect(body).not.toContain('Content-Signal');
+      expect(body).toMatch(/User-agent/i);
+      expect(body).toMatch(/Allow/i);
+    });
+  });
+
   test.describe('OG meta tag quality', () => {
     const enPages = [
       { path: '/', name: 'home' },
