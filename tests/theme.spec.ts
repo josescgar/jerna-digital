@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { Route, spanishPath } from './utils/routes';
 
 /**
  * Helper to click the theme toggle button.
@@ -41,7 +42,7 @@ test.describe('Theme System', () => {
     }) => {
       // Emulate dark color scheme
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('dark');
@@ -52,7 +53,7 @@ test.describe('Theme System', () => {
     }) => {
       // Emulate light color scheme
       await page.emulateMedia({ colorScheme: 'light' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
@@ -69,7 +70,7 @@ test.describe('Theme System', () => {
         localStorage.setItem('jerna-theme', 'light');
       });
 
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
@@ -78,7 +79,7 @@ test.describe('Theme System', () => {
 
   test.describe('Theme Toggle', () => {
     test('should show theme toggle button in header', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();
@@ -98,7 +99,7 @@ test.describe('Theme System', () => {
 
     test('should toggle from dark to light', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Verify starting in dark mode
       let theme = await page.locator('html').getAttribute('data-theme');
@@ -114,7 +115,7 @@ test.describe('Theme System', () => {
 
     test('should toggle from light to dark', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'light' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Verify starting in light mode
       let theme = await page.locator('html').getAttribute('data-theme');
@@ -132,7 +133,7 @@ test.describe('Theme System', () => {
       page,
     }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();
@@ -167,7 +168,7 @@ test.describe('Theme System', () => {
       // Desktop
       await page.setViewportSize({ width: 1280, height: 800 });
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const desktopToggle = page.locator(
         'header nav ul.md\\:flex [data-theme-toggle]'
@@ -180,7 +181,7 @@ test.describe('Theme System', () => {
 
       // Mobile
       await page.setViewportSize({ width: 375, height: 667 });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       await page.locator('#mobile-menu-btn').click();
 
@@ -197,7 +198,7 @@ test.describe('Theme System', () => {
     }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const toggle = page.locator(
         'header nav ul.md\\:flex [data-theme-toggle]'
@@ -241,7 +242,7 @@ test.describe('Theme System', () => {
   test.describe('Persistence', () => {
     test('should save theme preference to localStorage', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Initially no stored preference
       let storedTheme = await page.evaluate(() =>
@@ -261,13 +262,13 @@ test.describe('Theme System', () => {
 
     test('should persist theme across page navigation', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Toggle to light using helper
       await clickThemeToggle(page);
 
       // Navigate to another page
-      await page.goto('/about');
+      await page.goto(Route.About);
 
       // Theme should still be light
       const theme = await page.locator('html').getAttribute('data-theme');
@@ -281,14 +282,14 @@ test.describe('Theme System', () => {
       await page.addInitScript(() => {
         localStorage.setItem('jerna-theme', 'light');
       });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Verify theme is light (from stored preference)
       let theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
 
       // Navigate to Spanish version
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       // Theme should still be light
       theme = await page.locator('html').getAttribute('data-theme');
@@ -299,7 +300,7 @@ test.describe('Theme System', () => {
   test.describe('FOUC Prevention', () => {
     test('should have no-transitions class initially', async ({ page }) => {
       // Check that html starts with no-transitions class
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // The class should be removed after initial render
       // We verify by checking it's NOT present after load (removed by RAF)
@@ -323,7 +324,7 @@ test.describe('Theme System', () => {
 
       // We can verify FOUC prevention by checking the theme is set
       // synchronously in the <head> script
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const theme = await page.locator('html').getAttribute('data-theme');
       expect(theme).toBe('light');
@@ -335,7 +336,7 @@ test.describe('Theme System', () => {
       // Set viewport to mobile
       await page.setViewportSize({ width: 375, height: 667 });
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       // Open mobile menu
       await page.locator('#mobile-menu-btn').click();
@@ -357,7 +358,7 @@ test.describe('Theme System', () => {
       // Set viewport to mobile
       await page.setViewportSize({ width: 375, height: 667 });
       await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       // Open mobile menu
       await page.locator('#mobile-menu-btn').click();
@@ -376,7 +377,7 @@ test.describe('Theme System', () => {
 
   test.describe('Accessibility', () => {
     test('theme toggle should have accessible label', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();
@@ -402,7 +403,7 @@ test.describe('Theme System', () => {
     test('theme toggle should have Spanish accessible label on Spanish page', async ({
       page,
     }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       const mobileMenuBtn = page.locator('#mobile-menu-btn');
       const isMobile = await mobileMenuBtn.isVisible();

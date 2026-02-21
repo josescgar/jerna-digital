@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { Route, spanishPath } from './utils/routes';
 
 test.describe('SEO', () => {
   test.beforeEach(async ({ page }) => {
@@ -10,7 +11,7 @@ test.describe('SEO', () => {
   });
 
   test('home page should have proper meta tags', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     // Title
     await expect(page).toHaveTitle(/Jerna Digital/);
@@ -25,7 +26,7 @@ test.describe('SEO', () => {
   });
 
   test('should have Open Graph meta tags', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const ogTitle = page.locator('meta[property="og:title"]');
     const ogDescription = page.locator('meta[property="og:description"]');
@@ -41,7 +42,7 @@ test.describe('SEO', () => {
   });
 
   test('should have Twitter Card meta tags', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const twitterCard = page.locator('meta[name="twitter:card"]');
     const twitterTitle = page.locator('meta[name="twitter:title"]');
@@ -55,7 +56,7 @@ test.describe('SEO', () => {
   });
 
   test('should have JSON-LD structured data', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const jsonLd = page.locator('script[type="application/ld+json"]');
     await expect(jsonLd).toBeAttached();
@@ -74,7 +75,7 @@ test.describe('SEO', () => {
   });
 
   test('about page should have unique meta tags', async ({ page }) => {
-    await page.goto('/about');
+    await page.goto(Route.About);
 
     const title = await page.title();
     expect(title).toContain('About');
@@ -82,7 +83,7 @@ test.describe('SEO', () => {
   });
 
   test('services page should have unique meta tags', async ({ page }) => {
-    await page.goto('/services');
+    await page.goto(Route.Services);
 
     const title = await page.title();
     expect(title).toContain('Services');
@@ -92,7 +93,7 @@ test.describe('SEO', () => {
   test('portfolio detail page should have proper meta tags', async ({
     page,
   }) => {
-    await page.goto('/portfolio/jerna-digital');
+    await page.goto(`${Route.Portfolio}/jerna-digital`);
 
     const title = await page.title();
     expect(title).toContain('Jerna Digital');
@@ -107,7 +108,7 @@ test.describe('SEO', () => {
   });
 
   test('should have viewport meta tag', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const viewport = page.locator('meta[name="viewport"]');
     await expect(viewport).toHaveAttribute(
@@ -117,7 +118,7 @@ test.describe('SEO', () => {
   });
 
   test('should have charset meta tag', async ({ page }) => {
-    await page.goto('/');
+    await page.goto(Route.Home);
 
     const charset = page.locator('meta[charset]');
     await expect(charset).toHaveAttribute('charset', 'UTF-8');
@@ -125,7 +126,7 @@ test.describe('SEO', () => {
 
   test.describe('i18n SEO', () => {
     test('should have hreflang tags on English pages', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const hreflangEn = page.locator('link[hreflang="en"]');
       const hreflangEs = page.locator('link[hreflang="es"]');
@@ -137,7 +138,7 @@ test.describe('SEO', () => {
     });
 
     test('should have hreflang tags on Spanish pages', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       const hreflangEn = page.locator('link[hreflang="en"]');
       const hreflangEs = page.locator('link[hreflang="es"]');
@@ -151,7 +152,7 @@ test.describe('SEO', () => {
     test('English page should have og:locale set to en_US', async ({
       page,
     }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
 
       const ogLocale = page.locator('meta[property="og:locale"]');
       await expect(ogLocale).toHaveAttribute('content', 'en_US');
@@ -160,21 +161,21 @@ test.describe('SEO', () => {
     test('Spanish page should have og:locale set to es_ES', async ({
       page,
     }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
 
       const ogLocale = page.locator('meta[property="og:locale"]');
       await expect(ogLocale).toHaveAttribute('content', 'es_ES');
     });
 
     test('Spanish page should have proper title', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
       await expect(page).toHaveTitle(/Jerna Digital/);
     });
 
     test('Spanish about page should have unique meta tags', async ({
       page,
     }) => {
-      await page.goto('/es/about');
+      await page.goto(spanishPath(Route.About));
 
       const title = await page.title();
       expect(title).toContain('Jerna Digital');
@@ -183,19 +184,19 @@ test.describe('SEO', () => {
 
   test.describe('OG meta tag quality', () => {
     const enPages = [
-      { path: '/', name: 'home' },
-      { path: '/about', name: 'about' },
-      { path: '/services', name: 'services' },
-      { path: '/contact', name: 'contact' },
-      { path: '/portfolio', name: 'portfolio' },
+      { path: Route.Home, name: 'home' },
+      { path: Route.About, name: 'about' },
+      { path: Route.Services, name: 'services' },
+      { path: Route.Contact, name: 'contact' },
+      { path: Route.Portfolio, name: 'portfolio' },
     ];
 
     const esPages = [
-      { path: '/es', name: 'home (es)' },
-      { path: '/es/about', name: 'about (es)' },
-      { path: '/es/services', name: 'services (es)' },
-      { path: '/es/contact', name: 'contact (es)' },
-      { path: '/es/portfolio', name: 'portfolio (es)' },
+      { path: spanishPath(Route.Home), name: 'home (es)' },
+      { path: spanishPath(Route.About), name: 'about (es)' },
+      { path: spanishPath(Route.Services), name: 'services (es)' },
+      { path: spanishPath(Route.Contact), name: 'contact (es)' },
+      { path: spanishPath(Route.Portfolio), name: 'portfolio (es)' },
     ];
 
     for (const { path, name } of [...enPages, ...esPages]) {

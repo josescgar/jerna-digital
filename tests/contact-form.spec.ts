@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { Route } from './utils/routes';
 
 test.describe('Contact Form', () => {
   test.beforeEach(async ({ page }) => {
@@ -8,7 +9,7 @@ test.describe('Contact Form', () => {
       }
     });
 
-    await page.goto('/contact');
+    await page.goto(Route.Contact);
 
     // ContactForm is a hydrated React island. Wait until hydration completes
     // so React doesn't overwrite values we fill during tests.

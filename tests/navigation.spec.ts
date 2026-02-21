@@ -1,4 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
+import { Route, spanishPath } from './utils/routes';
 
 test.describe('Navigation', () => {
   /**
@@ -32,27 +33,27 @@ test.describe('Navigation', () => {
     });
 
     test('should load home page successfully', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
       await expect(page).toHaveTitle(/Jerna Digital/);
     });
 
     test('should navigate to About page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/about');
+      await page.goto(Route.Home);
+      await navigateViaHeader(page, Route.About);
       await expect(page).toHaveURL(/\/about\/?$/);
       await expect(page.locator('h1')).toContainText('About');
     });
 
     test('should navigate to Services page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/services');
+      await page.goto(Route.Home);
+      await navigateViaHeader(page, Route.Services);
       await expect(page).toHaveURL(/\/services\/?$/);
       await expect(page.locator('h1')).toContainText('Services');
     });
 
     test('should navigate to Portfolio page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/portfolio');
+      await page.goto(Route.Home);
+      await navigateViaHeader(page, Route.Portfolio);
       await expect(page).toHaveURL(/\/portfolio\/?$/);
       await expect(page.locator('h1')).toContainText('Portfolio');
     });
@@ -60,8 +61,10 @@ test.describe('Navigation', () => {
     test('should navigate to portfolio detail page from index', async ({
       page,
     }) => {
-      await page.goto('/portfolio');
-      const link = page.locator('a[href="/portfolio/jerna-digital"]').first();
+      await page.goto(Route.Portfolio);
+      const link = page
+        .locator(`a[href="${Route.Portfolio}/jerna-digital"]`)
+        .first();
       await expect(link).toBeVisible();
       await link.click();
       await expect(page).toHaveURL(/\/portfolio\/jerna-digital\/?$/);
@@ -69,15 +72,15 @@ test.describe('Navigation', () => {
     });
 
     test('should navigate to Contact page', async ({ page }) => {
-      await page.goto('/');
-      await navigateViaHeader(page, '/contact');
+      await page.goto(Route.Home);
+      await navigateViaHeader(page, Route.Contact);
       await expect(page).toHaveURL(/\/contact\/?$/);
       await expect(page.locator('h1')).toBeVisible();
     });
 
     test('should have working logo link to home', async ({ page }) => {
-      await page.goto('/about');
-      const logoLink = page.locator('header a[href="/"]').first();
+      await page.goto(Route.About);
+      const logoLink = page.locator(`header a[href="${Route.Home}"]`).first();
       await expect(logoLink).toBeVisible();
       await logoLink.click();
       await expect(page).toHaveURL(/\/?$/);
@@ -88,7 +91,7 @@ test.describe('Navigation', () => {
     test.use({ viewport: { width: 375, height: 812 } });
 
     test('shows only burger icon when menu is closed', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
       const menuIcon = page.locator('#mobile-menu-btn .menu-icon');
       const closeIcon = page.locator('#mobile-menu-btn .close-icon');
       await expect(menuIcon).toBeVisible();
@@ -96,7 +99,7 @@ test.describe('Navigation', () => {
     });
 
     test('shows only close icon when menu is open', async ({ page }) => {
-      await page.goto('/');
+      await page.goto(Route.Home);
       await page.locator('#mobile-menu-btn').click();
       const menuIcon = page.locator('#mobile-menu-btn .menu-icon');
       const closeIcon = page.locator('#mobile-menu-btn .close-icon');
@@ -107,28 +110,28 @@ test.describe('Navigation', () => {
 
   test.describe('Spanish Navigation', () => {
     test('should load Spanish home page successfully', async ({ page }) => {
-      await page.goto('/es');
+      await page.goto(spanishPath(Route.Home));
       await expect(page).toHaveTitle(/Jerna Digital/);
       await expect(page.locator('html')).toHaveAttribute('lang', 'es');
     });
 
     test('should navigate to Spanish About page', async ({ page }) => {
-      await page.goto('/es');
-      await navigateViaHeader(page, '/es/about');
+      await page.goto(spanishPath(Route.Home));
+      await navigateViaHeader(page, spanishPath(Route.About));
       await expect(page).toHaveURL(/\/es\/about\/?$/);
       await expect(page.locator('h1')).toBeVisible();
     });
 
     test('should navigate to Spanish Services page', async ({ page }) => {
-      await page.goto('/es');
-      await navigateViaHeader(page, '/es/services');
+      await page.goto(spanishPath(Route.Home));
+      await navigateViaHeader(page, spanishPath(Route.Services));
       await expect(page).toHaveURL(/\/es\/services\/?$/);
       await expect(page.locator('h1')).toBeVisible();
     });
 
     test('should navigate to Spanish Contact page', async ({ page }) => {
-      await page.goto('/es');
-      await navigateViaHeader(page, '/es/contact');
+      await page.goto(spanishPath(Route.Home));
+      await navigateViaHeader(page, spanishPath(Route.Contact));
       await expect(page).toHaveURL(/\/es\/contact\/?$/);
       // Spanish contact title is "Contacto"
       const h1 = page.locator('h1');
@@ -138,9 +141,11 @@ test.describe('Navigation', () => {
     });
 
     test('should have working logo link to Spanish home', async ({ page }) => {
-      await page.goto('/es/about');
+      await page.goto(spanishPath(Route.About));
       // Logo link should point to /es on Spanish pages
-      const logoLink = page.locator('header a[href="/es"]').first();
+      const logoLink = page
+        .locator(`header a[href="${spanishPath(Route.Home)}"]`)
+        .first();
       await expect(logoLink).toBeVisible();
       await logoLink.click();
       await expect(page).toHaveURL(/\/es\/?$/);
