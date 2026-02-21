@@ -139,7 +139,7 @@ async function main(): Promise<void> {
   const browser = await chromium.launch();
   const page = await browser.newPage({
     viewport: { width: WIDTH, height: HEIGHT },
-    deviceScaleFactor: 2,
+    deviceScaleFactor: 1,
   });
 
   await page.setContent(html, { waitUntil: 'networkidle' });
