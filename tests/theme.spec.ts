@@ -239,6 +239,77 @@ test.describe('Theme System', () => {
     });
   });
 
+  test.describe('Primary CTA Styling', () => {
+    test('should render primary CTA buttons with white text in light theme', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.emulateMedia({ colorScheme: 'light' });
+      await page.goto(Route.Home);
+
+      const primaryCta = page
+        .locator('a.cta-primary, button.cta-primary')
+        .first();
+      await expect(primaryCta).toBeVisible();
+
+      const color = await primaryCta.evaluate(
+        (el) => window.getComputedStyle(el).color
+      );
+
+      expect(color).toBe('rgb(255, 255, 255)');
+    });
+
+    test('should trigger subtle shimmer on hover for primary CTA buttons', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.emulateMedia({ colorScheme: 'light' });
+      await page.goto(Route.Home);
+
+      const primaryCta = page
+        .locator('a.cta-primary, button.cta-primary')
+        .first();
+      await expect(primaryCta).toBeVisible();
+
+      await primaryCta.hover();
+
+      const afterStyles = await primaryCta.evaluate((el) => {
+        const pseudo = window.getComputedStyle(el, '::after');
+        return {
+          animationName: pseudo.animationName,
+          opacity: Number(pseudo.opacity),
+        };
+      });
+
+      expect(afterStyles.animationName).toContain('cta-shimmer');
+      expect(afterStyles.opacity).toBeGreaterThan(0);
+    });
+
+    test('should disable CTA shimmer when reduced motion is enabled', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.emulateMedia({
+        colorScheme: 'light',
+        reducedMotion: 'reduce',
+      });
+      await page.goto(Route.Home);
+
+      const primaryCta = page
+        .locator('a.cta-primary, button.cta-primary')
+        .first();
+      await expect(primaryCta).toBeVisible();
+
+      await primaryCta.hover();
+
+      const animationName = await primaryCta.evaluate(
+        (el) => window.getComputedStyle(el, '::after').animationName
+      );
+
+      expect(animationName).toBe('none');
+    });
+  });
+
   test.describe('Persistence', () => {
     test('should save theme preference to localStorage', async ({ page }) => {
       await page.emulateMedia({ colorScheme: 'dark' });

@@ -22,7 +22,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          'bg-gradient-primary text-primary-foreground',
+          'bg-gradient-primary text-primary-foreground cta-primary',
           'hover:shadow-glow hover:scale-[1.02]',
           'active:scale-[0.98]',
         ],

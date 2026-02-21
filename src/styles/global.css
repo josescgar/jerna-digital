@@ -322,6 +322,58 @@ svg {
   );
 }
 
+/* Primary CTA button effects */
+@keyframes cta-shimmer {
+  from {
+    transform: translateX(-140%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(140%) skewX(-18deg);
+  }
+}
+
+.cta-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-primary-foreground);
+}
+
+[data-theme='light'] .cta-primary {
+  color: #ffffff;
+}
+
+.cta-primary::after {
+  content: '';
+  position: absolute;
+  inset: -120% -40%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0) 55%,
+    transparent 65%
+  );
+  transform: translateX(-140%) skewX(-18deg);
+}
+
+.cta-primary > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta-primary:hover::after,
+  .cta-primary:focus-visible::after {
+    opacity: 1;
+    animation: cta-shimmer 850ms var(--ease-out) 1;
+  }
+}
+
 .bg-gradient-secondary {
   background: linear-gradient(
     135deg,
@@ -622,5 +674,11 @@ svg {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .cta-primary:hover::after,
+  .cta-primary:focus-visible::after {
+    opacity: 0 !important;
+    animation: none !important;
   }
 }
