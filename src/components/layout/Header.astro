@@ -196,7 +196,7 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="close-icon hidden"
+          class="close-icon"
         >
           <path d="M18 6 6 18"></path>
           <path d="m6 6 12 12"></path>
@@ -285,12 +285,23 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
   </div>
 </header>
 
+<style is:global>
+  /* Mobile menu icon visibility - driven by aria-expanded (set synchronously in HTML) */
+  #mobile-menu-btn .close-icon {
+    display: none;
+  }
+  #mobile-menu-btn[aria-expanded='true'] .menu-icon {
+    display: none;
+  }
+  #mobile-menu-btn[aria-expanded='true'] .close-icon {
+    display: block;
+  }
+</style>
+
 <script>
   // Mobile menu toggle
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = menuBtn?.querySelector('.menu-icon');
-  const closeIcon = menuBtn?.querySelector('.close-icon');
 
   function toggleMenu(): void {
     const isExpanded = menuBtn?.getAttribute('aria-expanded') === 'true';
@@ -298,8 +309,6 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
     menuBtn?.setAttribute('aria-expanded', String(!isExpanded));
     mobileMenu?.classList.toggle('hidden');
     mobileMenu?.setAttribute('aria-hidden', String(isExpanded));
-    menuIcon?.classList.toggle('hidden');
-    closeIcon?.classList.toggle('hidden');
 
     // Prevent body scroll when menu is open
     document.body.style.overflow = isExpanded ? '' : 'hidden';
