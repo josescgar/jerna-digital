@@ -1,6 +1,24 @@
 import { test, expect } from '@playwright/test';
 import { Route, spanishPath } from './utils/routes';
 
+function readPngDimensions(data: Buffer): { width: number; height: number } {
+  const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
+
+  expect(data.length).toBeGreaterThanOrEqual(24);
+
+  for (const [index, byte] of pngSignature.entries()) {
+    expect(data[index]).toBe(byte);
+  }
+
+  const chunkType = data.toString('ascii', 12, 16);
+  expect(chunkType).toBe('IHDR');
+
+  const width = data.readUInt32BE(16);
+  const height = data.readUInt32BE(20);
+
+  return { width, height };
+}
+
 test.describe('SEO', () => {
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
@@ -254,6 +272,30 @@ test.describe('SEO', () => {
         await expect(ogHeight).toHaveAttribute('content', '630');
       });
     }
+
+    test('canonical og image asset should be 1200x630', async ({
+      page,
+      request,
+    }) => {
+      await page.goto(Route.Home);
+
+      const ogImage = await page
+        .locator('meta[property="og:image"]')
+        .getAttribute('content');
+
+      expect(ogImage).toBeTruthy();
+      const ogImageUrl = new URL(ogImage!);
+      expect(ogImageUrl.pathname).toBe('/og-image.png');
+
+      const imageResponse = await request.get(ogImageUrl.pathname);
+      expect(imageResponse.ok()).toBeTruthy();
+
+      const imageBuffer = await imageResponse.body();
+      const { width, height } = readPngDimensions(imageBuffer);
+
+      expect(width).toBe(1200);
+      expect(height).toBe(630);
+    });
   });
 });
 
