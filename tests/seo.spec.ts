@@ -256,3 +256,24 @@ test.describe('SEO', () => {
     }
   });
 });
+
+test.describe('Font Loading', () => {
+  test('should not request fonts from Google Fonts CDN', async ({ page }) => {
+    const googleFontsRequests: string[] = [];
+
+    page.on('request', (request) => {
+      const url = request.url();
+      if (
+        url.includes('fonts.googleapis.com') ||
+        url.includes('fonts.gstatic.com')
+      ) {
+        googleFontsRequests.push(url);
+      }
+    });
+
+    await page.goto('/');
+    await page.waitForLoadState('networkidle');
+
+    expect(googleFontsRequests).toHaveLength(0);
+  });
+});

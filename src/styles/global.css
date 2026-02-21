@@ -58,8 +58,9 @@
      ---------------------------------------- */
 
   /* Font families */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-heading: 'DM Sans', var(--font-sans);
+  --font-sans:
+    'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-heading: 'DM Sans Variable', var(--font-sans);
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Font sizes - Fluid typography scale */

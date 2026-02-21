@@ -69,11 +69,11 @@ The site supports both dark (default) and light themes. Colors automatically adj
 
 ### Font Families
 
-| Token            | Value                          | Usage     |
-| ---------------- | ------------------------------ | --------- |
-| `--font-sans`    | `Inter, system-ui, sans-serif` | Body text |
-| `--font-heading` | `DM Sans, var(--font-sans)`    | Headings  |
-| `--font-mono`    | `JetBrains Mono, monospace`    | Code      |
+| Token            | Value                                   | Usage     |
+| ---------------- | --------------------------------------- | --------- |
+| `--font-sans`    | `Inter Variable, system-ui, sans-serif` | Body text |
+| `--font-heading` | `DM Sans Variable, var(--font-sans)`    | Headings  |
+| `--font-mono`    | `JetBrains Mono, monospace`             | Code      |
 
 ### Font Sizes
 
