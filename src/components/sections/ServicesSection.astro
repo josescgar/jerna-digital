@@ -5,6 +5,7 @@ import {
   type Language,
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
+import { Route } from '@/lib/routes';
 
 interface Props {
   lang?: Language;
@@ -13,7 +14,7 @@ interface Props {
 const lang = Astro.props.lang ?? defaultLanguage;
 const t = getTranslations(lang);
 
-const servicesHref = getLocalizedPath(lang, '/services');
+const servicesHref = getLocalizedPath(lang, Route.Services);
 
 interface Service {
   icon: string;

@@ -2,6 +2,7 @@
  * i18n utility functions for URL handling and language detection.
  */
 
+import { type Route } from '@/lib/routes';
 import {
   type Language,
   languages,
@@ -23,7 +24,7 @@ const LANGUAGE_STORAGE_KEY = 'jerna-lang';
  * Default language stays at root (e.g., /about), other languages get prefixed
  * (e.g., /es/about).
  */
-export function getLocalizedPath(lang: Language, path: string): string {
+export function getLocalizedPath(lang: Language, path: Route | string): string {
   // Normalize path to start with /
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 

@@ -6,6 +6,7 @@ import {
   type Language,
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
+import { Route } from '@/lib/routes';
 import Logo from './Logo.astro';
 import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 
@@ -22,14 +23,14 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: t.nav.about, href: getLocalizedPath(lang, '/about') },
-  { label: t.nav.services, href: getLocalizedPath(lang, '/services') },
-  { label: t.nav.portfolio, href: getLocalizedPath(lang, '/portfolio') },
-  { label: t.nav.contact, href: getLocalizedPath(lang, '/contact') },
+  { label: t.nav.about, href: getLocalizedPath(lang, Route.About) },
+  { label: t.nav.services, href: getLocalizedPath(lang, Route.Services) },
+  { label: t.nav.portfolio, href: getLocalizedPath(lang, Route.Portfolio) },
+  { label: t.nav.contact, href: getLocalizedPath(lang, Route.Contact) },
 ];
 
-const homeHref = getLocalizedPath(lang, '/');
-const contactHref = getLocalizedPath(lang, '/contact');
+const homeHref = getLocalizedPath(lang, Route.Home);
+const contactHref = getLocalizedPath(lang, Route.Contact);
 
 // Get current path without language prefix for language switching
 const languagePrefixRegex = new RegExp(

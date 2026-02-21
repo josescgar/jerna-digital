@@ -5,6 +5,7 @@ import {
   type Language,
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
+import { Route } from '@/lib/routes';
 
 interface Props {
   lang?: Language;
@@ -13,7 +14,7 @@ interface Props {
 const lang = Astro.props.lang ?? defaultLanguage;
 const t = getTranslations(lang);
 
-const aboutHref = getLocalizedPath(lang, '/about');
+const aboutHref = getLocalizedPath(lang, Route.About);
 ---
 
 <section class="section relative overflow-hidden" id="about-preview">

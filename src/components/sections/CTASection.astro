@@ -5,6 +5,7 @@ import {
   type Language,
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
+import { Route } from '@/lib/routes';
 
 interface Props {
   lang?: Language;
@@ -13,8 +14,8 @@ interface Props {
 const lang = Astro.props.lang ?? defaultLanguage;
 const t = getTranslations(lang);
 
-const contactHref = getLocalizedPath(lang, '/contact');
-const servicesHref = getLocalizedPath(lang, '/services');
+const contactHref = getLocalizedPath(lang, Route.Contact);
+const servicesHref = getLocalizedPath(lang, Route.Services);
 ---
 
 <section class="section relative overflow-hidden">

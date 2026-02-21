@@ -10,6 +10,7 @@ import {
   type Language,
 } from '@/i18n/translations';
 import { getLocalizedPath } from '@/i18n/utils';
+import { Route } from '@/lib/routes';
 
 export function getStaticPaths() {
   return (Object.keys(languages) as Language[]).map((lang) => {
@@ -68,7 +69,10 @@ items.sort((a, b) => {
         {
           items.map((item) => (
             <a
-              href={getLocalizedPath(lang, `/portfolio/${item.data.urlSlug}`)}
+              href={getLocalizedPath(
+                lang,
+                `${Route.Portfolio}/${item.data.urlSlug}`
+              )}
               class="group border-border bg-background-elevated duration-normal hover:border-border-subtle relative overflow-hidden rounded-2xl border transition-all hover:shadow-lg"
             >
               {item.data.featured && (
