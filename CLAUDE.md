@@ -50,18 +50,18 @@ npm run lint && npm run format:check && npm run build
 
 ### Before Opening a PR
 
-E2E tests must pass before opening a pull request:
+Local (Chromium only) E2E tests must pass before opening a pull request:
 
 ```bash
-npm run test
+npm run test:local
 ```
 
 ### When a PR is Already Open
 
-If a PR is already open for the current branch, E2E tests must pass before committing additional changes:
+If a PR is already open for the current branch, Local (Chromium only) E2E tests must pass before committing additional changes:
 
 ```bash
-npm run test
+npm run test:local
 ```
 
 ### Documentation Requirements
@@ -112,7 +112,7 @@ If any check fails, the commit is blocked until the issue is fixed.
 Runs before pushing to remote:
 
 ```bash
-npm run test         # Run Playwright E2E tests
+npm run test:local       # Run Playwright E2E tests
 ```
 
 If tests fail, the push is blocked until tests pass.
