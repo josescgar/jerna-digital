@@ -84,6 +84,27 @@ test.describe('Navigation', () => {
     });
   });
 
+  test.describe('Mobile menu icon visibility', () => {
+    test.use({ viewport: { width: 375, height: 812 } });
+
+    test('shows only burger icon when menu is closed', async ({ page }) => {
+      await page.goto('/');
+      const menuIcon = page.locator('#mobile-menu-btn .menu-icon');
+      const closeIcon = page.locator('#mobile-menu-btn .close-icon');
+      await expect(menuIcon).toBeVisible();
+      await expect(closeIcon).toBeHidden();
+    });
+
+    test('shows only close icon when menu is open', async ({ page }) => {
+      await page.goto('/');
+      await page.locator('#mobile-menu-btn').click();
+      const menuIcon = page.locator('#mobile-menu-btn .menu-icon');
+      const closeIcon = page.locator('#mobile-menu-btn .close-icon');
+      await expect(menuIcon).toBeHidden();
+      await expect(closeIcon).toBeVisible();
+    });
+  });
+
   test.describe('Spanish Navigation', () => {
     test('should load Spanish home page successfully', async ({ page }) => {
       await page.goto('/es');
