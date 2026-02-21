@@ -146,20 +146,95 @@ test.describe('Theme System', () => {
 
       const toggle = page.locator(toggleSelector);
 
-      // In dark mode, sun icon should be visible (not have 'hidden' class)
       const sunIcon = toggle.locator('.sun-icon');
       const moonIcon = toggle.locator('.moon-icon');
 
-      // Check for the hidden class - in dark mode, sun-icon should NOT have hidden class
-      await expect(sunIcon).not.toHaveClass(/hidden/);
-      await expect(moonIcon).toHaveClass(/hidden/);
+      // In dark mode, sun icon should be visible; moon icon hidden
+      await expect(sunIcon).toBeVisible();
+      await expect(moonIcon).not.toBeVisible();
 
       // Toggle to light mode
       await toggle.click();
 
-      // In light mode, moon icon should be visible (not have 'hidden' class)
-      await expect(moonIcon).not.toHaveClass(/hidden/);
-      await expect(sunIcon).toHaveClass(/hidden/);
+      // In light mode, moon icon should be visible; sun icon hidden
+      await expect(moonIcon).toBeVisible();
+      await expect(sunIcon).not.toBeVisible();
+    });
+
+    test('should show only one icon at a time on initial load', async ({
+      page,
+    }) => {
+      // Desktop
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.emulateMedia({ colorScheme: 'dark' });
+      await page.goto('/');
+
+      const desktopToggle = page.locator(
+        'header nav ul.md\\:flex [data-theme-toggle]'
+      );
+      const desktopSun = desktopToggle.locator('.sun-icon');
+      const desktopMoon = desktopToggle.locator('.moon-icon');
+
+      await expect(desktopSun).toBeVisible();
+      await expect(desktopMoon).not.toBeVisible();
+
+      // Mobile
+      await page.setViewportSize({ width: 375, height: 667 });
+      await page.goto('/');
+
+      await page.locator('#mobile-menu-btn').click();
+
+      const mobileToggle = page.locator('#mobile-menu [data-theme-toggle]');
+      const mobileSun = mobileToggle.locator('.sun-icon');
+      const mobileMoon = mobileToggle.locator('.moon-icon');
+
+      await expect(mobileSun).toBeVisible();
+      await expect(mobileMoon).not.toBeVisible();
+    });
+
+    test('should apply is-animating class on toggle click', async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.emulateMedia({ colorScheme: 'dark' });
+      await page.goto('/');
+
+      const toggle = page.locator(
+        'header nav ul.md\\:flex [data-theme-toggle]'
+      );
+
+      // Use MutationObserver to catch the transient is-animating class
+      const classWasAdded = await Promise.all([
+        page.evaluate(() => {
+          return new Promise<boolean>((resolve) => {
+            const btn = document.querySelector(
+              'header nav ul.md\\:flex [data-theme-toggle]'
+            );
+            if (!btn) {
+              resolve(false);
+              return;
+            }
+            const observer = new MutationObserver(() => {
+              if (btn.classList.contains('is-animating')) {
+                observer.disconnect();
+                resolve(true);
+              }
+            });
+            observer.observe(btn, {
+              attributes: true,
+              attributeFilter: ['class'],
+            });
+            // Resolve false if animation never starts within 1s
+            setTimeout(() => {
+              observer.disconnect();
+              resolve(false);
+            }, 1000);
+          });
+        }),
+        toggle.click(),
+      ]);
+
+      expect(classWasAdded[0]).toBe(true);
     });
   });
 
