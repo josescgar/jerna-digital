@@ -35,7 +35,7 @@ const className = Astro.props.class ?? '';
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="sun-icon hidden"
+    class="sun-icon"
     aria-hidden="true"
   >
     <circle cx="12" cy="12" r="4"></circle>
@@ -59,36 +59,57 @@ const className = Astro.props.class ?? '';
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="moon-icon hidden"
+    class="moon-icon"
     aria-hidden="true"
   >
     <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
   </svg>
 </button>
 
+<style is:global>
+  /* Icon visibility driven by data-theme attribute (set synchronously in <head>) */
+  .theme-toggle .sun-icon {
+    display: block;
+  }
+  .theme-toggle .moon-icon {
+    display: none;
+  }
+  [data-theme='light'] .theme-toggle .sun-icon {
+    display: none;
+  }
+  [data-theme='light'] .theme-toggle .moon-icon {
+    display: block;
+  }
+
+  /* Click animation */
+  @keyframes theme-toggle-click {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .theme-toggle.is-animating {
+    animation: theme-toggle-click 0.25s var(--ease-bounce);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle.is-animating {
+      animation-duration: 0.01ms !important;
+    }
+  }
+</style>
+
 <script>
   function initThemeToggle(): void {
     const toggleButtons = document.querySelectorAll('[data-theme-toggle]');
 
-    function updateIcons(): void {
-      const theme = document.documentElement.getAttribute('data-theme');
-      toggleButtons.forEach((btn) => {
-        const sunIcon = btn.querySelector('.sun-icon');
-        const moonIcon = btn.querySelector('.moon-icon');
-
-        if (theme === 'light') {
-          // In light mode, show moon icon (click to go dark)
-          sunIcon?.classList.add('hidden');
-          moonIcon?.classList.remove('hidden');
-        } else {
-          // In dark mode, show sun icon (click to go light)
-          sunIcon?.classList.remove('hidden');
-          moonIcon?.classList.add('hidden');
-        }
-      });
-    }
-
-    function toggleTheme(): void {
+    function toggleTheme(btn: Element): void {
       const currentTheme =
         document.documentElement.getAttribute('data-theme') === 'light'
           ? 'light'
@@ -102,15 +123,20 @@ const className = Astro.props.class ?? '';
       }
 
       document.documentElement.setAttribute('data-theme', newTheme);
-      updateIcons();
-    }
 
-    // Initialize icons based on current theme
-    updateIcons();
+      btn.classList.add('is-animating');
+      btn.addEventListener(
+        'animationend',
+        () => btn.classList.remove('is-animating'),
+        {
+          once: true,
+        }
+      );
+    }
 
     // Add click handlers
     toggleButtons.forEach((btn) => {
-      btn.addEventListener('click', toggleTheme);
+      btn.addEventListener('click', () => toggleTheme(btn));
     });
 
     // Listen for system preference changes
@@ -121,7 +147,6 @@ const className = Astro.props.class ?? '';
         if (!localStorage.getItem('jerna-theme')) {
           const newTheme = e.matches ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', newTheme);
-          updateIcons();
         }
       });
   }
