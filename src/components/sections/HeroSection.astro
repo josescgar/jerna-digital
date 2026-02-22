@@ -57,10 +57,36 @@ const servicesHref = getLocalizedPath(lang, Route.Services);
 
       <!-- Description -->
       <p
-        class="animate-fade-in-up text-foreground-subtle mx-auto mt-4 max-w-md text-base"
+        class="animate-fade-in-up text-foreground-subtle mx-auto mt-4 max-w-2xl text-base"
         style="animation-delay: 0.3s;"
       >
         {t.hero.subtitle}
+        {' '}
+        {t.hero.referencesPrefix}{' '}
+        <a
+          href="https://dora.dev/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-foreground hover:text-primary underline underline-offset-4"
+        >
+          {t.hero.referenceDora}</a
+        >{t.hero.referencesSeparator}{' '}
+        <a
+          href="https://owasp.org/www-project-top-ten/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-foreground hover:text-primary underline underline-offset-4"
+        >
+          {t.hero.referenceOwasp}</a
+        >{t.hero.referencesBeforeLast}{' '}
+        <a
+          href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-foreground hover:text-primary underline underline-offset-4"
+        >
+          {t.hero.referenceAgents}</a
+        >.
       </p>
 
       <!-- CTAs -->
