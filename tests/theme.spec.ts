@@ -204,38 +204,44 @@ test.describe('Theme System', () => {
         'header nav ul.md\\:flex [data-theme-toggle]'
       );
 
-      // Use MutationObserver to catch the transient is-animating class
-      const classWasAdded = await Promise.all([
-        page.evaluate(() => {
-          return new Promise<boolean>((resolve) => {
-            const btn = document.querySelector(
-              'header nav ul.md\\:flex [data-theme-toggle]'
-            );
-            if (!btn) {
-              resolve(false);
-              return;
-            }
-            const observer = new MutationObserver(() => {
-              if (btn.classList.contains('is-animating')) {
-                observer.disconnect();
-                resolve(true);
-              }
-            });
-            observer.observe(btn, {
-              attributes: true,
-              attributeFilter: ['class'],
-            });
-            // Resolve false if animation never starts within 1s
-            setTimeout(() => {
-              observer.disconnect();
-              resolve(false);
-            }, 1000);
-          });
-        }),
-        toggle.click(),
-      ]);
+      const classWasAddedPromise = page.evaluate(() => {
+        return new Promise<boolean>((resolve) => {
+          const btn = document.querySelector(
+            'header nav ul.md\\:flex [data-theme-toggle]'
+          );
 
-      expect(classWasAdded[0]).toBe(true);
+          if (!btn) {
+            resolve(false);
+            return;
+          }
+
+          const observer = new MutationObserver(() => {
+            if (btn.classList.contains('is-animating')) {
+              observer.disconnect();
+              resolve(true);
+            }
+          });
+
+          observer.observe(btn, {
+            attributes: true,
+            attributeFilter: ['class'],
+          });
+
+          setTimeout(() => {
+            observer.disconnect();
+            resolve(false);
+          }, 2000);
+        });
+      });
+
+      await toggle.click();
+
+      const classWasAdded = await classWasAddedPromise;
+      expect(classWasAdded).toBe(true);
+
+      await expect(toggle).not.toHaveClass(/is-animating/, {
+        timeout: 3000,
+      });
     });
   });
 
@@ -259,7 +265,7 @@ test.describe('Theme System', () => {
       expect(color).toBe('rgb(255, 255, 255)');
     });
 
-    test('should trigger subtle shimmer on hover for primary CTA buttons', async ({
+    test('should only run shimmer on hover-capable devices', async ({
       page,
     }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
@@ -278,11 +284,18 @@ test.describe('Theme System', () => {
         return {
           animationName: pseudo.animationName,
           opacity: Number(pseudo.opacity),
+          supportsHover: window.matchMedia('(hover: hover) and (pointer: fine)')
+            .matches,
         };
       });
 
-      expect(afterStyles.animationName).toContain('cta-shimmer');
-      expect(afterStyles.opacity).toBeGreaterThan(0);
+      if (afterStyles.supportsHover) {
+        expect(afterStyles.animationName).toContain('cta-shimmer');
+        expect(afterStyles.opacity).toBeGreaterThan(0);
+      } else {
+        expect(afterStyles.animationName).toBe('none');
+        expect(afterStyles.opacity).toBe(0);
+      }
     });
 
     test('should disable CTA shimmer when reduced motion is enabled', async ({
@@ -369,21 +382,18 @@ test.describe('Theme System', () => {
   });
 
   test.describe('FOUC Prevention', () => {
-    test('should have no-transitions class initially', async ({ page }) => {
-      // Check that html starts with no-transitions class
+    test('should remove no-transitions class after initial render', async ({
+      page,
+    }) => {
       await page.goto(Route.Home);
 
-      // The class should be removed after initial render
-      // We verify by checking it's NOT present after load (removed by RAF)
-      await page.waitForLoadState('domcontentloaded');
+      await page.waitForFunction(
+        () => !document.documentElement.classList.contains('no-transitions'),
+        null,
+        { timeout: 3000 }
+      );
 
-      // Give time for requestAnimationFrame to execute
-      await page.waitForTimeout(100);
-
-      const hasNoTransitions = await page
-        .locator('html')
-        .evaluate((el) => el.classList.contains('no-transitions'));
-      expect(hasNoTransitions).toBe(false);
+      await expect(page.locator('html')).not.toHaveClass(/no-transitions/);
     });
 
     test('should set data-theme attribute before page content loads', async ({

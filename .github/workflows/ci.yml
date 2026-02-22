@@ -58,8 +58,8 @@ jobs:
 
       - name: Run Playwright tests (Chromium)
         if: github.event_name == 'pull_request' && github.event.pull_request.draft != true
-        run: npx playwright test --project=chromium
+        run: npm run test:local
 
       - name: Run Playwright tests (all browsers)
         if: github.event_name == 'push'
-        run: npx playwright test
+        run: npm run test
