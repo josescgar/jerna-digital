@@ -1,6 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { Route, spanishPath } from './utils/routes';
 
+const expectedHomeReferenceLinks = [
+  'https://dora.dev/',
+  'https://owasp.org/www-project-top-ten/',
+  'https://developers.openai.com/codex/guides/build-ai-native-engineering-team',
+];
+
 function readPngDimensions(data: Buffer): { width: number; height: number } {
   const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
 
@@ -145,6 +151,36 @@ test.describe('SEO', () => {
   });
 
   test.describe('i18n SEO', () => {
+    test('home meta description should be 150 chars or fewer in both locales', async ({
+      page,
+    }) => {
+      const homePaths = [Route.Home, spanishPath(Route.Home)];
+
+      for (const path of homePaths) {
+        await page.goto(path);
+        const description = await page
+          .locator('meta[name="description"]')
+          .getAttribute('content');
+
+        expect(description).toBeTruthy();
+        expect(description!.length).toBeLessThanOrEqual(150);
+      }
+    });
+
+    test('home should include authoritative external reference links', async ({
+      page,
+    }) => {
+      const homePaths = [Route.Home, spanishPath(Route.Home)];
+
+      for (const path of homePaths) {
+        await page.goto(path);
+
+        for (const href of expectedHomeReferenceLinks) {
+          await expect(page.locator(`a[href="${href}"]`).first()).toBeVisible();
+        }
+      }
+    });
+
     test('should have hreflang tags on English pages', async ({ page }) => {
       await page.goto(Route.Home);
 

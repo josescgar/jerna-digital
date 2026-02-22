@@ -53,6 +53,12 @@ export interface TranslationStrings {
     experience: string;
     startupsScaleups: string;
     remoteFirst: string;
+    referencesPrefix: string;
+    referencesSeparator: string;
+    referencesBeforeLast: string;
+    referenceDora: string;
+    referenceOwasp: string;
+    referenceAgents: string;
   };
   // Services section
   services: {
@@ -201,7 +207,7 @@ export interface TranslationStrings {
   };
   // SEO-specific metadata (decoupled from visible UI text)
   seo: {
-    home: { ogTitle: string; ogDescription: string };
+    home: { metaDescription: string; ogTitle: string; ogDescription: string };
     about: { ogTitle: string; ogDescription: string };
     services: { ogTitle: string; ogDescription: string };
     contact: { ogTitle: string; ogDescription: string };
@@ -237,6 +243,12 @@ export const translations: Record<Language, TranslationStrings> = {
       experience: 'Hands-on engineering leadership',
       startupsScaleups: 'Seed to Series A',
       remoteFirst: 'AI-augmented development',
+      referencesPrefix: 'I align delivery with proven frameworks like',
+      referencesSeparator: ',',
+      referencesBeforeLast: ', and',
+      referenceDora: 'DORA',
+      referenceOwasp: 'OWASP Top 10',
+      referenceAgents: 'Building an AI-Native Engineering Team',
     },
     services: {
       title: 'Services',
@@ -508,6 +520,8 @@ export const translations: Record<Language, TranslationStrings> = {
     },
     seo: {
       home: {
+        metaDescription:
+          'Fractional CTO and technical consulting for early-stage startups. Architecture, AI workflows, and engineering teams from seed to Series A.',
         ogTitle:
           'Jerna Digital \u2014 AI-First Technical Leadership for Startups',
         ogDescription:
@@ -566,6 +580,12 @@ export const translations: Record<Language, TranslationStrings> = {
       experience: 'Liderazgo de ingenier\u00EDa hands-on',
       startupsScaleups: 'De Seed a Serie A',
       remoteFirst: 'Desarrollo potenciado por IA',
+      referencesPrefix: 'Trabajo con marcos probados como',
+      referencesSeparator: ',',
+      referencesBeforeLast: ' y',
+      referenceDora: 'DORA',
+      referenceOwasp: 'OWASP Top 10',
+      referenceAgents: 'Building an AI-Native Engineering Team',
     },
     services: {
       title: 'Servicios',
@@ -841,6 +861,8 @@ export const translations: Record<Language, TranslationStrings> = {
     },
     seo: {
       home: {
+        metaDescription:
+          'CTO fraccional y consultoría técnica para startups en fase inicial: arquitectura, IA y equipos de ingeniería desde seed hasta Serie A.',
         ogTitle:
           'Jerna Digital \u2014 Liderazgo T\u00E9cnico AI-First para Startups',
         ogDescription:
