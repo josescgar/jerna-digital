@@ -9,7 +9,7 @@ import {
   languages,
   defaultLanguage,
   type Language,
-} from '@/i18n/translations';
+} from '@/features/i18n/i18n.translations';
 
 export function getStaticPaths() {
   return (Object.keys(languages) as Language[]).map((lang) => {

@@ -4,9 +4,9 @@ import {
   languages,
   defaultLanguage,
   type Language,
-} from '@/i18n/translations';
-import { getLocalizedPath } from '@/i18n/utils';
-import { Route } from '@/lib/routes';
+} from '@/features/i18n/i18n.translations';
+import { getLocalizedPath } from '@/features/i18n/i18n.utils';
+import { Route } from '@/features/common/routes.utils';
 import Logo from './Logo.astro';
 import ThemeToggle from '@/components/ui/ThemeToggle.astro';
 
@@ -119,7 +119,6 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
               (Object.keys(languages) as Language[]).map((langKey) => (
                 <a
                   href={getLocalizedPath(langKey, currentPath)}
-                  onclick={`try{localStorage.setItem('jerna-lang','${langKey}')}catch(e){}`}
                   class={`hover:bg-background-subtle flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
                     langKey === lang
                       ? 'text-primary font-medium'
@@ -258,7 +257,6 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
               (Object.keys(languages) as Language[]).map((langKey) => (
                 <a
                   href={getLocalizedPath(langKey, currentPath)}
-                  onclick={`try{localStorage.setItem('jerna-lang','${langKey}')}catch(e){}`}
                   class={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
                     langKey === lang
                       ? 'bg-primary/10 text-primary'
@@ -300,112 +298,5 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
 </style>
 
 <script>
-  // Mobile menu toggle
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  function toggleMenu(): void {
-    const isExpanded = menuBtn?.getAttribute('aria-expanded') === 'true';
-
-    menuBtn?.setAttribute('aria-expanded', String(!isExpanded));
-    mobileMenu?.classList.toggle('hidden');
-    mobileMenu?.setAttribute('aria-hidden', String(isExpanded));
-
-    // Prevent body scroll when menu is open
-    document.body.style.overflow = isExpanded ? '' : 'hidden';
-  }
-
-  menuBtn?.addEventListener('click', toggleMenu);
-
-  // Close menu on escape key
-  document.addEventListener('keydown', (e) => {
-    if (
-      e.key === 'Escape' &&
-      menuBtn?.getAttribute('aria-expanded') === 'true'
-    ) {
-      toggleMenu();
-    }
-  });
-
-  // Close menu when clicking outside
-  document.addEventListener('click', (e) => {
-    const target = e.target as Node;
-    if (
-      menuBtn?.getAttribute('aria-expanded') === 'true' &&
-      !mobileMenu?.contains(target) &&
-      !menuBtn?.contains(target)
-    ) {
-      toggleMenu();
-    }
-  });
-
-  // Language switcher dropdown (desktop)
-  const langBtn = document.getElementById('lang-switcher-btn');
-  const langMenu = document.getElementById('lang-switcher-menu');
-
-  function toggleLangMenu(): void {
-    const isExpanded = langBtn?.getAttribute('aria-expanded') === 'true';
-    langBtn?.setAttribute('aria-expanded', String(!isExpanded));
-    langMenu?.classList.toggle('hidden');
-  }
-
-  langBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleLangMenu();
-  });
-
-  // Close language menu when clicking outside
-  document.addEventListener('click', () => {
-    if (langBtn?.getAttribute('aria-expanded') === 'true') {
-      toggleLangMenu();
-    }
-  });
-
-  // Save language preference when clicking a language link
-  document.querySelectorAll('[data-lang]').forEach((link) => {
-    link.addEventListener('click', () => {
-      const lang = (link as HTMLElement).dataset.lang;
-      if (lang) {
-        try {
-          localStorage.setItem('jerna-lang', lang);
-        } catch {
-          // localStorage might be blocked
-        }
-      }
-    });
-  });
-
-  // Update mobile theme label when theme changes
-  const mobileThemeLabel = document.getElementById('mobile-theme-label');
-  const themeLabels = {
-    light: mobileThemeLabel?.dataset.lightLabel || 'Light',
-    dark: mobileThemeLabel?.dataset.darkLabel || 'Dark',
-  };
-
-  function updateMobileThemeLabel(): void {
-    if (!mobileThemeLabel) return;
-    const theme = document.documentElement.getAttribute('data-theme');
-    mobileThemeLabel.textContent =
-      theme === 'light' ? themeLabels.light : themeLabels.dark;
-  }
-
-  // Update label on initial load
-  updateMobileThemeLabel();
-
-  // Watch for theme changes via MutationObserver
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (
-        mutation.type === 'attributes' &&
-        mutation.attributeName === 'data-theme'
-      ) {
-        updateMobileThemeLabel();
-      }
-    });
-  });
-
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['data-theme'],
-  });
+  import './header.client';
 </script>

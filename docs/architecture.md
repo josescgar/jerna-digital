@@ -71,7 +71,8 @@ components/
 │   └── Label.tsx          # → With required indicator
 │
 ├── layout/                # Layout components
-│   ├── Header.astro       # → Navigation, mobile menu
+│   ├── Header.astro            # → Navigation shell
+│   ├── header.client.ts        # → Menu/language wiring
 │   ├── Footer.astro       # → Links, social, copyright
 │   └── Logo.astro         # → Brand mark + text
 │
@@ -83,6 +84,16 @@ components/
 │
 └── interactive/           # React islands
     └── ContactForm.tsx    # → Form with validation + Web3Forms
+
+features/
+├── common/
+│   ├── common.utils.ts        # → Cross-domain utilities (cn, formatters)
+│   └── routes.utils.ts        # → Shared route constants
+├── i18n/
+│   ├── i18n.translations.ts  # → Translation catalog and locale metadata
+│   ├── i18n.utils.ts         # → Path + language preference business logic
+└── theme/
+    └── theme.utils.ts   # → Theme preference business logic
 ```
 
 ## Data Flow
