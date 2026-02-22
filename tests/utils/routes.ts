@@ -1,4 +1,4 @@
-import { Route } from '../../src/lib/routes';
+import { Route } from '../../src/features/common/routes.utils';
 
 export { Route };
 

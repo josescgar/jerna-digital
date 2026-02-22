@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { Language } from '@/i18n/translations';
+import { Language } from '@/features/i18n/i18n.translations';
 
 /**
  * Portfolio collection schema.

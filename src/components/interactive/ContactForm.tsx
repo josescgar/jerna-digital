@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Label } from '@/components/ui/Label';
-import { cn } from '@/lib/utils';
+import { cn } from '@/features/common/common.utils';
 
 /**
  * Form state types
