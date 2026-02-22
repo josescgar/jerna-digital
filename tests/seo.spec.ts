@@ -49,12 +49,14 @@ test.describe('SEO', () => {
     const ogTitle = page.locator('meta[property="og:title"]');
     const ogDescription = page.locator('meta[property="og:description"]');
     const ogImage = page.locator('meta[property="og:image"]');
+    const ogLogo = page.locator('meta[property="og:logo"]');
     const ogType = page.locator('meta[property="og:type"]');
     const ogUrl = page.locator('meta[property="og:url"]');
 
     await expect(ogTitle).toHaveAttribute('content', /.+/);
     await expect(ogDescription).toHaveAttribute('content', /.+/);
     await expect(ogImage).toHaveAttribute('content', /.+/);
+    await expect(ogLogo).toHaveAttribute('content', /.+/);
     await expect(ogType).toHaveAttribute('content', 'website');
     await expect(ogUrl).toHaveAttribute('content', /.+/);
   });
@@ -228,6 +230,14 @@ test.describe('SEO', () => {
       { path: spanishPath(Route.Portfolio), name: 'portfolio (es)' },
     ];
 
+    const portfolioDetailPages = [
+      { path: `${Route.Portfolio}/jerna-digital`, name: 'portfolio detail' },
+      {
+        path: spanishPath(`${Route.Portfolio}/jerna-digital`),
+        name: 'portfolio detail (es)',
+      },
+    ];
+
     for (const { path, name } of [...enPages, ...esPages]) {
       test(`${name} page should have og:image as absolute URL`, async ({
         page,
@@ -270,6 +280,33 @@ test.describe('SEO', () => {
         const ogHeight = page.locator('meta[property="og:image:height"]');
         await expect(ogWidth).toHaveAttribute('content', '1200');
         await expect(ogHeight).toHaveAttribute('content', '630');
+      });
+
+      test(`${name} page should have og:logo as absolute URL`, async ({
+        page,
+      }) => {
+        await page.goto(path);
+        const ogLogo = await page
+          .locator('meta[property="og:logo"]')
+          .getAttribute('content');
+        expect(ogLogo).toBeTruthy();
+        expect(ogLogo!).toMatch(/^https?:\/\//);
+
+        const ogLogoUrl = new URL(ogLogo!);
+        expect(ogLogoUrl.pathname).toBe('/logo.png');
+      });
+    }
+
+    for (const { path, name } of portfolioDetailPages) {
+      test(`${name} page should include og:logo`, async ({ page }) => {
+        await page.goto(path);
+        const ogLogo = await page
+          .locator('meta[property="og:logo"]')
+          .getAttribute('content');
+
+        expect(ogLogo).toBeTruthy();
+        const ogLogoUrl = new URL(ogLogo!);
+        expect(ogLogoUrl.pathname).toBe('/logo.png');
       });
     }
 
