@@ -203,12 +203,15 @@ src/
 │           └── [slug].astro
 ├── styles/
 │   └── global.css    # Design tokens + Tailwind config
-├── lib/              # Utilities (cn function, formatters)
-├── i18n/             # Internationalization
-│   ├── translations.ts  # Translation strings (en, es)
-│   └── utils.ts         # i18n utility functions
-├── theme/            # Theme system (light/dark mode)
-│   └── utils.ts         # Theme utility functions
+├── features/         # Shared domain/business logic
+│   ├── common/
+│   │   ├── common.utils.ts
+│   │   └── routes.utils.ts
+│   ├── i18n/
+│   │   ├── i18n.translations.ts
+│   │   ├── i18n.utils.ts
+│   └── theme/
+│       └── theme.utils.ts
 └── assets/           # Static assets
 ```
 
@@ -235,16 +238,18 @@ src/
 - **Detection:** Stored preference (`localStorage.jerna-theme`) → System preference → Default
 - **Implementation:** `data-theme` attribute on `<html>`, CSS custom property overrides
 - **FOUC Prevention:** Inline script in `<head>` sets theme before render
-- **Utilities:** `src/theme/utils.ts` for theme detection and toggling
-- **Toggle:** `ThemeToggle.astro` component in header (desktop and mobile)
+- **Shared domain logic:** `src/features/theme/theme.utils.ts`
+- **Component wiring:** `src/components/ui/theme-toggle.client.ts`
+- **Toggle UI:** `src/components/ui/ThemeToggle.astro` (desktop and mobile)
 
 ### i18n Architecture
 
 - **Languages:** English (default) and Spanish
 - **URL Structure:** English at root (`/about`), Spanish with prefix (`/es/about`)
 - **Routing:** Optional locale segment via `src/pages/[...lang]/` with Astro i18n `prefixDefaultLocale: false`
-- **Translations:** `src/i18n/translations.ts` with type-safe `TranslationStrings` interface
-- **Utilities:** `src/i18n/utils.ts` for path generation, language detection, localStorage
+- **Translations:** `src/features/i18n/i18n.translations.ts` with type-safe `TranslationStrings` interface
+- **Shared domain logic:** `src/features/i18n/i18n.utils.ts`
+- **Component wiring:** `src/components/layout/header.client.ts`
 - **SEO:** hreflang tags and og:locale meta tags per language
 - **Language Switcher:** In header, saves preference to localStorage
 - **Default selection:** On unprefixed URLs, a small inline script redirects to the preferred language based on stored preference → browser language → English
@@ -262,15 +267,21 @@ src/
 - UI components follow shadcn/ui patterns (forwardRef, CVA variants)
 - Use `cn()` utility for class merging (clsx + tailwind-merge)
 - Astro components for static content, React for interactivity
+- Hybrid client logic organization for interactive Astro components:
+  - `*.astro` for presentation and data attributes
+  - `*.client.ts` for colocated browser wiring (events, DOM state)
+  - `src/features/<domain>/*.utils.ts` for shared domain logic
+- Inline `<script>` in `.astro` is only allowed for pre-render bootstrap exceptions (for example theme FOUC prevention and unprefixed URL language negotiation)
 
 ## Coding Conventions
 
 ### Naming
 
-- Components: PascalCase (`Button.tsx`, `HeroSection.astro`)
+- React/static components: PascalCase (`Button.tsx`, `HeroSection.astro`)
 - Utilities: camelCase (`formatDate.ts`)
 - Types/Interfaces: PascalCase (`ButtonProps`)
 - CSS custom properties: kebab-case (`--color-primary`)
+- Interactive Astro suffixes: `*.client.ts`, `*.utils.ts`
 
 ### Imports
 
@@ -331,7 +342,7 @@ The pre-push hook (`.husky/pre-push`) also runs Chromium-only E2E tests locally 
 
 1. Create localized page at `src/pages/[...lang]/new-page.astro` with `getStaticPaths()`
 2. Import `BaseLayout` and pass `lang` prop
-3. Add translations to `src/i18n/translations.ts` (both `en` and `es`)
+3. Add translations to `src/features/i18n/i18n.translations.ts` (both `en` and `es`)
 4. Add `seo.newPage` entries with `ogTitle` (40-65 chars) and `ogDescription` (110-160 chars) to both language objects
 5. Pass `ogTitle={t.seo.newPage.ogTitle} ogDescription={t.seo.newPage.ogDescription}` to `BaseLayout`
 6. Add navigation link in `src/components/layout/Header.astro` using `getLocalizedPath()`
@@ -346,7 +357,7 @@ import {
   languages,
   defaultLanguage,
   type Language,
-} from '@/i18n/translations';
+} from '@/features/i18n/i18n.translations';
 
 export function getStaticPaths() {
   return (Object.keys(languages) as Language[]).map((lang) => {
@@ -374,14 +385,14 @@ const t = getTranslations(lang);
 
 ### Adding translations
 
-1. Update `TranslationStrings` interface in `src/i18n/translations.ts`
+1. Update `TranslationStrings` interface in `src/features/i18n/i18n.translations.ts`
 2. Add strings to both `translations.en` and `translations.es` objects
 3. Use `t.key.subkey` pattern in components
 4. For React components, pass translations as props
 
 **Adding a new language:**
 
-1. Add language code to `languages` object in `src/i18n/translations.ts`
+1. Add language code to `languages` object in `src/features/i18n/i18n.translations.ts`
 2. Add locale metadata to `localeMetadata` object
 3. Add complete translation object (e.g., `translations.fr`)
 4. Update `astro.config.mjs` to add the locale

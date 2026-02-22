@@ -68,6 +68,16 @@ On unprefixed URLs (e.g. `/about`), the site will default to the stored language
 preference if present. Otherwise, it will use the browser language when it
 matches a supported language, falling back to English.
 
+## Architecture Pattern
+
+The project uses a pragmatic hybrid pattern for interactive Astro code:
+
+- `*.astro` keeps presentation, props, and data attributes.
+- `*.client.ts` keeps component-local browser wiring (DOM events and state sync).
+- `src/features/<domain>/*.utils.ts` keeps shared business/domain logic.
+- Inline scripts in `.astro` are reserved for pre-render bootstrap exceptions only
+  (for example theme FOUC prevention and unprefixed URL language negotiation).
+
 ## Project Structure
 
 ```
@@ -83,10 +93,15 @@ src/
 ├── pages/            # Astro pages (i18n)
 │   └── [...lang]/    # Optional locale segment (e.g., /, /es/*)
 ├── styles/           # Global CSS + design tokens
-├── lib/              # Utilities
-└── i18n/             # Internationalization
-    ├── translations.ts  # Translation strings
-    └── utils.ts         # i18n utilities
+├── features/         # Shared domain/business logic
+│   ├── common/
+│   │   ├── common.utils.ts
+│   │   └── routes.utils.ts
+│   ├── i18n/
+│   │   ├── i18n.translations.ts
+│   │   └── i18n.utils.ts
+│   └── theme/
+│       └── theme.utils.ts
 ```
 
 ## Documentation
