@@ -200,44 +200,62 @@ test.describe('Theme System', () => {
       await page.emulateMedia({ colorScheme: 'dark' });
       await page.goto(Route.Home);
 
-      const toggle = page.locator(
-        'header nav ul.md\\:flex [data-theme-toggle]'
-      );
+      const toggleSelector = 'header nav ul.md\\:flex [data-theme-toggle]';
+      const toggle = page.locator(toggleSelector);
 
-      const classWasAddedPromise = page.evaluate(() => {
-        return new Promise<boolean>((resolve) => {
-          const btn = document.querySelector(
-            'header nav ul.md\\:flex [data-theme-toggle]'
-          );
+      const animationStatePromise = page.evaluate((selector) => {
+        return new Promise<{
+          classWasAdded: boolean;
+          classWasRemoved: boolean;
+        }>((resolve) => {
+          const btn = document.querySelector(selector);
 
-          if (!btn) {
-            resolve(false);
+          if (!(btn instanceof HTMLElement)) {
+            resolve({
+              classWasAdded: false,
+              classWasRemoved: false,
+            });
             return;
           }
 
-          const observer = new MutationObserver(() => {
-            if (btn.classList.contains('is-animating')) {
-              observer.disconnect();
-              resolve(true);
+          const deadline = performance.now() + 2000;
+          let classWasAdded = btn.classList.contains('is-animating');
+
+          const checkAnimationState = (): void => {
+            const isAnimating = btn.classList.contains('is-animating');
+
+            if (isAnimating) {
+              classWasAdded = true;
             }
-          });
 
-          observer.observe(btn, {
-            attributes: true,
-            attributeFilter: ['class'],
-          });
+            if (classWasAdded && !isAnimating) {
+              resolve({
+                classWasAdded: true,
+                classWasRemoved: true,
+              });
+              return;
+            }
 
-          setTimeout(() => {
-            observer.disconnect();
-            resolve(false);
-          }, 2000);
+            if (performance.now() >= deadline) {
+              resolve({
+                classWasAdded,
+                classWasRemoved: classWasAdded && !isAnimating,
+              });
+              return;
+            }
+
+            requestAnimationFrame(checkAnimationState);
+          };
+
+          checkAnimationState();
         });
-      });
+      }, toggleSelector);
 
       await toggle.click();
 
-      const classWasAdded = await classWasAddedPromise;
-      expect(classWasAdded).toBe(true);
+      const animationState = await animationStatePromise;
+      expect(animationState.classWasAdded).toBe(true);
+      expect(animationState.classWasRemoved).toBe(true);
 
       await expect(toggle).not.toHaveClass(/is-animating/, {
         timeout: 3000,
