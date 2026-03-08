@@ -119,18 +119,31 @@ test.describe('SEO', () => {
   test('portfolio detail page should have proper meta tags', async ({
     page,
   }) => {
-    await page.goto(`${Route.Portfolio}/jerna-digital`);
+    const portfolioDetailPages = [
+      {
+        path: `${Route.Portfolio}/jerna-digital`,
+        titleFragment: 'Jerna Digital',
+      },
+      {
+        path: `${Route.Portfolio}/dondeteveo-com`,
+        titleFragment: 'Dondeteveo',
+      },
+    ];
 
-    const title = await page.title();
-    expect(title).toContain('Jerna Digital');
+    for (const detailPage of portfolioDetailPages) {
+      await page.goto(detailPage.path);
 
-    const description = page.locator('meta[name="description"]');
-    await expect(description).toHaveAttribute('content', /.+/);
+      const title = await page.title();
+      expect(title).toContain(detailPage.titleFragment);
 
-    const hreflangEn = page.locator('link[hreflang="en"]');
-    const hreflangEs = page.locator('link[hreflang="es"]');
-    await expect(hreflangEn).toBeAttached();
-    await expect(hreflangEs).toBeAttached();
+      const description = page.locator('meta[name="description"]');
+      await expect(description).toHaveAttribute('content', /.+/);
+
+      const hreflangEn = page.locator('link[hreflang="en"]');
+      const hreflangEs = page.locator('link[hreflang="es"]');
+      await expect(hreflangEn).toBeAttached();
+      await expect(hreflangEs).toBeAttached();
+    }
   });
 
   test('should have viewport meta tag', async ({ page }) => {
@@ -271,6 +284,14 @@ test.describe('SEO', () => {
       {
         path: spanishPath(`${Route.Portfolio}/jerna-digital`),
         name: 'portfolio detail (es)',
+      },
+      {
+        path: `${Route.Portfolio}/dondeteveo-com`,
+        name: 'portfolio detail dondeteveo',
+      },
+      {
+        path: spanishPath(`${Route.Portfolio}/dondeteveo-com`),
+        name: 'portfolio detail dondeteveo (es)',
       },
     ];
 

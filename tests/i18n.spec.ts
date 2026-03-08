@@ -30,6 +30,9 @@ test.describe('Internationalization (i18n)', () => {
 
       await page.goto(`${Route.Portfolio}/jerna-digital`);
       await expect(page).toHaveURL(/\/portfolio\/jerna-digital\/?$/);
+
+      await page.goto(`${Route.Portfolio}/dondeteveo-com`);
+      await expect(page).toHaveURL(/\/portfolio\/dondeteveo-com\/?$/);
     });
 
     test('Spanish pages should have /es/ prefix', async ({ page }) => {
@@ -51,6 +54,9 @@ test.describe('Internationalization (i18n)', () => {
 
       await page.goto(spanishPath(`${Route.Portfolio}/jerna-digital`));
       await expect(page).toHaveURL(/\/es\/portfolio\/jerna-digital\/?$/);
+
+      await page.goto(spanishPath(`${Route.Portfolio}/dondeteveo-com`));
+      await expect(page).toHaveURL(/\/es\/portfolio\/dondeteveo-com\/?$/);
     });
   });
 
