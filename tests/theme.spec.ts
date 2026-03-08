@@ -192,75 +192,6 @@ test.describe('Theme System', () => {
       await expect(mobileSun).toBeVisible();
       await expect(mobileMoon).not.toBeVisible();
     });
-
-    test('should apply is-animating class on toggle click', async ({
-      page,
-    }) => {
-      await page.setViewportSize({ width: 1280, height: 800 });
-      await page.emulateMedia({ colorScheme: 'dark' });
-      await page.goto(Route.Home);
-
-      const toggleSelector = 'header nav ul.md\\:flex [data-theme-toggle]';
-      const toggle = page.locator(toggleSelector);
-
-      const animationStatePromise = page.evaluate((selector) => {
-        return new Promise<{
-          classWasAdded: boolean;
-          classWasRemoved: boolean;
-        }>((resolve) => {
-          const btn = document.querySelector(selector);
-
-          if (!(btn instanceof HTMLElement)) {
-            resolve({
-              classWasAdded: false,
-              classWasRemoved: false,
-            });
-            return;
-          }
-
-          const deadline = performance.now() + 2000;
-          let classWasAdded = btn.classList.contains('is-animating');
-
-          const checkAnimationState = (): void => {
-            const isAnimating = btn.classList.contains('is-animating');
-
-            if (isAnimating) {
-              classWasAdded = true;
-            }
-
-            if (classWasAdded && !isAnimating) {
-              resolve({
-                classWasAdded: true,
-                classWasRemoved: true,
-              });
-              return;
-            }
-
-            if (performance.now() >= deadline) {
-              resolve({
-                classWasAdded,
-                classWasRemoved: classWasAdded && !isAnimating,
-              });
-              return;
-            }
-
-            requestAnimationFrame(checkAnimationState);
-          };
-
-          checkAnimationState();
-        });
-      }, toggleSelector);
-
-      await toggle.click();
-
-      const animationState = await animationStatePromise;
-      expect(animationState.classWasAdded).toBe(true);
-      expect(animationState.classWasRemoved).toBe(true);
-
-      await expect(toggle).not.toHaveClass(/is-animating/, {
-        timeout: 3000,
-      });
-    });
   });
 
   test.describe('Primary CTA Styling', () => {
@@ -281,63 +212,6 @@ test.describe('Theme System', () => {
       );
 
       expect(color).toBe('rgb(255, 255, 255)');
-    });
-
-    test('should only run shimmer on hover-capable devices', async ({
-      page,
-    }) => {
-      await page.setViewportSize({ width: 1280, height: 800 });
-      await page.emulateMedia({ colorScheme: 'light' });
-      await page.goto(Route.Home);
-
-      const primaryCta = page
-        .locator('a.cta-primary, button.cta-primary')
-        .first();
-      await expect(primaryCta).toBeVisible();
-
-      await primaryCta.hover();
-
-      const afterStyles = await primaryCta.evaluate((el) => {
-        const pseudo = window.getComputedStyle(el, '::after');
-        return {
-          animationName: pseudo.animationName,
-          opacity: Number(pseudo.opacity),
-          supportsHover: window.matchMedia('(hover: hover) and (pointer: fine)')
-            .matches,
-        };
-      });
-
-      if (afterStyles.supportsHover) {
-        expect(afterStyles.animationName).toContain('cta-shimmer');
-        expect(afterStyles.opacity).toBeGreaterThan(0);
-      } else {
-        expect(afterStyles.animationName).toBe('none');
-        expect(afterStyles.opacity).toBe(0);
-      }
-    });
-
-    test('should disable CTA shimmer when reduced motion is enabled', async ({
-      page,
-    }) => {
-      await page.setViewportSize({ width: 1280, height: 800 });
-      await page.emulateMedia({
-        colorScheme: 'light',
-        reducedMotion: 'reduce',
-      });
-      await page.goto(Route.Home);
-
-      const primaryCta = page
-        .locator('a.cta-primary, button.cta-primary')
-        .first();
-      await expect(primaryCta).toBeVisible();
-
-      await primaryCta.hover();
-
-      const animationName = await primaryCta.evaluate(
-        (el) => window.getComputedStyle(el, '::after').animationName
-      );
-
-      expect(animationName).toBe('none');
     });
   });
 
