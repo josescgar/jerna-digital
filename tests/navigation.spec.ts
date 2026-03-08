@@ -71,6 +71,19 @@ test.describe('Navigation', () => {
       await expect(page.locator('h1')).toBeVisible();
     });
 
+    test('should navigate to dondeteveo portfolio detail page from index', async ({
+      page,
+    }) => {
+      await page.goto(Route.Portfolio);
+      const link = page
+        .locator(`a[href="${Route.Portfolio}/dondeteveo-com"]`)
+        .first();
+      await expect(link).toBeVisible();
+      await link.click();
+      await expect(page).toHaveURL(/\/portfolio\/dondeteveo-com\/?$/);
+      await expect(page.locator('h1')).toContainText('Dondeteveo');
+    });
+
     test('should navigate to Contact page', async ({ page }) => {
       await page.goto(Route.Home);
       await navigateViaHeader(page, Route.Contact);
@@ -149,6 +162,21 @@ test.describe('Navigation', () => {
       await expect(logoLink).toBeVisible();
       await logoLink.click();
       await expect(page).toHaveURL(/\/es\/?$/);
+    });
+
+    test('should navigate to Spanish dondeteveo detail page from index', async ({
+      page,
+    }) => {
+      await page.goto(spanishPath(Route.Portfolio));
+      const link = page
+        .locator(
+          `a[href="${spanishPath(`${Route.Portfolio}/dondeteveo-com`)}"]`
+        )
+        .first();
+      await expect(link).toBeVisible();
+      await link.click();
+      await expect(page).toHaveURL(/\/es\/portfolio\/dondeteveo-com\/?$/);
+      await expect(page.locator('h1')).toContainText('Dondeteveo');
     });
   });
 });
