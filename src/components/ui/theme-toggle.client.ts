@@ -5,13 +5,20 @@ const THEME_TOGGLE_ANIMATION_FALLBACK_MS =
   THEME_TOGGLE_ANIMATION_DURATION_MS + 150;
 
 const animationCleanupTimers = new WeakMap<HTMLElement, number>();
+const animationCleanupControllers = new WeakMap<HTMLElement, AbortController>();
 
 function clearThemeToggleAnimation(button: HTMLElement): void {
   const cleanupTimer = animationCleanupTimers.get(button);
+  const cleanupController = animationCleanupControllers.get(button);
 
   if (cleanupTimer !== undefined) {
     window.clearTimeout(cleanupTimer);
     animationCleanupTimers.delete(button);
+  }
+
+  if (cleanupController !== undefined) {
+    cleanupController.abort();
+    animationCleanupControllers.delete(button);
   }
 
   button.classList.remove('is-animating');
@@ -23,15 +30,18 @@ function startThemeToggleAnimation(button: HTMLElement): void {
   void button.offsetWidth;
   button.classList.add('is-animating');
 
+  const cleanupController = new AbortController();
   const handleAnimationComplete = (): void => {
     clearThemeToggleAnimation(button);
   };
 
   button.addEventListener('animationend', handleAnimationComplete, {
     once: true,
+    signal: cleanupController.signal,
   });
   button.addEventListener('animationcancel', handleAnimationComplete, {
     once: true,
+    signal: cleanupController.signal,
   });
 
   const cleanupTimer = window.setTimeout(
@@ -40,6 +50,7 @@ function startThemeToggleAnimation(button: HTMLElement): void {
   );
 
   animationCleanupTimers.set(button, cleanupTimer);
+  animationCleanupControllers.set(button, cleanupController);
 }
 
 declare global {
