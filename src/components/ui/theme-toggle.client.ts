@@ -1,5 +1,47 @@
 import { THEME_STORAGE_KEY, toggleTheme } from '@/features/theme/theme.utils';
 
+const THEME_TOGGLE_ANIMATION_DURATION_MS = 250;
+const THEME_TOGGLE_ANIMATION_FALLBACK_MS =
+  THEME_TOGGLE_ANIMATION_DURATION_MS + 150;
+
+const animationCleanupTimers = new WeakMap<HTMLElement, number>();
+
+function clearThemeToggleAnimation(button: HTMLElement): void {
+  const cleanupTimer = animationCleanupTimers.get(button);
+
+  if (cleanupTimer !== undefined) {
+    window.clearTimeout(cleanupTimer);
+    animationCleanupTimers.delete(button);
+  }
+
+  button.classList.remove('is-animating');
+}
+
+function startThemeToggleAnimation(button: HTMLElement): void {
+  clearThemeToggleAnimation(button);
+
+  void button.offsetWidth;
+  button.classList.add('is-animating');
+
+  const handleAnimationComplete = (): void => {
+    clearThemeToggleAnimation(button);
+  };
+
+  button.addEventListener('animationend', handleAnimationComplete, {
+    once: true,
+  });
+  button.addEventListener('animationcancel', handleAnimationComplete, {
+    once: true,
+  });
+
+  const cleanupTimer = window.setTimeout(
+    handleAnimationComplete,
+    THEME_TOGGLE_ANIMATION_FALLBACK_MS
+  );
+
+  animationCleanupTimers.set(button, cleanupTimer);
+}
+
 declare global {
   interface Window {
     __jernaThemeToggleInitialized?: boolean;
@@ -18,14 +60,7 @@ function handleThemeToggleClick(event: Event): void {
   }
 
   toggleTheme();
-  button.classList.add('is-animating');
-  button.addEventListener(
-    'animationend',
-    () => button.classList.remove('is-animating'),
-    {
-      once: true,
-    }
-  );
+  startThemeToggleAnimation(button);
 }
 
 function handleSystemThemeChange(event: MediaQueryListEvent): void {
