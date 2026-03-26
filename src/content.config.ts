@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { Language } from '@/features/i18n/i18n.translations';
 
@@ -25,7 +26,7 @@ const portfolio = defineCollection({
       publishedAt: z.date().optional(),
       featured: z.boolean().default(false),
       draft: z.boolean().default(true),
-      lang: z.nativeEnum(Language),
+      lang: z.enum([Language.EN, Language.ES]),
       urlSlug: z.string(),
       ogTitle: z.string().optional(),
       ogDescription: z.string().optional(),
