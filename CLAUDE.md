@@ -6,7 +6,7 @@ Jerna Digital is an interactive portfolio website for a software development and
 
 ## Tech Stack
 
-- **Framework:** Astro 5.x with React islands
+- **Framework:** Astro 6.x with React islands
 - **Styling:** Tailwind CSS 4.x with custom design tokens
 - **Animation:** CSS animations + Framer Motion
 - **Type Safety:** TypeScript (strict mode)
