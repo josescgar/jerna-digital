@@ -9,6 +9,15 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    ignore:
+      # Current lint plugins do not yet support ESLint 10.
+      - dependency-name: 'eslint'
+        versions: ['>=10']
+      - dependency-name: '@eslint/js'
+        versions: ['>=10']
+      # typescript-eslint currently supports TypeScript versions below 6.1.
+      - dependency-name: 'typescript'
+        versions: ['>=7']
     groups:
       npm-dependencies:
         patterns:
