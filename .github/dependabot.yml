@@ -15,6 +15,8 @@ updates:
         versions: ['>=10']
       - dependency-name: '@eslint/js'
         versions: ['>=10']
+      - dependency-name: 'eslint-plugin-astro'
+        versions: ['>=2']
       # typescript-eslint currently supports TypeScript versions below 6.1.
       - dependency-name: 'typescript'
         versions: ['>=7']
