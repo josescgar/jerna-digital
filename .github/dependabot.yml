@@ -10,7 +10,8 @@ updates:
     schedule:
       interval: 'weekly'
     ignore:
-      # Current lint plugins do not yet support ESLint 10.
+      # eslint-plugin-jsx-a11y supports ESLint through 9; remove these ignores
+      # once it supports ESLint 10 and the lint stack can be upgraded together.
       - dependency-name: 'eslint'
         versions: ['>=10']
       - dependency-name: '@eslint/js'
@@ -19,7 +20,7 @@ updates:
         versions: ['>=2']
       # typescript-eslint currently supports TypeScript versions below 6.1.
       - dependency-name: 'typescript'
-        versions: ['>=7']
+        versions: ['>=6.1.0']
     groups:
       npm-dependencies:
         patterns:
