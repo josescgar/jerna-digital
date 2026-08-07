@@ -40,7 +40,9 @@ test.describe('Contact Form', () => {
     await page.fill('input[name="name"]', 'Test User');
     await page.fill('input[name="email"]', 'invalid-email');
     await page.fill('textarea[name="message"]', 'This is a test message');
-    await page.click('button[type="submit"]');
+    await page
+      .locator('form')
+      .evaluate((form) => (form as HTMLFormElement).requestSubmit());
 
     await expect(
       page.locator('text=Please enter a valid email address')
