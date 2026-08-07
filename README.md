@@ -6,7 +6,7 @@ Interactive portfolio website for Jerna Digital - Software Development and Engin
 
 - **Framework:** [Astro](https://astro.build/) with React islands
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
-- **Animation:** CSS animations + [Framer Motion](https://www.framer.com/motion/)
+- **Animation:** CSS animations + [Motion](https://motion.dev/)
 - **Type Safety:** TypeScript (strict mode)
 - **Testing:** [Playwright](https://playwright.dev/)
 - **Forms:** [Web3Forms](https://web3forms.com/)
@@ -15,8 +15,8 @@ Interactive portfolio website for Jerna Digital - Software Development and Engin
 
 ### Prerequisites
 
-- Node.js 20 LTS
-- npm
+- Node.js 24 LTS
+- npm 11 or later
 
 ### Installation
 

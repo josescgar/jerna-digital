@@ -83,7 +83,7 @@ components/
 │   └── CTASection.astro
 │
 └── interactive/           # React islands
-    └── ContactForm.tsx    # → Form with validation + Web3Forms
+    └── ContactForm.tsx    # → Form with validation + Web3Forms + Motion
 
 features/
 ├── common/
