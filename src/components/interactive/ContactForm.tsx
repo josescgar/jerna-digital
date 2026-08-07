@@ -1,6 +1,6 @@
+import { motion, AnimatePresence } from 'motion/react';
 import * as React from 'react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
