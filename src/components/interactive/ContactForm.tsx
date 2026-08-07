@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
@@ -163,7 +163,7 @@ export default function ContactForm({
    * Handles form submission via Web3Forms API
    */
   async function handleSubmit(
-    e: React.FormEvent<HTMLFormElement>
+    e: React.SubmitEvent<HTMLFormElement>
   ): Promise<void> {
     e.preventDefault();
 

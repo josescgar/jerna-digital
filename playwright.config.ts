@@ -28,9 +28,9 @@ export default defineConfig({
   ],
   webServer: {
     // Ensure `dist/` is fresh before running E2E.
-    // Use Astro's built-in preview server on the expected port.
+    // Keep Astro 7 in the foreground even when it detects an agent environment.
     command:
-      'npm run build && exec npx astro preview --host 127.0.0.1 --port 4321',
+      'npm run build && ASTRO_PREVIEW_BACKGROUND=0 exec npx astro preview --host 127.0.0.1 --port 4321',
     url: 'http://127.0.0.1:4321/index.html',
     reuseExistingServer: false,
     // Build + preview can take longer than just starting the server.
