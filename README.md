@@ -16,7 +16,7 @@ Interactive portfolio website for Jerna Digital - Software Development and Engin
 
 ### Prerequisites
 
-- Node.js 24 LTS
+- Node.js 26 LTS (see `.nvmrc`; run `nvm use`)
 - npm 11 or later
 
 ### Installation
