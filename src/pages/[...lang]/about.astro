@@ -39,9 +39,7 @@ const t = getTranslations(lang);
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
           {t.about.title}
         </h1>
-        <p class="text-foreground-muted mt-6 text-xl">
-          {t.about.subtitle}
-        </p>
+        <p class="text-foreground-muted mt-6 text-xl">{t.about.subtitle}</p>
       </div>
     </div>
   </section>
@@ -69,39 +67,32 @@ const t = getTranslations(lang);
 
         <div class="relative">
           <!-- Timeline line -->
-          <div
-            class="bg-border absolute top-0 left-4 h-full w-px md:left-1/2 md:-translate-x-1/2"
-          >
-          </div>
+          <div class="bg-border absolute top-0 left-4 h-full w-px md:left-1/2 md:-translate-x-1/2"></div>
 
           <div class="space-y-12">
-            {
-              t.about.milestones.map((milestone, index) => (
+            {t.about.milestones.map((milestone, index) => (
+              <div
+                class={`relative pl-12 md:pl-0 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-1/2'}`}
+              >
+                {/* Timeline dot */}
                 <div
-                  class={`relative pl-12 md:pl-0 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-1/2'}`}
-                >
-                  {/* Timeline dot */}
-                  <div
-                    class={`bg-primary absolute top-1.5 left-2.5 h-3 w-3 rounded-full md:left-1/2 md:-translate-x-1/2`}
-                  />
+                  class={`bg-primary absolute top-1.5 left-2.5 h-3 w-3 rounded-full md:left-1/2 md:-translate-x-1/2`}
+                />
 
-                  {/* Content card */}
-                  <div
-                    class={`border-border bg-background-elevated rounded-xl border p-6 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}
-                  >
-                    <span class="bg-primary/10 text-primary inline-block rounded-full px-3 py-1 text-sm font-medium">
-                      {milestone.year}
-                    </span>
-                    <h3 class="mt-3 text-xl font-semibold">
-                      {milestone.title}
-                    </h3>
-                    <p class="text-foreground-muted mt-2">
-                      {milestone.description}
-                    </p>
-                  </div>
+                {/* Content card */}
+                <div
+                  class={`border-border bg-background-elevated rounded-xl border p-6 ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}
+                >
+                  <span class="bg-primary/10 text-primary inline-block rounded-full px-3 py-1 text-sm font-medium">
+                    {milestone.year}
+                  </span>
+                  <h3 class="mt-3 text-xl font-semibold">{milestone.title}</h3>
+                  <p class="text-foreground-muted mt-2">
+                    {milestone.description}
+                  </p>
                 </div>
-              ))
-            }
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -120,16 +111,14 @@ const t = getTranslations(lang);
         </p>
 
         <div class="mt-12 grid gap-6 sm:grid-cols-2">
-          {
-            t.about.approach.items.map((item) => (
-              <div class="border-border bg-background-elevated rounded-xl border p-6">
-                <h3 class="text-lg font-semibold">{item.title}</h3>
-                <p class="text-foreground-muted mt-2 text-sm">
-                  {item.description}
-                </p>
-              </div>
-            ))
-          }
+          {t.about.approach.items.map((item) => (
+            <div class="border-border bg-background-elevated rounded-xl border p-6">
+              <h3 class="text-lg font-semibold">{item.title}</h3>
+              <p class="text-foreground-muted mt-2 text-sm">
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -144,28 +133,26 @@ const t = getTranslations(lang);
         </h2>
 
         <div class="grid gap-4 sm:grid-cols-2">
-          {
-            t.about.values.items.map((value) => (
-              <div class="border-border bg-background-elevated flex items-center gap-4 rounded-xl border p-4">
-                <div class="bg-gradient-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-lg">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="m9 12 2 2 4-4" />
-                  </svg>
-                </div>
-                <span class="font-medium">{value}</span>
+          {t.about.values.items.map((value) => (
+            <div class="border-border bg-background-elevated flex items-center gap-4 rounded-xl border p-4">
+              <div class="bg-gradient-primary text-primary-foreground flex h-10 w-10 items-center justify-center rounded-lg">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
               </div>
-            ))
-          }
+              <span class="font-medium">{value}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

@@ -63,10 +63,10 @@ const formattedDate = publishedAt
   lang={lang}
   title={title}
   description={summary}
-  {...entry.data.ogTitle !== undefined && { ogTitle: entry.data.ogTitle }}
-  {...entry.data.ogDescription !== undefined && {
+  {...(entry.data.ogTitle !== undefined && { ogTitle: entry.data.ogTitle })}
+  {...(entry.data.ogDescription !== undefined && {
     ogDescription: entry.data.ogDescription,
-  }}
+  })}
 >
   <article class="section">
     <div class="container">
@@ -95,13 +95,11 @@ const formattedDate = publishedAt
       <!-- Hero -->
       <header class="mx-auto max-w-3xl">
         <div class="mb-4 flex flex-wrap items-center gap-3">
-          {
-            featured && (
-              <span class="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-medium">
-                {t.portfolio.featuredBadge}
-              </span>
-            )
-          }
+          {featured && (
+            <span class="bg-primary/10 text-primary rounded-full px-3 py-1 text-xs font-medium">
+              {t.portfolio.featuredBadge}
+            </span>
+          )}
           <span class="text-foreground-subtle text-sm">
             {client} &bull; {industry}
           </span>
@@ -113,38 +111,32 @@ const formattedDate = publishedAt
 
         <!-- Tags -->
         <div class="mt-6 flex flex-wrap gap-2">
-          {
-            tags.map((tag) => (
-              <span class="bg-background-subtle text-foreground-subtle rounded-full px-3 py-1 text-sm">
-                {tag}
-              </span>
-            ))
-          }
+          {tags.map((tag) => (
+            <span class="bg-background-subtle text-foreground-subtle rounded-full px-3 py-1 text-sm">
+              {tag}
+            </span>
+          ))}
         </div>
 
-        {
-          formattedDate && (
-            <p class="text-foreground-subtle mt-4 text-sm">
-              {t.portfolio.publishedOn} {formattedDate}
-            </p>
-          )
-        }
+        {formattedDate && (
+          <p class="text-foreground-subtle mt-4 text-sm">
+            {t.portfolio.publishedOn} {formattedDate}
+          </p>
+        )}
       </header>
 
       <!-- Hero image -->
-      {
-        image && (
-          <div class="border-border mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border shadow-lg">
-            <Image
-              src={image}
-              alt={imageAlt ?? title}
-              class="w-full"
-              widths={[600, 900, 1200]}
-              sizes="(max-width: 768px) 100vw, 900px"
-            />
-          </div>
-        )
-      }
+      {image && (
+        <div class="border-border mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border shadow-lg">
+          <Image
+            src={image}
+            alt={imageAlt ?? title}
+            class="w-full"
+            widths={[600, 900, 1200]}
+            sizes="(max-width: 768px) 100vw, 900px"
+          />
+        </div>
+      )}
 
       <!-- Content -->
       <div class="prose mx-auto mt-12 max-w-3xl">

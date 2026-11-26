@@ -179,11 +179,9 @@ const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
     <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- hreflang tags for language alternatives -->
-    {
-      alternateUrls.map(({ hreflang, url }) => (
-        <link rel="alternate" hreflang={hreflang} href={url} />
-      ))
-    }
+    {alternateUrls.map(({ hreflang, url }) => (
+      <link rel="alternate" hreflang={hreflang} href={url} />
+    ))}
     <link
       rel="alternate"
       hreflang="x-default"
@@ -226,9 +224,7 @@ const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
       })}
     />
   </head>
-  <body
-    class="bg-background text-foreground flex min-h-screen flex-col antialiased"
-  >
+  <body class="bg-background text-foreground flex min-h-screen flex-col antialiased">
     <!-- Skip to main content link for accessibility -->
     <a
       href="#main-content"
@@ -251,21 +247,14 @@ const alternateUrls = getAlternateUrls(Astro.url.pathname, siteUrl);
       aria-hidden="true"
     >
       <!-- Large gradient orb - top right -->
-      <div
-        class="animate-pulse-glow from-primary/20 via-secondary/10 absolute -top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-gradient-to-br to-transparent blur-[100px]"
-      >
-      </div>
+      <div class="animate-pulse-glow from-primary/20 via-secondary/10 absolute -top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full bg-gradient-to-br to-transparent blur-[100px]"></div>
       <!-- Secondary orb - bottom left -->
       <div
         class="animate-pulse-glow from-secondary/15 via-primary/5 absolute -bottom-1/4 -left-1/4 h-[500px] w-[500px] rounded-full bg-gradient-to-tr to-transparent blur-[100px]"
         style="animation-delay: 2s;"
-      >
-      </div>
+      ></div>
       <!-- Subtle grid pattern -->
-      <div
-        class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"
-      >
-      </div>
+      <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
     </div>
 
     <!-- Enable transitions after initial render to prevent FOUC -->

@@ -8,6 +8,7 @@ Interactive portfolio website for Jerna Digital - Software Development and Engin
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) v4
 - **Animation:** CSS animations + [Motion](https://motion.dev/)
 - **Type Safety:** TypeScript (strict mode)
+- **Linting:** ESLint 10 + Prettier
 - **Testing:** [Playwright](https://playwright.dev/)
 - **Forms:** [Web3Forms](https://web3forms.com/)
 
@@ -15,7 +16,7 @@ Interactive portfolio website for Jerna Digital - Software Development and Engin
 
 ### Prerequisites
 
-- Node.js 24 LTS
+- Node.js 26 LTS (see `.nvmrc`; run `nvm use`)
 - npm 11 or later
 
 ### Installation

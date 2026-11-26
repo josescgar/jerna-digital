@@ -52,18 +52,16 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
 
       <!-- Desktop Navigation -->
       <ul class="hidden items-center gap-1 md:flex">
-        {
-          navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-foreground-muted hover:bg-background-subtle hover:text-foreground rounded-lg px-4 py-2 text-sm font-medium transition-colors"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="text-foreground-muted hover:bg-background-subtle hover:text-foreground rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
 
         <!-- Theme Toggle (Desktop) -->
         <li class="ml-2">
@@ -115,39 +113,37 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
             id="lang-switcher-menu"
             role="menu"
           >
-            {
-              (Object.keys(languages) as Language[]).map((langKey) => (
-                <a
-                  href={getLocalizedPath(langKey, currentPath)}
-                  class={`hover:bg-background-subtle flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
-                    langKey === lang
-                      ? 'text-primary font-medium'
-                      : 'text-foreground-muted'
-                  }`}
-                  role="menuitem"
-                  data-lang={langKey}
-                >
-                  {langKey === lang && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path d="m9 12 2 2 4-4" />
-                    </svg>
-                  )}
-                  <span class={langKey !== lang ? 'ml-[22px]' : ''}>
-                    {languages[langKey]}
-                  </span>
-                </a>
-              ))
-            }
+            {(Object.keys(languages) as Language[]).map((langKey) => (
+              <a
+                href={getLocalizedPath(langKey, currentPath)}
+                class={`hover:bg-background-subtle flex items-center gap-2 px-4 py-2 text-sm transition-colors ${
+                  langKey === lang
+                    ? 'text-primary font-medium'
+                    : 'text-foreground-muted'
+                }`}
+                role="menuitem"
+                data-lang={langKey}
+              >
+                {langKey === lang && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                )}
+                <span class={langKey !== lang ? 'ml-[22px]' : ''}>
+                  {languages[langKey]}
+                </span>
+              </a>
+            ))}
           </div>
         </li>
 
@@ -213,24 +209,20 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
   >
     <nav class="container py-4">
       <ul class="flex flex-col gap-2">
-        {
-          navItems.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-foreground-muted hover:bg-background-subtle hover:text-foreground block rounded-lg px-4 py-3 text-base font-medium transition-colors"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))
-        }
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="text-foreground-muted hover:bg-background-subtle hover:text-foreground block rounded-lg px-4 py-3 text-base font-medium transition-colors"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
 
         <!-- Theme Toggle (Mobile) -->
         <li class="border-border mt-2 border-t pt-4">
-          <div
-            class="text-foreground-subtle mb-2 px-4 text-xs font-semibold tracking-wider uppercase"
-          >
+          <div class="text-foreground-subtle mb-2 px-4 text-xs font-semibold tracking-wider uppercase">
             {t.themeSwitcher.label}
           </div>
           <div class="flex items-center gap-2 px-4">
@@ -240,34 +232,31 @@ const currentPath = Astro.url.pathname.replace(languagePrefixRegex, '') || '/';
               id="mobile-theme-label"
               data-light-label={t.themeSwitcher.light}
               data-dark-label={t.themeSwitcher.dark}
-              >{t.themeSwitcher.dark}</span
             >
+              {t.themeSwitcher.dark}
+            </span>
           </div>
         </li>
 
         <!-- Language Switcher (Mobile) -->
         <li class="border-border mt-2 border-t pt-4">
-          <div
-            class="text-foreground-subtle mb-2 px-4 text-xs font-semibold tracking-wider uppercase"
-          >
+          <div class="text-foreground-subtle mb-2 px-4 text-xs font-semibold tracking-wider uppercase">
             {t.languageSwitcher.label}
           </div>
           <div class="flex gap-2 px-4">
-            {
-              (Object.keys(languages) as Language[]).map((langKey) => (
-                <a
-                  href={getLocalizedPath(langKey, currentPath)}
-                  class={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                    langKey === lang
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-foreground-muted hover:bg-background-subtle hover:text-foreground'
-                  }`}
-                  data-lang={langKey}
-                >
-                  {languages[langKey]}
-                </a>
-              ))
-            }
+            {(Object.keys(languages) as Language[]).map((langKey) => (
+              <a
+                href={getLocalizedPath(langKey, currentPath)}
+                class={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  langKey === lang
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-foreground-muted hover:bg-background-subtle hover:text-foreground'
+                }`}
+                data-lang={langKey}
+              >
+                {languages[langKey]}
+              </a>
+            ))}
           </div>
         </li>
 

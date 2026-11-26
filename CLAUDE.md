@@ -6,10 +6,12 @@ Jerna Digital is an interactive portfolio website for a software development and
 
 ## Tech Stack
 
+- **Runtime:** Node.js 26 LTS (pinned in `.nvmrc`, used by CI)
 - **Framework:** Astro 7.x with React islands
 - **Styling:** Tailwind CSS 4.x with custom design tokens
 - **Animation:** CSS animations + Motion
 - **Type Safety:** TypeScript (strict mode)
+- **Linting:** ESLint 10 (typescript-eslint, eslint-plugin-astro, eslint-plugin-jsx-a11y-x, eslint-plugin-react-hooks) + Prettier
 - **Testing:** Playwright (E2E)
 - **Forms:** Web3Forms (third-party service)
 - **Hosting:** GitHub Pages (static)
