@@ -20,23 +20,16 @@ const servicesHref = getLocalizedPath(lang, Route.Services);
 
 <section class="section relative overflow-hidden">
   <div class="container">
-    <div
-      class="border-border bg-background-elevated relative overflow-hidden rounded-3xl border p-8 md:p-12 lg:p-16"
-    >
+    <div class="border-border bg-background-elevated relative overflow-hidden rounded-3xl border p-8 md:p-12 lg:p-16">
       <!-- Content -->
       <div class="relative z-10 mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
           {t.cta.title}{' '}
-          <span class="text-gradient">{t.cta.titleHighlight}</span>{
-            t.cta.titleSuffix
-          }
+          <span class="text-gradient">{t.cta.titleHighlight}</span>
+          {t.cta.titleSuffix}
         </h2>
-        <p class="text-foreground-muted mt-6 text-lg">
-          {t.cta.subtitle}
-        </p>
-        <div
-          class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
+        <p class="text-foreground-muted mt-6 text-lg">{t.cta.subtitle}</p>
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
             href={contactHref}
             class="bg-gradient-primary text-primary-foreground cta-primary hover:shadow-glow inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg px-8 text-base font-medium transition-all hover:scale-[1.02] sm:w-auto"
@@ -71,14 +64,8 @@ const servicesHref = getLocalizedPath(lang, Route.Services);
         class="pointer-events-none absolute inset-0 -z-10"
         aria-hidden="true"
       >
-        <div
-          class="from-primary/20 absolute -top-1/4 -left-1/4 h-96 w-96 rounded-full bg-gradient-to-br to-transparent blur-[80px]"
-        >
-        </div>
-        <div
-          class="from-secondary/20 absolute -right-1/4 -bottom-1/4 h-96 w-96 rounded-full bg-gradient-to-tl to-transparent blur-[80px]"
-        >
-        </div>
+        <div class="from-primary/20 absolute -top-1/4 -left-1/4 h-96 w-96 rounded-full bg-gradient-to-br to-transparent blur-[80px]"></div>
+        <div class="from-secondary/20 absolute -right-1/4 -bottom-1/4 h-96 w-96 rounded-full bg-gradient-to-tl to-transparent blur-[80px]"></div>
       </div>
     </div>
   </div>

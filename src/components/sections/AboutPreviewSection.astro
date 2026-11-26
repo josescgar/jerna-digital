@@ -25,9 +25,7 @@ const aboutHref = getLocalizedPath(lang, Route.About);
         <h2 class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
           <span class="text-gradient">{t.about.title}</span>
         </h2>
-        <p class="text-foreground-muted mt-4 text-lg">
-          {t.about.subtitle}
-        </p>
+        <p class="text-foreground-muted mt-4 text-lg">{t.about.subtitle}</p>
 
         <p class="text-foreground-muted mt-6 leading-relaxed">
           {t.about.intro}
@@ -43,29 +41,27 @@ const aboutHref = getLocalizedPath(lang, Route.About);
         <div class="mt-8">
           <h3 class="mb-4 text-xl font-semibold">{t.about.values.title}</h3>
           <ul class="grid gap-3 sm:grid-cols-2">
-            {
-              t.about.values.items.map((value) => (
-                <li class="flex items-center gap-3">
-                  <div class="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-lg">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="text-primary"
-                    >
-                      <path d="m9 12 2 2 4-4" />
-                    </svg>
-                  </div>
-                  <span class="text-foreground-muted">{value}</span>
-                </li>
-              ))
-            }
+            {t.about.values.items.map((value) => (
+              <li class="flex items-center gap-3">
+                <div class="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-lg">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-primary"
+                  >
+                    <path d="m9 12 2 2 4-4" />
+                  </svg>
+                </div>
+                <span class="text-foreground-muted">{value}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -93,15 +89,11 @@ const aboutHref = getLocalizedPath(lang, Route.About);
 
       <!-- Visual element / Image placeholder -->
       <div class="relative lg:order-first">
-        <div
-          class="border-border bg-background-elevated aspect-square overflow-hidden rounded-2xl border p-8"
-        >
+        <div class="border-border bg-background-elevated aspect-square overflow-hidden rounded-2xl border p-8">
           <!-- Abstract visual representing consulting/engineering -->
           <div class="relative h-full w-full">
             <!-- Grid of floating cards -->
-            <div
-              class="animate-float border-border bg-background-subtle absolute top-[10%] left-[10%] h-24 w-32 rounded-xl border p-3"
-            >
+            <div class="animate-float border-border bg-background-subtle absolute top-[10%] left-[10%] h-24 w-32 rounded-xl border p-3">
               <div class="bg-primary/30 h-2 w-16 rounded"></div>
               <div class="bg-foreground/10 mt-2 h-2 w-20 rounded"></div>
               <div class="bg-foreground/10 mt-2 h-2 w-12 rounded"></div>
@@ -163,30 +155,30 @@ const aboutHref = getLocalizedPath(lang, Route.About);
                 x2="60%"
                 y2="35%"
                 stroke="url(#line-gradient)"
-                stroke-width="1"></line>
+                stroke-width="1"
+              ></line>
               <line
                 x1="35%"
                 y1="55%"
                 x2="70%"
                 y2="45%"
                 stroke="url(#line-gradient)"
-                stroke-width="1"></line>
+                stroke-width="1"
+              ></line>
               <line
                 x1="40%"
                 y1="70%"
                 x2="65%"
                 y2="80%"
                 stroke="url(#line-gradient)"
-                stroke-width="1"></line>
+                stroke-width="1"
+              ></line>
             </svg>
           </div>
         </div>
 
         <!-- Decorative gradient behind -->
-        <div
-          class="from-primary/10 to-secondary/10 absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br via-transparent blur-2xl"
-        >
-        </div>
+        <div class="from-primary/10 to-secondary/10 absolute -inset-4 -z-10 rounded-3xl bg-gradient-to-br via-transparent blur-2xl"></div>
       </div>
     </div>
   </div>

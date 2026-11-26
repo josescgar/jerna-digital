@@ -10,6 +10,7 @@ Jerna Digital is an interactive portfolio website for a software development and
 - **Styling:** Tailwind CSS 4.x with custom design tokens
 - **Animation:** CSS animations + Motion
 - **Type Safety:** TypeScript (strict mode)
+- **Linting:** ESLint 10 (typescript-eslint, eslint-plugin-astro, eslint-plugin-jsx-a11y-x, eslint-plugin-react-hooks) + Prettier
 - **Testing:** Playwright (E2E)
 - **Forms:** Web3Forms (third-party service)
 - **Hosting:** GitHub Pages (static)

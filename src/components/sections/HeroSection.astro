@@ -23,15 +23,10 @@ const servicesHref = getLocalizedPath(lang, Route.Services);
     <div class="mx-auto max-w-3xl text-center">
       <!-- Availability badge with animated ping dot -->
       <div class="animate-fade-in-up mb-8">
-        <span
-          class="bg-primary/10 text-primary inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium"
-        >
+        <span class="bg-primary/10 text-primary inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium">
           <span class="relative flex h-2 w-2">
-            <span
-              class="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-            ></span>
-            <span class="bg-primary relative inline-flex h-2 w-2 rounded-full"
-            ></span>
+            <span class="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
+            <span class="bg-primary relative inline-flex h-2 w-2 rounded-full"></span>
           </span>
           {t.hero.availableForProjects}
         </span>
@@ -60,33 +55,34 @@ const servicesHref = getLocalizedPath(lang, Route.Services);
         class="animate-fade-in-up text-foreground-subtle mx-auto mt-4 max-w-2xl text-base"
         style="animation-delay: 0.3s;"
       >
-        {t.hero.subtitle}
-        {' '}
-        {t.hero.referencesPrefix}{' '}
+        {t.hero.subtitle} {t.hero.referencesPrefix}{' '}
         <a
           href="https://dora.dev/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-foreground hover:text-primary underline underline-offset-4"
         >
-          {t.hero.referenceDora}</a
-        >{t.hero.referencesSeparator}{' '}
+          {t.hero.referenceDora}
+        </a>
+        {t.hero.referencesSeparator}{' '}
         <a
           href="https://owasp.org/www-project-top-ten/"
           target="_blank"
           rel="noopener noreferrer"
           class="text-foreground hover:text-primary underline underline-offset-4"
         >
-          {t.hero.referenceOwasp}</a
-        >{t.hero.referencesBeforeLast}{' '}
+          {t.hero.referenceOwasp}
+        </a>
+        {t.hero.referencesBeforeLast}{' '}
         <a
           href="https://developers.openai.com/codex/guides/build-ai-native-engineering-team"
           target="_blank"
           rel="noopener noreferrer"
           class="text-foreground hover:text-primary underline underline-offset-4"
         >
-          {t.hero.referenceAgents}</a
-        >.
+          {t.hero.referenceAgents}
+        </a>
+        .
       </p>
 
       <!-- CTAs -->
